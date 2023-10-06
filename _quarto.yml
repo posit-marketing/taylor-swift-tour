@@ -1,0 +1,36 @@
+project:
+  type: website
+  output-dir: ./_site
+  
+website:
+  sidebar:
+    style: "floating"
+    search: false
+    contents:
+      - section: "Want to walk through the code?"
+        contents:
+          - text: "🐍 See the code in Python"
+            href: ../py
+          - text: "🔵 See the code in R"
+            href: ../r
+          - text: "☁️ Open the project in Posit Cloud"
+          - icon: github
+            text: "See the code on GitHub"
+
+execute:
+  freeze: true
+
+format:
+  html:
+    theme: cosmo
+    css: style.css
+    toc: true
+    toc-location: left
+    toc-title: "Table of Contents"
+    page-layout: full
+    include-in-header: 
+      - progress-bar.html
+  
+profile: 
+  default: index
+  group: [index, r, py]

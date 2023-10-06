@@ -1,0 +1,150 @@
+<details><summary>See R code</summary>
+
+::: {.callout-tip}
+## Highest-grossing tours of all time visualization
+
+Let's get started by loading the necessary R packages to clean, scrape, and visualize the data. These packages are the building blocks of our data scraping journey.
+
+```{r}
+#| message: false
+#| warning: false
+# To clean data
+library(tidyverse)
+library(janitor)
+
+# To scrape data
+library(rvest)
+library(httr)
+library(polite)
+
+# To visualize data
+library(ggplot2)
+library(showtext)
+library(viridis)
+
+font_add_google("Open Sans", "open-sans")
+showtext::showtext_auto()
+```
+
+Now that we have the necessary libraries loaded, it's time to politely scrape data from Wikipedia and bring it into R. We'll start by specifying the URL of the Wikipedia page we want to extract data from:
+
+```{r}
+url <-
+  "https://en.wikipedia.org/wiki/List_of_highest-grossing_concert_tours"
+```
+
+Next, we'll use the polite package to create a 'bag of words' (bow) representation of the URL. This step helps us make a polite request to the web server for the page's content:
+
+```{r}
+#| message: false
+url_bow <- polite::bow(url)
+url_bow
+```
+
+Once we have our 'bow,' we can use it to scrape the web page. We'll specifically target the tables with the class 'wikitable' on the page:
+
+```{r}
+ind_html <-
+  polite::scrape(url_bow) %>%  # scrape web page
+  rvest::html_nodes("table.wikitable") %>% # pull out specific table
+  rvest::html_table(fill = TRUE) 
+```
+
+Finally, we'll clean up the extracted table (the second table on the page, Top 20 highest-grossing tours of all time) by storing it in the `ind_tab` variable and ensuring that column names are in a consistent format:
+
+```{r}
+ind_tab <- 
+  ind_html[[2]] %>% 
+  clean_names()
+```
+
+This code segment efficiently fetches and prepares the data we need from the Wikipedia page. Our next step is to clean it for analysis. In this code snippet, we'll perform some essential data cleaning tasks to make our dataset ready for exploration: transforming the Adjusted Gross in 2022 Dollars, Actual Gross, and Average Gross columns into numeric variables.
+
+```{r}
+ind_tab_clean <-
+  ind_tab %>%
+  dplyr::mutate(across(
+    c(adjusted_gross_in_2022_dollars,
+      actual_gross,
+      averagegross),
+    ~ as.numeric(str_replace_all(.x, "[$,]", ""))
+  ))
+```
+
+We want to add Taylor's data
+
+```{r}
+ind_tab_tay <-
+  ind_tab_clean %>% 
+  add_row(artist = "Taylor Swift",
+          tour_title = "The Eras Tour (Expected)",
+          year_s = "2023-2024",
+          shows = 146,
+          adjusted_gross_in_2022_dollars = 1400000000)
+```
+
+
+Now that our data is clean and ready, let's visualize the highest-grossing concert tours of all time (as of 2023) using a bar chart. We'll use the ggplot2 package
+
+```{r}
+#| results: hide
+#| out.width: 400px
+#| dpi: 300
+#| fig.show: hide
+#| fig.path: "../images/"
+#| label: highest-grossing-tours-r
+ind_tab_tay %>%
+  mutate(color = case_when(artist == "Taylor Swift" ~ "#C2D9D9",
+                          .default = "#122B2B")) %>% 
+  ggplot(aes(
+    x = forcats::fct_reorder(tour_title, adjusted_gross_in_2022_dollars),
+    y = adjusted_gross_in_2022_dollars
+  )) +
+  geom_col(aes(fill = color),
+           color = "#122B2B",
+           width= .9) +
+  scale_fill_identity() +
+  labs(title = "Highest-grossing tours of all time",
+       subtitle = "(as of 2023)") +
+  theme(
+    text = element_text(size = 9,
+                        family = "open-sans"),
+    title = element_text(size = 16,
+                              face = "bold",
+                              family = "open-sans"),
+    subtitle = element_text(size = 12,
+                                 family = "open-sans")
+  ) +
+  geom_text(aes(y = 12000000, label = tour_title),
+  family = "open-sans",
+  hjust = 0,
+  vjust = 0.5,
+  size = 3,
+  color = "white",
+  fontface = "bold") +
+    geom_text(aes(y = 12000000, label = ifelse(artist == "Taylor Swift", tour_title, "")),
+  family = "open-sans",
+  hjust = 0,
+  vjust = 0.5,
+  size = 3,
+  color = "black",
+  fontface = "bold") +
+  geom_text(aes(
+    label = scales::dollar(
+      adjusted_gross_in_2022_dollars,
+      accuracy = 1,
+      scale = 1e-6,
+      suffix = "M"
+    )
+  ),
+  family = "open-sans",
+  hjust = -0.1,
+  vjust = 0.5,
+  size = 3) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 1500000000)) +
+  theme_void()
+```
+
+:::
+</details>
