@@ -1,7 +1,14 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 <details><summary>See R code</summary>
 
 ::: {.callout-tip}
 ## The Eras Tour Dates and Venues
+
+Let's get started by loading the necessary R packages to clean, scrape, and visualize the data. These packages are the building blocks of our data scraping journey.
 
 ```{r}
 #| message: false
@@ -18,10 +25,13 @@ library(polite)
 
 # To geocode data
 library(tidygeocoder)
+library(lubridate)
 
 # To visualize data
 library(leaflet)
 ```
+
+Now that we have the needed libraries let's politely scrape data from Wikipedia and bring it into R. We'll start by specifying the URL of the Wikipedia page we want to extract data from:
 
 ```{r}
 #| label: url-map
@@ -32,6 +42,8 @@ url_map_bow <- polite::bow(url_map)
 url_map_bow
 ```
 
+Now, let's extract and clean up our table. 
+
 ```{r}
 #| label: scrape-map
 map_html <-
@@ -39,9 +51,13 @@ map_html <-
   rvest::html_nodes("tbody") |> # pull out specific table
   rvest::html_table(fill = TRUE) |>
   bind_rows() |>
-  row_to_names(row_number = 1) |>
+  row_to_names(row_number = 1) |> # set the first row to column headers
   clean_names()
 ```
+
+Now we want to geocode the locations in our table. We have a number of cities and venues, but where exactly are they located on a map? We'll use the `geocode` function from the `tidygeocoder` package. Given these, it will return the geolocation, latitude and longitude based a specified geocoding service. We'll use `osm` for Open Street Map. 
+
+After that, we'll clean up our table a bit more. We'll note how many shows happen at each location and indicate whether those shows have happened yet. 
 
 ```{r}
 #| label: geocode-map
@@ -53,6 +69,7 @@ map_html_geocode <-
           lat = latitude ,
           long = longitude)
 
+# A few geolocation appear incorrect. Let's correct them manually. 
 map_html_geo <-
   map_html_geocode |>
   mutate(
@@ -67,24 +84,40 @@ map_html_geo <-
       .default = longitude
     )
   ) |>
-  mutate(number_shows = n(),
-         .by = c(venue, city)) |>
-  mutate(occurred = case_when(lubridate::mdy(paste0(date, year)) < today() ~ "Occurred",
-                              .default = "Not Occurred"))
+  mutate(
+    number_shows = n(),
+    .by = c(venue, city)) |>
+  mutate(
+    date = case_when(
+      date == "March 18 (6:30 PM)" ~ "March 18",
+      date == "March 18 (12 PM)" ~ "March 18",
+      .default = date
+    ),
+    date =  lubridate::mdy(paste0(date, " ", year))
+  ) |> 
+  mutate(
+    occurred = case_when(
+     date < today() ~ "Occurred",
+      date > today() ~ "Not Occurred",
+      .default = "NA"))
 ```
+
+
+Now let's use Leaflet to map all these shows and their venues. 
 
 ```{r}
 #| label: leaflet-map
 #| results: false
 #| message: false
 
+# set up the colors for our map markers
 pal <- colorFactor(
   palette = c("#823549", "#1D1F38"),
   domain = map_html_geo$occurred
 )
 
 leaflet(options = leafletOptions(zoomControl = FALSE)) |>
-  addProviderTiles("Stadia.AlidadeSmooth",
+  addProviderTiles("Stadia.AlidadeSmooth",   
                    options = (noWrap = TRUE)) |>
   setMaxBounds(
     lng1 = 180,
@@ -108,8 +141,8 @@ leaflet(options = leafletOptions(zoomControl = FALSE)) |>
       lapply(htmltools::HTML)
   ) |> 
   addLegend("bottomright", pal = pal, values = map_html_geo$occurred,
-    title = "Event Status",
-    opacity = 1
+            title = "Event Status",
+            opacity = 1
   )
 ```
 

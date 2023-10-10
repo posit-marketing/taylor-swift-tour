@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 <details><summary>See R code</summary>
 
 ::: {.callout-tip}
@@ -35,7 +40,7 @@ url <-
   "https://en.wikipedia.org/wiki/List_of_highest-grossing_concert_tours"
 ```
 
-Next, we'll use the polite package to create a 'bag of words' (bow) representation of the URL. This step helps us make a polite request to the web server for the page's content:
+Next, we'll use the [`polite'](https://cran.r-project.org/web/packages/polite/readme/README.html) package to create a 'bag of words' (bow) representation of the URL. This step helps us make a polite request to the web server for the page's content:
 
 ```{r}
 #| message: false
