@@ -1,7 +1,6 @@
 project:
   type: website
-  output-dir: ./_site
-  
+
 website:
   sidebar:
     style: "floating"
@@ -10,9 +9,9 @@ website:
       - section: "Want to walk through the code?"
         contents:
           - text: "🐍 See the code in Python"
-            href: ../py
+            href: py.qmd
           - text: "🔵 See the code in R"
-            href: ../r
+            href: r.qmd
           - text: "☁️ Open the project in Posit Cloud"
           - icon: github
             text: "See the code on GitHub"
@@ -30,7 +29,3 @@ format:
     page-layout: full
     include-in-header: 
       - progress-bar.html
-  
-profile: 
-  default: index
-  group: [index, r, py]

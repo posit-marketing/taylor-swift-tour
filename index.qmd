@@ -4,13 +4,22 @@ format: html
 title-block-banner: images/hero.png
 ---
 
+```{r}
+#| include: false
+#| message: false
+#| label: source-files
+library(leaflet)
+source(knitr::purl("notebooks/highest-grossing-tours-r.qmd"))
+map_html_geo <- read_rds("data/map_html_geo.Rds")
+```
+
 # Taylor Swift's Tour in the Pantheon of Music
 
 ## Introduction
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum.
 
-## The Eras Tour
+## The Eras Tour {style="font-family: Abril Fatface"}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum. 
 
@@ -20,40 +29,53 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 ### Attendance
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-#### How many people attended the Eras tour
+#### How many people have attended the Eras tour?
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-#### How many cities and states did Taylor Swift hold a concert in
+#### How many cities and states has Taylor Swift held a concert in?
 
-::: {.content-visible when-profile="r"}
-
-{{< include viz/eras-tour-dates-and-venues.qmd >}}
-
-:::
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
 :::{.column-page}
 
 ```{r}
 #| echo: false
-leaflet() %>%
-  addProviderTiles("Stadia.StamenWatercolor",
-                   group = "Stadia.StamenWatercolor") %>%
-  addMarkers(
-    data = ind_html_geo,
+#| message: false
+pal <- colorFactor(
+  palette = c("#823549", "#1D1F38"),
+  domain = map_html_geo$occurred
+)
+
+leaflet(options = leafletOptions(zoomControl = FALSE)) |>
+  addProviderTiles("Stadia.AlidadeSmooth",
+                   options = (noWrap = TRUE)) |>
+  setMaxBounds(
+    lng1 = -90,
+    lat1 = -180,
+    lng2 = 90,
+    lat2 = 180
+  ) |> 
+  addCircleMarkers(
+    data = map_html_geo,
+    color = ~pal(occurred),
     label = paste(
       "Venue: ",
-      ind_html_geo$venue,
+      map_html_geo$venue,
       "<br>",
       "City: ",
-      ind_html_geo$city,
+      map_html_geo$city,
       "<br>",
-      "Date: ",
-      ind_html_geo$date
-    ) %>%
+      "Number of Shows: ",
+      map_html_geo$number_shows
+    ) |>
       lapply(htmltools::HTML)
+  ) |> 
+  addLegend("bottomright", pal = pal, values = map_html_geo$occurred,
+    title = "Event Status",
+    opacity = 1
   )
 ```
 
@@ -71,25 +93,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-::: {.content-visible when-profile="r"}
-
-{{< include viz/highest-grossing-tours-r.qmd >}}
-
-:::
-
 `r knitr::include_graphics("images/highest-grossing-tours-r-1.png")`
 
 #### Number of shows vs. income
 
 ```{r}
 annual_hi_gross_tours <-
-  ind_html[[9]] %>%
+  ind_html[[9]] |>
   clean_names()
 ```
 
 ```{r}
 annual_hi_gross_tours_clean <-
-  annual_hi_gross_tours %>%
+  annual_hi_gross_tours |>
   dplyr::mutate(across(
     c(adjusted_gross_in_2022_dollar,
       actual_gross),
@@ -100,7 +116,7 @@ annual_hi_gross_tours_clean <-
 ```
 
 ```{r}
-annual_hi_gross_tours_clean %>%
+annual_hi_gross_tours_clean |>
   ggplot(aes(
     x = year,
     y = adjusted_gross_in_2022_dollar,
@@ -126,7 +142,7 @@ combine_data <- function(ind_html_list) {
   
   # Loop through the ind_html_list and append each element to the combined_data
   for (i in 4:8) {
-    extracted_data <- ind_html_list[[i]] %>% clean_names()
+    extracted_data <- ind_html_list[[i]] |> clean_names()
     combined_data <- bind_rows(combined_data, extracted_data)
   }
   
@@ -138,28 +154,28 @@ annual_hi_gross_tours <- combine_data(ind_html)
 
 ```{r}
 tours_by_decade <-
-  annual_hi_gross_tours %>%
+  annual_hi_gross_tours |>
   dplyr::mutate(across(
     c(adjusted_gross_in_2022_dollar,
       averagegross,
       actual_gross),
     ~ as.numeric(str_replace_all(.x, "[$,]", ""))
-  )) %>%
+  )) |>
      add_row(artist = "Taylor Swift",
           tour_title = "The Eras Tour (Expected)",
           year_s = "2023-2024",
           shows = 146,
-          adjusted_gross_in_2022_dollar = 1400000000) %>% 
+          adjusted_gross_in_2022_dollar = 1400000000) |> 
   mutate(
     start_year = str_sub(year_s, start = 1, end = 4),
-    year = lubridate::ymd(start_year, truncated = 2L)) %>% 
+    year = lubridate::ymd(start_year, truncated = 2L)) |> 
   mutate(decade = as.factor(floor_date(year, years(10))))
 ```
 
 ```{r}
 g1 <- subset(tours_by_decade, tour_title == "The Eras Tour (Expected)")
 
-tours_by_decade %>%
+tours_by_decade |>
   ggplot(aes(
     x = year,
     y = adjusted_gross_in_2022_dollar,
@@ -187,13 +203,13 @@ tours_by_decade %>%
 ```
 
 ```{r}
-tours_by_decade %>% 
+tours_by_decade |> 
   ggplot(aes(x = shows, y = adjusted_gross_in_2022_dollar)) +
   geom_point()
 ```
 
 ```{r}
-tours_by_decade %>% 
+tours_by_decade |> 
   ggplot(aes(x = shows, y = adjusted_gross_in_2022_dollar)) +
   geom_point()
 ```
@@ -206,17 +222,17 @@ url_bow2 <- polite::bow(url2)
 url_bow2
 
 ind_html2 <-
-  polite::scrape(url_bow2) %>%  # scrape web page
-  rvest::html_nodes("table.wikitable") %>% # pull out specific table
+  polite::scrape(url_bow2) |>  # scrape web page
+  rvest::html_nodes("table.wikitable") |> # pull out specific table
   rvest::html_table(fill = TRUE) 
 
 ind_tab2 <- 
-  ind_html2[[2]] %>% 
-  clean_names() %>% 
+  ind_html2[[2]] |> 
+  clean_names() |> 
   mutate(tickets_sold = as.numeric(str_replace(tickets_sold, " million.*", "")) * 1e6)
 
 tours_by_decade2 <-
-  tours_by_decade %>%
+  tours_by_decade |>
   mutate(
     tour_title = case_when(
       tour_title == "Music of the Spheres World Tour †" ~ "Music of the Spheres World Tour",
@@ -229,13 +245,8 @@ tours_by_decade2 <-
 cost_per <-
   left_join(ind_tab2, tours_by_decade2, join_by(tour_title))
 
-cost_per %>% 
-  mutate(cost_per = adjusted_gross_in_2022_dollar / tickets_sold) %>% 
+cost_per |> 
+  mutate(cost_per = adjusted_gross_in_2022_dollar / tickets_sold) |> 
   ggplot(aes(x = year, y = cost_per)) +
   geom_point()
 ```
-
-
-
-## Locations of Taylor Swift Tours
-
