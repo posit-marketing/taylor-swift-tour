@@ -1,0 +1,190 @@
+---
+title: "Taylor Swift vs Other Tours"
+format: 
+  html:
+    fig-width: 10
+    fig-height: 10
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| message: false
+#| warning: false
+
+# data loading and manipulation
+library(tidyverse)
+
+# data visualization  
+library(ggplot2)
+library(scales)
+library(glue)
+library(ggsankey) # get at https://github.com/davidsjoberg/ggsankey
+library(ggtext)
+library(colorspace)
+library(ggh4x)
+```
+
+Borrowing heavily from [Georgios Karamanis'](https://www.linkedin.com/in/georgios-karamanis-a54926153/)   [#TidyTuesday post, where he shared an alluvial bump chart made with {ggsankey} with data from UNHCR, the UN Refugee Agency](https://www.linkedin.com/posts/georgios-karamanis-a54926153_tidytuesday-rstats-dataviz-activity-7101468916958322688-7UxN) The heaviest lift came from [{`ggsankey`}, the R Package for making beautiful sankey, alluvial and sankey bump plots in ggplot2](https://github.com/davidsjoberg/ggsankey)
+
+
+First, we're going to load our data, collected manually from Pollstar reporting over the last 20 years. Artist names need to be cleaned up, and we need to structure our dataset for the Sankey Bump plot. 
+
+```{r}
+#| message: false
+#| warning: false
+rank_concert_tours <- read_csv("../data/rank_concert_tours.csv") |> 
+  mutate(
+    artist = case_when(
+      artist == "Tim McGraw/Faith Hill"  ~ "Tim Mcgraw et. al.",
+      artist == "Tim McGraw / Faith Hill"  ~ "Tim Mcgraw et. al.",     
+      artist == "Kenny Chesney & Tim Mcgraw"  ~ "Tim Mcgraw et. al.",     
+      artist == "Michael Jackson The Immortal World Tour By Cirque Du Soleil"  ~ "Michael Jackson",
+      artist == "Bruce Springsteen & The E Street Band"  ~ "Bruce Springsteen & the E Street Band",
+      artist == "Jay-Z / Beyoncé"   ~ "Beyoncé & Jay Z",
+      artist == "Beyoncé and Jay Z" ~ "Beyoncé & Jay Z",
+      artist == "Billy Joel/Elton John"  ~ "Billy Joel & Elton John"  ,
+      artist == "“Summer Sanitarium Tour”/Metallica"  ~ "Metallica",
+      artist == "'N Sync"  ~ "Nsync",
+      .default = artist
+    )
+  )
+
+for (YEAR in unique(rank_concert_tours$year)){
+  # print(as.character(YEAR))
+  
+  year_tbl <- rank_concert_tours |> 
+    filter(year == YEAR)
+  
+  add_tbl <- tibble(
+    year = YEAR,
+    artist = (rank_concert_tours$artist |> unique())[!(rank_concert_tours$artist |> unique() %in% year_tbl$artist)],
+    gross = 1
+  )
+  add_tbl$rank <- 11:(nrow(add_tbl)+10)
+  
+  year_tbl <- year_tbl |> 
+    bind_rows(
+      add_tbl
+    )
+  
+  rank_concert_tours <- year_tbl |> 
+    bind_rows(
+      rank_concert_tours |> 
+        filter(year != YEAR)
+    )
+  
+}
+
+rank_concert_tours <- tibble(rank_concert_tours) |> 
+  arrange(year, rank)
+
+```
+
+
+Now, let's use `ggplot`, `ggsankey` to build this plot. 
+
+```{r}
+#| message: false
+#| warning: false
+#| results: hide
+#| dpi: 300
+#| fig.show: hide
+#| fig.path: "../images/"
+#| label: tswift-v-others-sankey
+
+# set text and position of major artist and tour annotation. 
+annot <- tribble(
+  ~artist, ~x, ~y, ~total, ~note,
+  "Taylor Swift",2019, 2800, 2200000000,"Projected",
+  "U2", 2014, 2100, 316000000,"in 2017",
+  "The Rolling Stones",2003.5, 1400,1216000000,"between 2013-2023",
+  "Bruce Springsteen & the E Street Band",2011,1700,268300000,"in 2016",
+  "Ed Sheeran",2017,2400,768200000,"between 2017-2019"
+) |> rowwise() |> 
+  mutate(
+    label = glue("**{artist}**<br>{scales::dollar(total)} {note}")
+  )
+
+f1 <- "Source Sans Pro"
+f2 <- "Source Serif Pro"
+
+rank_concert_tours |> 
+  ggplot( ) +
+  # create Sankey bump plot
+  geom_sankey_bump(
+    aes(
+      x = year, 
+      node = artist, 
+      fill = ifelse(artist %in% annot$artist, artist, NA),
+      value = gross,
+      color = after_scale(colorspace::lighten(fill, 0.4))
+    ), 
+    linewidth = 0.3, 
+    type = "alluvial", 
+    space = 0, 
+    alpha = 0.9
+  ) +
+  # Labels for top artists
+  ggtext::geom_richtext(
+    data = annot, 
+    aes(
+      x = x, 
+      y = y, 
+      label = label, 
+      color = artist,
+    ), 
+    size = 5,
+    vjust = 0, 
+    family = f1, 
+    fill = NA, 
+    label.color = NA) + 
+  # More labels
+  annotate("text", x = 2023.2, y = 1000, label = "Mid-Year\nTotal\nfor Other\nArtists↓", family = f1, hjust = 0, vjust = 1, color = "grey30") +
+  # Title and subtitle
+  annotate("text", x = 2000, y = 3600, label = "How does Taylor Swift's Eras Tour Compare to Others?", size = 8, family = f2, fontface = "bold", hjust = 0, color = "#181716") +
+  annotate("text", x = 2000, y = 3450, label = str_wrap("This plot shows rankings and revenue from each year's top ten international music tours between 2000 and 2023.\nOther top tours & artists are highlighted. ", 60), 
+           size = 5.5, family = f1, hjust = 0, vjust = 1, color = "#393433",
+           lineheight = .9) +
+  
+  # Scales, coord, theme
+  scale_x_continuous(
+    limits = c(2000,2024),
+    breaks = seq(2002, 2022, 2),
+    minor_breaks = NULL, 
+    guide = "axis_minor") +
+  scale_y_continuous(
+    labels = unit_format(
+      prefix = "$",
+      unit = "Billion", 
+      scale = 1e-3),
+    limits = c(0,3700),
+    minor_breaks = NULL
+  ) +
+  scale_fill_manual(values = c("#0041CC", "#e17d17", "#CE1126", "#A713CC","#38C754"), na.value = "grey80") +
+  scale_color_manual(values = c("#0041CC", "#e17d17", "#CE1126", "#A713CC","#38C754"), na.value = "grey80") +
+  scale_size_continuous(range = c(4, 6)) +
+  coord_cartesian(clip = "off", expand = FALSE) +
+  labs(
+    caption = "Source: Pollstar"
+  ) +
+  theme_minimal(
+    base_family = f1
+  ) +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "#FFFFFE", color = NA),
+    axis.title = element_blank(),
+    axis.text = element_text(size = 12, margin = margin(5, 0, 0, 0), family = f1, color = "#393433"),
+    # axis.ticks.x = element_line(color = "grey70"),
+    # ggh4x.axis.ticks.length.minor = rel(1),
+    plot.margin = margin(20, 75, 30, 35),
+    plot.caption = element_text(margin = margin(10, 500, 0, 0))
+  )
+
+```
+
+
+
+
