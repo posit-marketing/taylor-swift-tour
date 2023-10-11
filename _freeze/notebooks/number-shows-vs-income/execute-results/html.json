@@ -1,0 +1,16 @@
+{
+  "hash": "eedd976604340325cb75b7b569c6c992",
+  "result": {
+    "markdown": "<details><summary>See R code</summary>\n\n\n\n\n\n::: {.callout-tip}\n\n\n::: {.cell}\n\n```{.r .cell-code}\nannual_hi_gross_tours <-\n  ind_html[[9]] |>\n  clean_names()\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nannual_hi_gross_tours_clean <-\n  annual_hi_gross_tours |>\n  dplyr::mutate(across(\n    c(adjusted_gross_in_2022_dollar,\n      actual_gross),\n    ~ as.numeric(str_replace_all(.x, \"[$,]\", \"\"))\n  ),\n  year = lubridate::ymd(year, truncated = 2L),\n  decade = as.factor(floor_date(year, years(10))))\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nannual_hi_gross_tours_clean |>\n  ggplot(aes(\n    x = year,\n    y = adjusted_gross_in_2022_dollar,\n    size = shows,\n    fill = decade\n  )) +\n  geom_point(alpha = 0.5,\n             shape = 21,\n             color = \"black\") +\n  scale_size(range = c(0, 4)) +\n  scale_fill_viridis(discrete = TRUE,\n                     guide = FALSE,\n                     option = \"A\") +\n  theme_minimal() +\n  theme(\n    legend.position = \"none\",\n    text = element_text(size = 9,\n                        family = \"lato\"),\n    title = element_text(size = 16,\n                         family = \"abril-fatface\"),\n    panel.background = element_blank(),\n    axis.ticks.x = element_blank(),\n    axis.text.x = element_blank(),\n    axis.title.x = element_blank(),\n    axis.title.y = element_blank()\n  )+\n  labs(title = \"Highest-grossing tours by decade\")\n```\n\n::: {.cell-output-display}\n![](number-shows-vs-income_files/figure-html/unnamed-chunk-4-1.png){width=672}\n:::\n:::\n\n\n:::\n</details>",
+    "supporting": [
+      "number-shows-vs-income_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

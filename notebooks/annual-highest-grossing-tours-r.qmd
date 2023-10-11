@@ -1,0 +1,103 @@
+<details><summary>See R code</summary>
+
+```{r}
+#| include: false
+source(here::here("highest-grossing-tours-r.R"))
+```
+
+::: {.callout-tip}
+
+```{r}
+annual_hi_gross_tours <-
+  ind_html[[9]] |>
+  clean_names()
+```
+
+```{r}
+annual_hi_gross_tours_clean <-
+  annual_hi_gross_tours |>
+  dplyr::mutate(across(
+    c(adjusted_gross_in_2022_dollar,
+      actual_gross),
+    ~ as.numeric(str_replace_all(.x, "[$,]", ""))
+  ),
+  year = lubridate::ymd(year, truncated = 2L),
+  decade = as.factor(floor_date(year, years(10))))
+```
+
+```{r}
+#| results: hide
+#| out.width: 400px
+#| dpi: 300
+#| fig.show: hide
+#| fig.path: "../images/"
+#| label: annual-highest-grossing-tours
+annual_hi_gross_tours_clean |>
+  ggplot(aes(
+    x = year,
+    y = adjusted_gross_in_2022_dollar,
+    size = shows,
+    fill = decade
+  )) +
+  geom_point(alpha = 0.5,
+             shape = 21,
+             color = "black") +
+  geom_smooth(aes(group = decade)) +
+  scale_size(range = c(0, 4)) +
+  scale_fill_viridis(discrete = TRUE,
+                     guide = FALSE,
+                     option = "A") +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    text = element_text(size = 9,
+                        family = "lato"),
+    title = element_text(size = 16,
+                         family = "abril-fatface"),
+    panel.background = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank()
+  ) +
+  labs(title = "Annual highest-grossing tours")
+```
+
+```{r}
+#| results: hide
+#| out.width: 400px
+#| dpi: 300
+#| fig.show: hide
+#| fig.path: "../images/"
+#| label: num-shows-vs-income
+annual_hi_gross_tours_clean |>
+  ggplot(aes(
+    x = shows,
+    y = adjusted_gross_in_2022_dollar,
+    fill = decade
+  )) +
+  geom_point(alpha = 0.5,
+             shape = 21,
+             color = "black") +
+  scale_size(range = c(0, 4)) +
+  scale_fill_viridis(discrete = TRUE,
+                     guide = FALSE,
+                     option = "A") +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    text = element_text(size = 9,
+                        family = "lato"),
+    title = element_text(size = 16,
+                         family = "abril-fatface"),
+    panel.background = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank()
+  ) +
+  labs(title = "Number of shows vs. income")
+```
+
+:::
+</details>

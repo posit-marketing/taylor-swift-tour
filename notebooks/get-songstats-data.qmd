@@ -1,0 +1,80 @@
+<details><summary>See R code</summary>
+
+::: {.callout-tip}
+
+```{r}
+#| eval: false
+library(httr)
+library(jsonlite)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(readr)
+library(glue)
+
+get_artist_data <- function(artist_name, songstats_artist_id) {
+  url <-
+    "https://api.songstats.com/enterprise/v1/artists/historic_stats"
+  
+  queryString <- list(
+    source = "all",
+    songstats_artist_id = songstats_artist_id,
+    start_date = "2020-01-01"
+  )
+  
+  response <- httr::VERB(
+    "GET",
+    url,
+    query = queryString,
+    add_headers(
+      "Accept-Encoding" = "",
+      "apikey" = Sys.getenv("SONGSTATS_TOKEN")
+    ),
+    content_type("application/octet-stream"),
+    accept("application/json")
+  )
+  
+  artist_data <- httr::content(response, "text")
+  
+  artist_tibble <- artist_data |>
+    jsonlite::fromJSON() |>
+    purrr::map_if(is.data.frame, list) |>
+    as.data.frame() |>
+    tidyr::unnest_wider(stats.data) |>
+    tidyr::unnest(history) |>
+    dplyr::mutate(
+      time_frame = dplyr::case_when(date < "2022-11-01" ~ "before announcement",
+                                    .default = "after announcement"),
+      artist = artist_name
+    )
+  
+  file_name <- glue::glue("{artist_name}_tibble.Rds")
+  readr::write_rds(artist_tibble, "data/file_name")
+  
+  return(artist_tibble)
+}
+
+# Create a list of artists and their IDs
+artists <- list(
+  c("Paramore", "p5xm8h7b"),
+  c("Beabadoobee", "n3k29evr"),
+  c("Phoebe Bridgers", "9yhbd1el"),
+  c("Girl In Red", "p71m4gr8"),
+  c("MUNA", "fyxmowt5"),
+  c("HAIM", "apuz50ix"),
+  c("GAYLE", "q16uf7gk"),
+  c("OWENN", "cztp0nug"),
+  c("Gracie Abrams", "so4cd0bt"),
+  c("Taylor Swift", "i5muw4xf")
+)
+
+artist_data_list <-
+  map(artists, ~ get_artist_data(.x[1], .x[2]))
+
+combined_artist_data <-
+  bind_rows(artist_data_list)
+
+write_rds(combined_artist_data, "combined_artist_data.rds")
+```
+:::
+</summary>

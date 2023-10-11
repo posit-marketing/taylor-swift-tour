@@ -1,0 +1,14 @@
+{
+  "hash": "19a2b2d3bca50fb69a565eccd7fcad17",
+  "result": {
+    "markdown": "::: {.cell}\n\n```{.r .cell-code}\nurl2 <- \"https://en.wikipedia.org/wiki/List_of_most-attended_concert_tours\"\nurl_bow2 <- polite::bow(url2)\nurl_bow2\n\nind_html2 <-\n  polite::scrape(url_bow2) |>  # scrape web page\n  rvest::html_nodes(\"table.wikitable\") |> # pull out specific table\n  rvest::html_table(fill = TRUE) \n\nind_tab2 <- \n  ind_html2[[2]] |> \n  clean_names() |> \n  mutate(tickets_sold = as.numeric(str_replace(tickets_sold, \" million.*\", \"\")) * 1e6)\n\ntours_by_decade2 <-\n  tours_by_decade |>\n  mutate(\n    tour_title = case_when(\n      tour_title == \"Music of the Spheres World Tour †\" ~ \"Music of the Spheres World Tour\",\n      tour_title == \"The Garth Brooks World Tour\" ~ \"The Garth Brooks World Tour (1996–1998)\",\n      tour_title == \"Steel Wheels Tour\" ~ \"Steel Wheels/Urban Jungle Tour\",\n      .default = tour_title\n    )\n  )\n\ncost_per <-\n  left_join(ind_tab2, tours_by_decade2, join_by(tour_title))\n\ncost_per |> \n  mutate(cost_per = adjusted_gross_in_2022_dollar / tickets_sold) |> \n  ggplot(aes(x = year, y = cost_per)) +\n  geom_point()\n```\n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

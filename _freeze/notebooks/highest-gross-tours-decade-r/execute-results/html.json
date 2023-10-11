@@ -1,0 +1,16 @@
+{
+  "hash": "b2f8f20d2d4fa98f13c029b711fa4530",
+  "result": {
+    "markdown": "<details><summary>See R code</summary>\n\n::: {.callout-tip}\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\ncombine_data <- function(ind_html_list) {\n  # Initialize an empty tibble\n  combined_data <- tibble()\n  \n  # Loop through the ind_html_list and append each element to the combined_data\n  for (i in 4:8) {\n    extracted_data <- ind_html_list[[i]] |> clean_names()\n    combined_data <- bind_rows(combined_data, extracted_data)\n  }\n  \n  return(combined_data)\n}\n\nannual_hi_gross_tours <- combine_data(ind_html)\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\ntours_by_decade <-\n  annual_hi_gross_tours |>\n  dplyr::mutate(across(\n    c(adjusted_gross_in_2022_dollar,\n      averagegross,\n      actual_gross),\n    ~ as.numeric(str_replace_all(.x, \"[$,]\", \"\"))\n  )) |>\n     add_row(artist = \"Taylor Swift\",\n          tour_title = \"The Eras Tour (Expected)\",\n          year_s = \"2023-2024\",\n          shows = 146,\n          adjusted_gross_in_2022_dollar = 1400000000) |> \n  mutate(\n    start_year = str_sub(year_s, start = 1, end = 4),\n    year = lubridate::ymd(start_year, truncated = 2L)) |> \n  mutate(decade = as.factor(floor_date(year, years(10))))\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\ng1 <- subset(tours_by_decade, tour_title == \"The Eras Tour (Expected)\")\n\ntours_by_decade |>\n  ggplot(aes(\n    x = year,\n    y = adjusted_gross_in_2022_dollar,\n    size =  shows,\n    fill = decade\n  )) +\n  geom_point(alpha = 0.5,\n             shape = 21,\n             color = \"black\") +\n  scale_size(range = c(.1, 8)) +\n  scale_fill_viridis(discrete = TRUE,\n                     guide = FALSE,\n                     option = \"G\") +\n  theme_minimal() +\n  geom_point(data = g1, colour = \"#122B2B\") +\n  geom_text(\n    data = g1,\n    label = \"Taylor Swift\",\n    vjust = 2.4,\n    size = 3\n  ) +\n  theme(legend.position = \"none\") +\n  labs(title = \"Highest-grossing tours by decade\") +\n  scale_x_date(limits = c(ymd(\"1980-01-01\"), ymd(\"2028-01-01\")))\n```\n\n::: {.cell-output-display}\n![](highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-4-1.png){width=672}\n:::\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\ntours_by_decade |> \n  ggplot(aes(x = shows, y = adjusted_gross_in_2022_dollar)) +\n  geom_point()\n```\n\n::: {.cell-output-display}\n![](highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-5-1.png){width=672}\n:::\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\ntours_by_decade |> \n  ggplot(aes(x = shows, y = adjusted_gross_in_2022_dollar)) +\n  geom_point()\n```\n\n::: {.cell-output-display}\n![](highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-6-1.png){width=672}\n:::\n:::\n\n\n\n\n\n\n\n:::\n</summary>",
+    "supporting": [
+      "highest-gross-tours-decade-r_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

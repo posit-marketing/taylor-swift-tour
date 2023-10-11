@@ -1,0 +1,59 @@
+```{r}
+#| eval: false
+library(httr)
+library(dplyr)
+library(purrr)
+library(tidyr)
+
+url <-
+  "https://api.songstats.com/enterprise/v1/artists/historic_stats"
+
+queryString <- list(
+  source = "all",
+  songstats_artist_id = "so4cd0bt",
+  start_date = "2020-01-01"
+)
+
+response <-
+  VERB(
+    "GET",
+    url,
+    query = queryString,
+    add_headers(
+      'Accept-Encoding' = '',
+      'apikey' = Sys.getenv('SONGSTATS_TOKEN')
+    ),
+    content_type("application/octet-stream"),
+    accept("application/json")
+  )
+```
+
+```{r}
+#| eval: false
+gracie_abrams <- content(response, "text")
+
+gracie_abrams_tibble <-
+  gracie_abrams |> 
+  jsonlite::fromJSON() |> 
+  map_if(is.data.frame, list) |> 
+  as.data.frame() |> 
+  unnest_wider(stats.data) |> 
+  unnest(history) |> 
+  mutate(time_frame = case_when(date < "2022-11-01" ~ "before announcement",
+                                .default = "after announcement"),
+         artist = "gracie_abrams")
+
+readr::write_rds(gracie_abrams_tibble, "gracie_abrams_tibble.Rds")
+```
+
+```{r}
+#| eval: false
+ggplot(
+  gracie_abrams_tibble_dat |> filter(stats.source == "shazam"),
+  aes(x = as.Date(date), y = shazams_total)
+) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              aes(color = time_frame))
+```
+

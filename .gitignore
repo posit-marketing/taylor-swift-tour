@@ -4,5 +4,6 @@
 .Ruserdata
 *.DS_Store
 
+/data/*
 /.quarto/
 /rsconnect/*
