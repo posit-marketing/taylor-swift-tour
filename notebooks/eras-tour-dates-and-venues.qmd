@@ -117,7 +117,7 @@ pal <- colorFactor(
 )
 
 leaflet(options = leafletOptions(zoomControl = FALSE)) |>
-  addProviderTiles("Stadia.AlidadeSmooth",   
+  addProviderTiles("Esri.WorldGrayCanvas",
                    options = (noWrap = TRUE)) |>
   setMaxBounds(
     lng1 = 180,
