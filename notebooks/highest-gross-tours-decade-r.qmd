@@ -6,6 +6,11 @@
 #| include: false
 source(here::here("highest-grossing-tours-r.R"))
 
+font_add_google("Abril Fatface", "abril-fatface")
+font_add_google("Lato", "lato")
+
+showtext::showtext_auto()
+
 annual_hi_gross_tours <- 
   ind_html[[9]] |>
   clean_names()
@@ -35,65 +40,56 @@ tours_by_decade <-
     c(adjusted_gross_in_2022_dollar,
       averagegross,
       actual_gross),
-    ~ as.numeric(str_replace_all(.x, "[$,]", ""))
-  )) |>
-     add_row(artist = "Taylor Swift",
-          tour_title = "The Eras Tour (Expected)",
-          year_s = "2023-2024",
-          shows = 146,
-          adjusted_gross_in_2022_dollar = 1400000000) |> 
-  mutate(
-    start_year = str_sub(year_s, start = 1, end = 4),
-    year = lubridate::ymd(start_year, truncated = 2L)) |> 
-  mutate(decade = as.factor(floor_date(year, years(10))))
+    ~ as.numeric(str_replace_all(.x, "[$,]", "")))) |>
+  mutate(start_year = str_sub(year_s, start = 1, end = 4),
+         year = lubridate::ymd(start_year, truncated = 2L)) |> 
+  mutate(decade = paste0(str_sub(as.factor(floor_date(year, years(10))), start = 1, end = 4), "s"),
+         `Adjusted Gross in 2022 Dollars` = -adjusted_gross_in_2022_dollar,
+         `Average Gross` = averagegross) |> 
+  pivot_longer(cols = c(`Adjusted Gross in 2022 Dollars`, `Average Gross`)) |> 
+  select(name, tour_title, value, decade, year)
 ```
 
 ```{r}
-g1 <- subset(tours_by_decade, tour_title == "The Eras Tour (Expected)")
-
-tours_by_decade |>
-  ggplot(aes(
-    x = year,
-    y = adjusted_gross_in_2022_dollar,
-    size =  shows,
-    fill = decade
-  )) +
-  geom_point(alpha = 0.5,
-             shape = 21,
-             color = "black") +
-  scale_size(range = c(.1, 8)) +
-  scale_fill_viridis(discrete = TRUE,
-                     guide = FALSE,
-                     option = "G") +
-  theme_minimal() +
-  geom_point(data = g1, colour = "#122B2B") +
+ggplot(tours_by_decade) +
+  geom_col(aes(value, fct_reorder(tour_title, year, .desc = TRUE), fill = abs(value))) +
   geom_text(
-    data = g1,
-    label = "Taylor Swift",
-    vjust = 2.4,
-    size = 3
+    data = . %>% filter(name == "Adjusted Gross in 2022 Dollars"),
+    aes(800000000, tour_title, label = tour_title),
+    hjust = 0.5,
+    family = "lato",
+    size = 3.5
   ) +
-  theme(legend.position = "none") +
-  labs(title = "Highest-grossing tours by decade") +
-  scale_x_date(limits = c(ymd("1980-01-01"), ymd("2028-01-01")))
+  facet_grid2(
+    rows = vars(decade),
+    cols = vars(toupper(name)),
+    scales = "free",
+    space = "free_y",
+    strip = strip_split(
+      c("top", "top"),
+      text_x = elem_list_text(color = c("#903345", "grey60")),
+      by_layer_x = TRUE
+    )
+  ) +
+  labs(title = "Top 10 highest-grossing tours by decade",
+       caption = "Source: Wikipedia · Graphic: Inspired by Georgios Karamanis") +
+  theme_minimal() +
+  coord_cartesian(clip = "off") +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "grey99", color = NA),
+    axis.text.y = element_blank(),
+    axis.title = element_blank(),
+    panel.grid.major.y = element_blank(),
+    strip.text = element_text(size = 12, face = "bold"),
+    plot.title = element_text(face = "bold", size = 16),
+    plot.margin = margin(10, 10, 10, 10),
+    title = element_text(size = 16,
+                             family = "abril-fatface"),
+    text = element_text(size = 9,
+                            family = "lato")
+  )
 ```
-
-```{r}
-tours_by_decade |> 
-  ggplot(aes(x = shows, y = adjusted_gross_in_2022_dollar)) +
-  geom_point()
-```
-
-```{r}
-tours_by_decade |> 
-  ggplot(aes(x = shows, y = adjusted_gross_in_2022_dollar)) +
-  geom_point()
-```
-
-
-
-
-
 
 :::
 </summary>
