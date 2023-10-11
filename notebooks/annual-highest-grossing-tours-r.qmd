@@ -22,7 +22,14 @@ annual_hi_gross_tours_clean <-
     ~ as.numeric(str_replace_all(.x, "[$,]", ""))
   ),
   year = lubridate::ymd(year, truncated = 2L),
-  decade = as.factor(floor_date(year, years(10))))
+  decade = as.factor(floor_date(year, years(10)))) |> 
+  add_row(artist = "Taylor Swift",
+          tour_title = "The Eras Tour (Expected)",
+          year = lubridate::date("2023-01-01"),
+          shows = 146,
+          adjusted_gross_in_2022_dollar = 1400000000,
+          decade = "2020-01-01",
+          .before = 1)
 ```
 
 ```{r}
@@ -31,25 +38,18 @@ annual_hi_gross_tours_clean <-
 #| dpi: 300
 #| fig.show: hide
 #| fig.path: "../images/"
-#| label: annual-highest-grossing-tours
+#| label: annual-highest-grossing-tours-bar
 annual_hi_gross_tours_clean |>
   ggplot(aes(
     x = year,
     y = adjusted_gross_in_2022_dollar,
-    size = shows,
     fill = decade
   )) +
-  geom_point(alpha = 0.5,
-             shape = 21,
-             color = "black") +
+  geom_bar(stat = "identity") +
   geom_smooth(aes(group = decade)) +
   scale_size(range = c(0, 4)) +
-  scale_fill_viridis(discrete = TRUE,
-                     guide = FALSE,
-                     option = "A") +
   theme_minimal() +
   theme(
-    legend.position = "none",
     text = element_text(size = 9,
                         family = "lato"),
     title = element_text(size = 16,
@@ -58,8 +58,12 @@ annual_hi_gross_tours_clean |>
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
     axis.title.x = element_blank(),
-    axis.title.y = element_blank()
-  ) +
+    axis.title.y = element_blank()) +
+  geom_text(aes(label = tour_title),
+            family = "lato",
+            vjust = -2.5,
+            angle = 45,
+            size = 2) +
   labs(title = "Annual highest-grossing tours")
 ```
 
@@ -92,7 +96,6 @@ annual_hi_gross_tours_clean |>
                          family = "abril-fatface"),
     panel.background = element_blank(),
     axis.ticks.x = element_blank(),
-    axis.text.x = element_blank(),
     axis.title.x = element_blank(),
     axis.title.y = element_blank()
   ) +

@@ -1,0 +1,62 @@
+```{r}
+#| echo: false
+library(dplyr)
+library(readr)
+library(tidyr)
+library(gt)
+library(gtExtras)
+library(ggplot2)
+
+taylor <-
+  read_rds(here::here("data", "combined_artist_data.rds")) 
+
+taylor_spotify <-
+  taylor |> 
+  filter(artist == "Taylor Swift",
+         stats.source == "spotify") |> 
+  mutate(date = as.Date(date)) |> 
+  pivot_longer(cols = followers_total:monthly_listeners_current)
+
+taylor_spotify |>
+  group_by(name) |>
+  dplyr::summarize(spotify_data = list(value),
+                   .groups = "drop") |>
+  dplyr::mutate(name = case_when(name == "followers_total" ~ "Followers",
+                                 name == "monthly_listeners_current" ~ "Monthly Listeners",
+                                 .default = name)) |> 
+  gt::gt() |>
+  gt::tab_options(column_labels.hidden = TRUE) |> 
+  gt::tab_header("Taylor Swift on Spotify") |> 
+  gtExtras::gt_plt_sparkline(spotify_data)
+
+taylor_yt <-
+  taylor |> 
+  filter(artist == "Taylor Swift",
+         stats.source == "youtube",
+         date > as.Date("2021-01-01")) |> 
+  mutate(date = as.Date(date)) |> 
+  pivot_longer(cols = video_views_total:video_likes_total)
+
+taylor_yt |>
+  group_by(name) |>
+  dplyr::summarize(yt_data = list(value),
+                   .groups = "drop") |>
+  dplyr::mutate(name = case_when(name == "video_views_total" ~ "Total video views",
+                                 name == "video_likes_total" ~ "Total video likes",
+                                 .default = name)) |> 
+  gt::gt() |>
+  gt::tab_options(column_labels.hidden = TRUE) |> 
+  gt::tab_header("Taylor Swift on Spotify") |> 
+  gtExtras::gt_plt_sparkline(yt_data)
+```
+
+
+```{r}
+taylor |> 
+  filter(artist == "Taylor Swift",
+         stats.source == "youtube",
+         date > as.Date("2021-01-01")) |> 
+  mutate(date = as.Date(date)) |> 
+  ggplot(aes(x = date, y = video_views_total)) +
+  geom_line()
+```

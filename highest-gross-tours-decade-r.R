@@ -1,17 +1,13 @@
-<details><summary>See R code</summary>
-
-::: {.callout-tip}
-
-```{r}
+## -------------------------------------------------------------------------
 #| include: false
 source(here::here("highest-grossing-tours-r.R"))
 
-annual_hi_gross_tours <- 
+annual_hi_gross_tours <-
   ind_html[[9]] |>
   clean_names()
-```
 
-```{r}
+
+## -------------------------------------------------------------------------
 combine_data <- function(ind_html_list) {
   # Initialize an empty tibble
   combined_data <- tibble()
@@ -26,9 +22,9 @@ combine_data <- function(ind_html_list) {
 }
 
 annual_hi_gross_tours <- combine_data(ind_html)
-```
 
-```{r}
+
+## -------------------------------------------------------------------------
 tours_by_decade <-
   annual_hi_gross_tours |>
   dplyr::mutate(across(
@@ -46,9 +42,9 @@ tours_by_decade <-
     start_year = str_sub(year_s, start = 1, end = 4),
     year = lubridate::ymd(start_year, truncated = 2L)) |> 
   mutate(decade = as.factor(floor_date(year, years(10))))
-```
 
-```{r}
+
+## -------------------------------------------------------------------------
 g1 <- subset(tours_by_decade, tour_title == "The Eras Tour (Expected)")
 
 tours_by_decade |>
@@ -76,24 +72,16 @@ tours_by_decade |>
   theme(legend.position = "none") +
   labs(title = "Highest-grossing tours by decade") +
   scale_x_date(limits = c(ymd("1980-01-01"), ymd("2028-01-01")))
-```
 
-```{r}
+
+## -------------------------------------------------------------------------
 tours_by_decade |> 
   ggplot(aes(x = shows, y = adjusted_gross_in_2022_dollar)) +
   geom_point()
-```
 
-```{r}
+
+## -------------------------------------------------------------------------
 tours_by_decade |> 
   ggplot(aes(x = shows, y = adjusted_gross_in_2022_dollar)) +
   geom_point()
-```
 
-
-
-
-
-
-:::
-</summary>
