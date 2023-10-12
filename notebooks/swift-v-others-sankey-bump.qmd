@@ -97,20 +97,23 @@ Now, let's use `ggplot`, `ggsankey` to build this plot.
 # set text and position of major artist and tour annotation. 
 annot <- tribble(
   ~artist, ~x, ~y, ~total, ~note,
-  "Taylor Swift",2019, 2800, 2200000000,"Projected",
-  "U2", 2014, 2100, 316000000,"in 2017",
-  "The Rolling Stones",2003.5, 1400,1216000000,"between 2013-2023",
-  "Bruce Springsteen & the E Street Band",2011,1700,268300000,"in 2016",
-  "Ed Sheeran",2017,2400,768200000,"between 2017-2019"
+  "The Rolling Stones",2003.5, 1100,1216000000,"between 2013-2023",
+  "Bruce Springsteen & the E Street Band",2010,1550,268300000,"in 2016",
+  "U2", 2013, 1850, 316000000,"in 2017",
+  "Ed Sheeran",2017,2200,768200000,"between 2017-2019",
+  "Elton John",2018.5,2480,334400000,"in 2022",
+  "Bad Bunny",2018.5,2700,373500000,"in 2022",
+  "Taylor Swift",2019, 3000, 2200000000,"Projected"
 ) |> rowwise() |> 
   mutate(
     label = glue("**{artist}**<br>{scales::dollar(total)} {note}")
   )
 
-f1 <- "Source Sans Pro"
-f2 <- "Source Serif Pro"
+f1 <- "Lato"
+f2 <- "Abril Fatface"
 
-rank_concert_tours |> 
+# exporting manually: 
+p <- rank_concert_tours |> 
   ggplot( ) +
   # create Sankey bump plot
   geom_sankey_bump(
@@ -141,16 +144,18 @@ rank_concert_tours |>
     fill = NA, 
     label.color = NA) + 
   # More labels
-  annotate("text", x = 2023.2, y = 1000, label = "Mid-Year\nTotal\nfor Other\nArtists↓", family = f1, hjust = 0, vjust = 1, color = "grey30") +
+  annotate("text", x = 2023.2, y = 900, label = "Mid-Year\nTotal\nfor Other\nArtists", family = f1, hjust = 0, vjust = 1, color = "grey30") +
   # Title and subtitle
-  annotate("text", x = 2000, y = 3600, label = "How does Taylor Swift's Eras Tour Compare to Others?", size = 8, family = f2, fontface = "bold", hjust = 0, color = "#181716") +
-  annotate("text", x = 2000, y = 3450, label = str_wrap("This plot shows rankings and revenue from each year's top ten international music tours between 2000 and 2023.\nOther top tours & artists are highlighted. ", 60), 
+  annotate(
+    "text", x = 2000, y = 3500, 
+    label = str_wrap("How does Taylor Swift's Eras Tour Compare to Others?", indent = 0), 
+    size = 8, family = f2, fontface = "bold", hjust = 0, color = "#181716") +
+  annotate("text", x = 2000, y = 3370, label = str_wrap("This plot shows rankings and revenue from each year's top ten international music tours between 2000 and 2023. Other top tours & artists are highlighted. ", 50), 
            size = 5.5, family = f1, hjust = 0, vjust = 1, color = "#393433",
            lineheight = .9) +
   
   # Scales, coord, theme
   scale_x_continuous(
-    limits = c(2000,2024),
     breaks = seq(2002, 2022, 2),
     minor_breaks = NULL, 
     guide = "axis_minor") +
@@ -159,11 +164,14 @@ rank_concert_tours |>
       prefix = "$",
       unit = "Billion", 
       scale = 1e-3),
-    limits = c(0,3700),
+    limits = c(0,3600),
+    breaks = c(1000,2000,3000),
     minor_breaks = NULL
   ) +
-  scale_fill_manual(values = c("#0041CC", "#e17d17", "#CE1126", "#A713CC","#38C754"), na.value = "grey80") +
-  scale_color_manual(values = c("#0041CC", "#e17d17", "#CE1126", "#A713CC","#38C754"), na.value = "grey80") +
+  scale_fill_manual(
+    values = c("#1EB3B3", "#0041CC", "#e17d17", "#A713CC","#CE1126", "#877DB8","#38C754"), na.value = "grey80") +
+  scale_color_manual(
+    values = c("#1EB3B3", "#0041CC", "#e17d17", "#A713CC","#CE1126", "#877DB8","#38C754"), na.value = "grey80") +
   scale_size_continuous(range = c(4, 6)) +
   coord_cartesian(clip = "off", expand = FALSE) +
   labs(
@@ -182,6 +190,36 @@ rank_concert_tours |>
     plot.margin = margin(20, 75, 30, 35),
     plot.caption = element_text(margin = margin(10, 500, 0, 0))
   )
+
+p
+# 
+# ggsave(
+#   filename = "images/tswift-v-others-sankey-sqr.png",
+#   plot = p,
+#   device = png,
+#   path = NULL,
+#   scale = 1,
+#   width = 10,
+#   height = 10,
+#   units = "in",
+#   dpi = 300,
+#   limitsize = TRUE,
+#   bg = NULL
+# )
+# 
+# ggsave(
+#   filename = "images/tswift-v-others-sankey-rect.png",
+#   plot = p,
+#   device = png,
+#   path = NULL,
+#   scale = 1,
+#   width = 12,
+#   height = 8,
+#   units = "in",
+#   dpi = 300,
+#   limitsize = TRUE,
+#   bg = NULL
+# )
 
 ```
 
