@@ -85,6 +85,8 @@ rank_concert_tours <- tibble(rank_concert_tours) |>
 
 Now, let's use `ggplot`, `ggsankey` to build this plot. 
 
+The placement of much of the annotations is optimized for the square image output. 
+
 ```{r}
 #| message: false
 #| warning: false
@@ -193,33 +195,33 @@ p <- rank_concert_tours |>
 
 p
 
-ggsave(
-  filename = "images/tswift-v-others-sankey-sqr.png",
-  plot = p,
-  device = png,
-  path = NULL,
-  scale = 1,
-  width = 10,
-  height = 10,
-  units = "in",
-  dpi = 300,
-  limitsize = TRUE,
-  bg = NULL
-)
-
-ggsave(
-  filename = "images/tswift-v-others-sankey-rect.png",
-  plot = p,
-  device = png,
-  path = NULL,
-  scale = 1,
-  width = 12,
-  height = 8,
-  units = "in",
-  dpi = 300,
-  limitsize = TRUE,
-  bg = NULL
-)
+# ggsave(
+#   filename = "images/tswift-v-others-sankey-sqr.png",
+#   plot = p,
+#   device = png,
+#   path = NULL,
+#   scale = 1,
+#   width = 10,
+#   height = 10,
+#   units = "in",
+#   dpi = 300,
+#   limitsize = TRUE,
+#   bg = NULL
+# )
+# 
+# ggsave(
+#   filename = "images/tswift-v-others-sankey-rect.png",
+#   plot = p,
+#   device = png,
+#   path = NULL,
+#   scale = 1,
+#   width = 12,
+#   height = 8,
+#   units = "in",
+#   dpi = 300,
+#   limitsize = TRUE,
+#   bg = NULL
+# )
 
 ```
 
