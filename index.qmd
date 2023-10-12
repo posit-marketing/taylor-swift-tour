@@ -59,7 +59,7 @@ pal <- colorFactor(
   domain = map_html_geo$occurred
 )
 
-leaflet(options = leafletOptions(noWrap = TRUE)) |>
+leaflet(options = leafletOptions(zoomControl = FALSE)) |>
   addProviderTiles("Esri.WorldGrayCanvas") |>
   setMaxBounds(
     lng1 = -90,
@@ -103,12 +103,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
 :::{style="font-family: Abril Fatface"}
-#### Annual highest-grossing tours
+#### Highest-grossing tours
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
 `r knitr::include_graphics("images/highest-grossing-tours-r-1.png")`
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+`r knitr::include_graphics("images/annual-highest-grossing-tours-bar-1.png")`
 
 :::{style="font-family: Abril Fatface"}
 #### Number of shows vs. income
@@ -116,10 +120,36 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-`r knitr::include_graphics("images/annual-highest-grossing-tours-1.png")`
+`r knitr::include_graphics("images/num-shows-vs-income-1.png")`
 
 :::{style="font-family: Abril Fatface"}
-# Highest-grossing tours by decade
+#### Cost per ticket
+:::
+
+`r knitr::include_graphics("images/cost-per-ticket-scatterplot-1.png")`
+
+:::{style="font-family: Oswald"}
+# Taylor's Music
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+:::
+
+::: {.column width="50%"}
+
+{{< include notebooks/taylor-music.qmd >}}
+
+:::
+
+:::
+
+## Openers
+
+{{< include notebooks/opener-data.qmd >}}

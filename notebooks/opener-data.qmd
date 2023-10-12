@@ -1,0 +1,57 @@
+```{r}
+#| echo: false
+library(dplyr)
+library(readr)
+library(tidyr)
+library(gt)
+library(gtExtras)
+library(ggplot2)
+
+openers <-
+  read_rds(here::here("data", "combined_artist_data.rds")) |> 
+  filter(artist != "Taylor Swift") |> 
+  mutate(date = as.Date(date)) |> 
+  filter(date > as.Date("2022-01-01"))
+```
+
+```{r}
+#| echo: false
+ggplot(
+  openers %>%
+    filter(stats.source == "shazam",
+           date > as.Date(2022-01-01)),
+  aes(x = as.Date(date), y = shazams_total)
+) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              aes(color = time_frame)) +
+  facet_wrap( ~ artist, scales = "free")
+```
+
+```{r}
+#| echo: false
+ggplot(
+  openers %>%
+    filter(stats.source == "spotify",
+           date > as.Date(2022-01-01)),
+  aes(x = as.Date(date), y = followers_total)
+) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              aes(color = time_frame)) +
+  facet_wrap( ~ artist, scales = "free")
+```
+
+```{r}
+#| echo: false
+ggplot(
+  openers %>%
+    filter(stats.source == "youtube",
+           date > as.Date(2022-01-01)),
+  aes(x = as.Date(date), y = video_views_total)
+) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              aes(color = time_frame)) +
+  facet_wrap( ~ artist, scales = "free")
+```
