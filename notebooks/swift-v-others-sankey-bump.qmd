@@ -96,14 +96,14 @@ Now, let's use `ggplot`, `ggsankey` to build this plot.
 
 # set text and position of major artist and tour annotation. 
 annot <- tribble(
-  ~artist, ~x, ~y, ~total, ~note,
-  "The Rolling Stones",2003.5, 1100,1216000000,"between 2013-2023",
-  "Bruce Springsteen & the E Street Band",2010,1550,268300000,"in 2016",
-  "U2", 2013, 1850, 316000000,"in 2017",
-  "Ed Sheeran",2017,2200,768200000,"between 2017-2019",
-  "Elton John",2018.5,2480,334400000,"in 2022",
-  "Bad Bunny",2018.5,2700,373500000,"in 2022",
-  "Taylor Swift",2019, 3000, 2200000000,"Projected"
+  ~artist, ~x, ~y, ~total, ~note, ~size,
+  "The Rolling Stones",2003.5, 1100,1216000000,"between 2013-2023",4.9,
+  "Bruce Springsteen & the E Street Band",2010,1550,268300000,"in 2016",4.9,
+  "U2", 2013, 1850, 316000000,"in 2017",4.9,
+  "Ed Sheeran",2017,2200,768200000,"between 2017-2019",5,
+  "Elton John",2018.5,2500,334400000,"in 2022",4.8,
+  "Bad Bunny",2018.5,2700,373500000,"in 2022",4.8,
+  "Taylor Swift",2018.6, 3000, 2200000000,"Projected",5.5
 ) |> rowwise() |> 
   mutate(
     label = glue("**{artist}**<br>{scales::dollar(total)} {note}")
@@ -137,8 +137,8 @@ p <- rank_concert_tours |>
       y = y, 
       label = label, 
       color = artist,
+      size = size
     ), 
-    size = 5,
     vjust = 0, 
     family = f1, 
     fill = NA, 
@@ -165,7 +165,7 @@ p <- rank_concert_tours |>
       unit = "Billion", 
       scale = 1e-3),
     limits = c(0,3600),
-    breaks = c(1000,2000,3000),
+    breaks = c(1000,2000),
     minor_breaks = NULL
   ) +
   scale_fill_manual(
@@ -192,34 +192,34 @@ p <- rank_concert_tours |>
   )
 
 p
-# 
-# ggsave(
-#   filename = "images/tswift-v-others-sankey-sqr.png",
-#   plot = p,
-#   device = png,
-#   path = NULL,
-#   scale = 1,
-#   width = 10,
-#   height = 10,
-#   units = "in",
-#   dpi = 300,
-#   limitsize = TRUE,
-#   bg = NULL
-# )
-# 
-# ggsave(
-#   filename = "images/tswift-v-others-sankey-rect.png",
-#   plot = p,
-#   device = png,
-#   path = NULL,
-#   scale = 1,
-#   width = 12,
-#   height = 8,
-#   units = "in",
-#   dpi = 300,
-#   limitsize = TRUE,
-#   bg = NULL
-# )
+
+ggsave(
+  filename = "images/tswift-v-others-sankey-sqr.png",
+  plot = p,
+  device = png,
+  path = NULL,
+  scale = 1,
+  width = 10,
+  height = 10,
+  units = "in",
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL
+)
+
+ggsave(
+  filename = "images/tswift-v-others-sankey-rect.png",
+  plot = p,
+  device = png,
+  path = NULL,
+  scale = 1,
+  width = 12,
+  height = 8,
+  units = "in",
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL
+)
 
 ```
 
