@@ -94,7 +94,7 @@ The placement of much of the annotations is optimized for the square image outpu
 #| dpi: 300
 #| fig.show: hide
 #| fig.path: "../images/"
-#| label: tswift-v-others-sankey
+#| label: tswift-v-others-sankey-square
 
 # set text and position of major artist and tour annotation. 
 annot <- tribble(
@@ -177,7 +177,136 @@ p <- rank_concert_tours |>
   scale_size_continuous(range = c(4, 6)) +
   coord_cartesian(clip = "off", expand = FALSE) +
   labs(
-    caption = "Source: Pollstar"
+    caption = "Source: Pollstar. Projection by CNN & QuestionPro"
+  ) +
+  theme_minimal(
+    base_family = f1
+  ) +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "#FFFFFE", color = NA),
+    axis.title = element_blank(),
+    axis.text = element_text(size = 12, margin = margin(5, 0, 0, 0), family = f1, color = "#393433"),
+    # axis.ticks.x = element_line(color = "grey70"),
+    # ggh4x.axis.ticks.length.minor = rel(1),
+    plot.margin = margin(20, 75, 30, 35),
+    plot.caption = element_text(margin = margin(10, 0, 0, 0))
+  )
+
+p
+
+ggsave(
+  filename = "../images/tswift-v-others-sankey-sqr.png",
+  plot = p,
+  device = png,
+  path = NULL,
+  scale = 1,
+  width = 10,
+  height = 10,
+  units = "in",
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL
+)
+
+
+
+```
+
+
+Rectangle Version, for blog post. 
+
+```{r}
+#| message: false
+#| warning: false
+#| results: hide
+#| dpi: 300
+#| fig.show: hide
+#| fig.path: "../images/"
+#| label: tswift-v-others-sankey-rect
+
+# set text and position of major artist and tour annotation. 
+annot <- tribble(
+  ~artist, ~x, ~y, ~total, ~note, ~size,
+  "The Rolling Stones",2004.5, 1100,1216000000,"between 2013-2023",5,
+  "Bruce Springsteen & the E Street Band",2012,1550,268300000,"in 2016",4.9,
+  "U2", 2015, 1900, 316000000,"in 2017",4.9,
+  "Ed Sheeran",2017,2200,768200000,"between 2017-2019",5.1,
+  "Elton John",2020,2550,334400000,"in 2022",4.8,
+  "Bad Bunny",2020,2800,373500000,"in 2022",4.8,
+  "Taylor Swift",2020.5, 3150, 2200000000,"Projected",5.5
+) |> rowwise() |> 
+  mutate(
+    label = glue("**{artist}**<br>{scales::dollar(total)} {note}")
+  )
+
+f1 <- "Lato"
+f2 <- "Abril Fatface"
+
+# exporting manually: 
+p <- rank_concert_tours |> 
+  ggplot( ) +
+  # create Sankey bump plot
+  geom_sankey_bump(
+    aes(
+      x = year, 
+      node = artist, 
+      fill = ifelse(artist %in% annot$artist, artist, NA),
+      value = gross,
+      color = after_scale(colorspace::lighten(fill, 0.4))
+    ), 
+    linewidth = 0.3, 
+    type = "alluvial", 
+    space = 0, 
+    alpha = 0.9
+  ) +
+  # Labels for top artists
+  ggtext::geom_richtext(
+    data = annot, 
+    aes(
+      x = x, 
+      y = y, 
+      label = label, 
+      color = artist,
+      size = size
+    ), 
+    vjust = 0, 
+    family = f1, 
+    fill = NA, 
+    label.color = NA) + 
+  # More labels
+  annotate("text", x = 2023.2, y = 900, label = "Mid-Year\nTotal\nfor Other\nArtists", family = f1, hjust = 0, vjust = 1, color = "grey30") +
+  # Title and subtitle
+  annotate(
+    "text", x = 2000, y = 3500, 
+    label = str_wrap("How does Taylor Swift's Eras Tour Compare to Others?", indent = 0), 
+    size = 8, family = f2, fontface = "bold", hjust = 0, color = "#181716") +
+  annotate("text", x = 2000, y = 3370, label = str_wrap("This plot shows rankings and revenue from each year's top ten international music tours between 2000 and 2023. Other top tours & artists are highlighted. ", 66), 
+           size = 5.5, family = f1, hjust = 0, vjust = 1, color = "#393433",
+           lineheight = .9) +
+  
+  # Scales, coord, theme
+  scale_x_continuous(
+    breaks = seq(2002, 2022, 2),
+    minor_breaks = NULL, 
+    guide = "axis_minor") +
+  scale_y_continuous(
+    labels = unit_format(
+      prefix = "$",
+      unit = "Billion", 
+      scale = 1e-3),
+    limits = c(0,3600),
+    breaks = c(1000,2000),
+    minor_breaks = NULL
+  ) +
+  scale_fill_manual(
+    values = c("#1EB3B3", "#0041CC", "#e17d17", "#A713CC","#CE1126", "#877DB8","#38C754"), na.value = "grey80") +
+  scale_color_manual(
+    values = c("#1EB3B3", "#0041CC", "#e17d17", "#A713CC","#CE1126", "#877DB8","#38C754"), na.value = "grey80") +
+  scale_size_continuous(range = c(4, 6)) +
+  coord_cartesian(clip = "off", expand = FALSE) +
+  labs(
+    caption = "Source: Pollstar. Projection by CNN & QuestionPro"
   ) +
   theme_minimal(
     base_family = f1
@@ -193,38 +322,21 @@ p <- rank_concert_tours |>
     plot.caption = element_text(margin = margin(10, 500, 0, 0))
   )
 
-p
+# p
 
-# ggsave(
-#   filename = "images/tswift-v-others-sankey-sqr.png",
-#   plot = p,
-#   device = png,
-#   path = NULL,
-#   scale = 1,
-#   width = 10,
-#   height = 10,
-#   units = "in",
-#   dpi = 300,
-#   limitsize = TRUE,
-#   bg = NULL
-# )
-# 
-# ggsave(
-#   filename = "images/tswift-v-others-sankey-rect.png",
-#   plot = p,
-#   device = png,
-#   path = NULL,
-#   scale = 1,
-#   width = 12,
-#   height = 8,
-#   units = "in",
-#   dpi = 300,
-#   limitsize = TRUE,
-#   bg = NULL
-# )
+ggsave(
+  filename = "../images/tswift-v-others-sankey-rect.png",
+  plot = p,
+  device = jpeg,
+  path = NULL,
+  scale = 1,
+  width = 14,
+  height = 8,
+  units = "in",
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL
+)
 
 ```
-
-
-
 
