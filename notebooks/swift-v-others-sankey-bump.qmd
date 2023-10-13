@@ -80,6 +80,31 @@ for (YEAR in unique(rank_concert_tours$year)){
 rank_concert_tours <- tibble(rank_concert_tours) |> 
   arrange(year, rank)
 
+# Set artist as factor, set levels
+# This helps the visualization
+
+# artist we want in front
+artist_levels <- c(
+  "Taylor Swift",
+  "Ed Sheeran",
+  "The Rolling Stones",
+  "Bruce Springsteen & the E Street Band",
+  "U2",
+  "Elton John",
+  "Bad Bunny"
+)
+artist_levels = c(
+  artist_levels,
+  
+  # everyone else, sorted alphabeically. 
+  (rank_concert_tours$artist |> unique())[!(rank_concert_tours$artist |> unique() %in% artist_levels)] |> sort()
+)
+
+rank_concert_tours$artist <- factor(
+  x = rank_concert_tours$artist,
+  levels = artist_levels
+)
+
 ```
 
 
@@ -110,19 +135,36 @@ annot <- tribble(
   mutate(
     label = glue("**{artist}**<br>{scales::dollar(total)} {note}")
   )
+artist_levels <- c(
+  "Taylor Swift",
+  "Ed Sheeran",
+  "The Rolling Stones",
+  "Bruce Springsteen & the E Street Band",
+  "U2",
+  "Elton John",
+  "Bad Bunny"
+)
+annot$artist <- factor(
+  x = annot$artist,
+  levels = artist_levels
+)
 
 f1 <- "Lato"
 f2 <- "Abril Fatface"
 
 # exporting manually: 
 p <- rank_concert_tours |> 
+  mutate(
+    fill = artist,
+    fill = ifelse(artist %in% annot$artist, artist, NA)
+  ) |> 
   ggplot( ) +
   # create Sankey bump plot
   geom_sankey_bump(
     aes(
       x = year, 
       node = artist, 
-      fill = ifelse(artist %in% annot$artist, artist, NA),
+      fill = fill,
       value = gross,
       color = after_scale(colorspace::lighten(fill, 0.4))
     ), 
