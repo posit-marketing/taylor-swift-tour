@@ -2,10 +2,15 @@
 output: html_document
 editor_options: 
   chunk_output_type: console
+execute:
+  eval: false
 ---
-<details><summary>See R code</summary>
 
-::: {.callout-tip}
+<details>
+
+<summary>See R code</summary>
+
+::: callout-tip
 ## Highest-grossing tours of all time visualization
 
 Let's get started by loading the necessary R packages to clean, scrape, and visualize the data. These packages are the building blocks of our data scraping journey.
@@ -39,7 +44,7 @@ url <-
   "https://en.wikipedia.org/wiki/List_of_highest-grossing_concert_tours"
 ```
 
-Next, we'll use the [`polite'](https://cran.r-project.org/web/packages/polite/readme/README.html) package to create a 'bag of words' (bow) representation of the URL. This step helps us make a polite request to the web server for the page's content:
+Next, we'll use the [\`polite'](https://cran.r-project.org/web/packages/polite/readme/README.html) package to create a 'bag of words' (bow) representation of the URL. This step helps us make a polite request to the web server for the page's content:
 
 ```{r}
 #| message: false
@@ -55,8 +60,9 @@ ind_html <-
   rvest::html_nodes("table.wikitable") |> # <2>
   rvest::html_table(fill = TRUE) 
 ```
-1. Scrape the webpage
-2. Pull out the specific table
+
+1.  Scrape the webpage
+2.  Pull out the specific table
 
 Finally, we'll clean up the extracted table (the second table on the page, Top 20 highest-grossing tours of all time) by storing it in the `ind_tab` variable and ensuring that column names are in a consistent format:
 
@@ -91,7 +97,6 @@ ind_tab_tay <-
           adjusted_gross_in_2022_dollars = 1400000000,
           .before = 1)
 ```
-
 
 Now that our data is clean and ready, let's visualize the highest-grossing concert tours of all time (as of 2023) using a bar chart. We'll use the ggplot2 package.
 
@@ -237,7 +242,6 @@ ind_tab_tay |>
         axis.title.x = element_blank(),
         axis.title.y = element_blank())
 ```
-
-
 :::
+
 </details>

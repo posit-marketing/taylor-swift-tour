@@ -1,8 +1,10 @@
 {
-  "hash": "3d2e0f35355541ca6b5f6d17985c81c7",
+  "hash": "50492439aa0ae00cfd4afffa038ff140",
   "result": {
-    "markdown": "::: {.cell}\n\n```{.r .cell-code}\nlibrary(dplyr)\nlibrary(readr)\nlibrary(tidyr)\nlibrary(gt)\nlibrary(gtExtras)\nlibrary(ggplot2)\n\ntaylor <-\n  read_rds(\"data/combined_artist_data.rds\") |> \n  filter(artist == \"Taylor Swift\",\n         stats.source == \"spotify\") |> \n  mutate(date = as.Date(date)) |> \n  pivot_longer(cols = followers_total:monthly_listeners_current)\n\ntaylor |>\n  group_by(name) |>\n  dplyr::summarize(spotify_data = list(value),\n                   .groups = \"drop\") |>\n  gt() |>\n  gt_plt_sparkline(spotify_data)\n\ntaylor |>\n  ggplot(aes(x = date, y = value, group = name)) + geom_line() +\n  facet_grid(~ name)\n```\n:::\n",
-    "supporting": [],
+    "markdown": "::: {.cell}\n::: {.cell-output .cell-output-stderr}\n\n```\n\nAttaching package: 'dplyr'\n```\n\n\n:::\n\n::: {.cell-output .cell-output-stderr}\n\n```\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n```\n\n\n:::\n\n::: {.cell-output .cell-output-stderr}\n\n```\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n```\n\n\n:::\n\n::: {.cell-output .cell-output-stderr}\n\n```\n`summarise()` has grouped output by 'month'. You can override using the\n`.groups` argument.\n```\n\n\n:::\n\n::: {.cell-output-display}\n![](taylor-music_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::",
+    "supporting": [
+      "taylor-music_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

@@ -73,9 +73,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -206,922 +203,11 @@ document.addEventListener("DOMContentLoaded", function() {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(treemapify)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(taylor)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Abril Fatface"</span>, <span class="st">"abril-fatface"</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Lato"</span>, <span class="st">"lato"</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>showtext<span class="sc">::</span><span class="fu">showtext_auto</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">sum</span>(ind_tab<span class="sc">$</span>adjusted_gross_in_2023_dollar)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># https://github.com/wilkox/treemapify/issues/37</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>treemap <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">area =</span> adjusted_gross_in_2023_dollar,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill =</span> title,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> label,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmin =</span> xmin,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmax =</span> xmax,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">ymin =</span> ymin,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">ymax =</span> ymax</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap</span>() <span class="sc">+</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  ggfittext<span class="sc">::</span><span class="fu">geom_fit_text</span>(</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">"Lato"</span>,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"white"</span>,</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">place =</span> <span class="st">"center"</span>,</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">grow =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">rich =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">contrast =</span> <span class="cn">TRUE</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> scales<span class="sc">::</span><span class="fu">dollar</span>(total)) <span class="sc">+</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">80</span>,</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"abril-fatface"</span>,</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">hjust =</span> <span class="fl">0.5</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#903345"</span>,</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#867D80"</span>,</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#1D1E3C"</span>,</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#A9C7A5"</span>,</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#F9C989"</span>,</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#D4ACD1"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead
-
-Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-font family 'Lato' not found, will use 'sans' instead</code></pre>
-</div>
-<div class="cell-output-display">
-<p><a href="taylor-live-performances_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="taylor-live-performances_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></a></p>
-</div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Abril Fatface"</span>, <span class="st">"abril-fatface"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Lato"</span>, <span class="st">"lato"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>showtext<span class="sc">::</span><span class="fu">showtext_auto</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span></span>
@@ -1137,7 +223,7 @@ font family 'Lato' not found, will use 'sans' instead</code></pre>
 <span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-2-12"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>ind_tab <span class="ot">&lt;-</span> </span>
 <span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>  ind_html[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(</span>
 <span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(adjusted_gross_in_2023_dollar,</span>
 <span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-hidden="true" tabindex="-1"></a>      gross,</span>
@@ -1150,23 +236,69 @@ font family 'Lato' not found, will use 'sans' instead</code></pre>
 <span id="annotated-cell-2-24"><a href="#annotated-cell-2-24" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">.default =</span> gross),</span>
 <span id="annotated-cell-2-25"><a href="#annotated-cell-2-25" aria-hidden="true" tabindex="-1"></a>                <span class="at">adjusted_gross_in_2023_dollar =</span> <span class="fu">case_when</span>(title <span class="sc">==</span> <span class="st">"The Eras Tour"</span> <span class="sc">~</span> <span class="dv">2200000000</span>,</span>
 <span id="annotated-cell-2-26"><a href="#annotated-cell-2-26" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">.default =</span> adjusted_gross_in_2023_dollar),</span>
-<span id="annotated-cell-2-27"><a href="#annotated-cell-2-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> <span class="fu">paste0</span>(title,<span class="st">"&lt;br&gt;&lt;span style='font-size:12pt'&gt;"</span>, scales<span class="sc">::</span><span class="fu">dollar</span>(adjusted_gross_in_2023_dollar), <span class="st">"&lt;/span&gt;"</span>))</span>
-<span id="annotated-cell-2-28"><a href="#annotated-cell-2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-29"><a href="#annotated-cell-2-29" aria-hidden="true" tabindex="-1"></a>treemap <span class="ot">&lt;-</span></span>
-<span id="annotated-cell-2-30"><a href="#annotated-cell-2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">treemapify</span>(ind_tab, <span class="at">area =</span> <span class="st">"adjusted_gross_in_2023_dollar"</span>)</span>
-<span id="annotated-cell-2-31"><a href="#annotated-cell-2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-32"><a href="#annotated-cell-2-32" aria-hidden="true" tabindex="-1"></a>treemap <span class="ot">&lt;-</span></span>
-<span id="annotated-cell-2-33"><a href="#annotated-cell-2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ind_tab, treemap <span class="sc">|&gt;</span> <span class="fu">select</span>(title, ymax<span class="sc">:</span>xmax))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining with `by = join_by(title)`</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;polite session&gt; https://en.wikipedia.org/wiki/List_of_Taylor_Swift_live_performances
-    User-agent: polite R package
-    robots.txt: 456 rules are defined for 33 bots
-   Crawl delay: 5 sec
-  The path is scrapable for this user-agent</code></pre>
-</div>
+<span id="annotated-cell-2-27"><a href="#annotated-cell-2-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> <span class="fu">paste0</span>(title, <span class="st">"&lt;br&gt;&lt;span style='font-size:30pt'&gt;"</span>, scales<span class="sc">::</span><span class="fu">dollar</span>(adjusted_gross_in_2023_dollar), <span class="st">"&lt;/span&gt;"</span>),</span>
+<span id="annotated-cell-2-28"><a href="#annotated-cell-2-28" aria-hidden="true" tabindex="-1"></a>                <span class="at">image =</span> <span class="fu">case_when</span>(title <span class="sc">==</span> <span class="st">"The Eras Tour"</span> <span class="sc">~</span> <span class="st">"&lt;img src='notebooks/logo-images/eras.png'&gt;"</span>,</span>
+<span id="annotated-cell-2-29"><a href="#annotated-cell-2-29" aria-hidden="true" tabindex="-1"></a>                                  title <span class="sc">==</span> <span class="st">"Fearless Tour"</span> <span class="sc">~</span> <span class="st">"&lt;img src='notebooks/logo-images/fearless.png' style='width:30%'&gt;"</span>,</span>
+<span id="annotated-cell-2-30"><a href="#annotated-cell-2-30" aria-hidden="true" tabindex="-1"></a>                                  title <span class="sc">==</span> <span class="st">"The 1989 World Tour"</span> <span class="sc">~</span> <span class="st">"&lt;img src='notebooks/logo-images/1989.png'&gt;"</span>,</span>
+<span id="annotated-cell-2-31"><a href="#annotated-cell-2-31" aria-hidden="true" tabindex="-1"></a>                                  title <span class="sc">==</span> <span class="st">"Reputation Stadium Tour"</span> <span class="sc">~</span> <span class="st">"&lt;img src='notebooks/logo-images/reputation.png'&gt;"</span>,</span>
+<span id="annotated-cell-2-32"><a href="#annotated-cell-2-32" aria-hidden="true" tabindex="-1"></a>                                  title <span class="sc">==</span> <span class="st">"Speak Now World Tour"</span> <span class="sc">~</span> <span class="st">"&lt;img src='notebooks/logo-images/speak_now.jpg'&gt;"</span>,</span>
+<span id="annotated-cell-2-33"><a href="#annotated-cell-2-33" aria-hidden="true" tabindex="-1"></a>                                  title <span class="sc">==</span> <span class="st">"The Red Tour"</span> <span class="sc">~</span> <span class="st">"&lt;img src='notebooks/logo-images/red.jpg'&gt;"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-2-34"><a href="#annotated-cell-2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">image =</span> <span class="fu">paste0</span>(image, <span class="st">"&lt;br&gt;&lt;span style='font-size:30pt'&gt;"</span>, scales<span class="sc">::</span><span class="fu">dollar</span>(adjusted_gross_in_2023_dollar), <span class="st">"&lt;/span&gt;"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="annotated-cell-2-35"><a href="#annotated-cell-2-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adjusted_gross_in_2023_dollar2 =</span> <span class="fu">case_when</span>(title <span class="sc">==</span> <span class="st">"Fearless Tour"</span> <span class="sc">~</span> adjusted_gross_in_2023_dollar <span class="sc">*</span> <span class="fl">1.5</span>,</span>
+<span id="annotated-cell-2-36"><a href="#annotated-cell-2-36" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">.default =</span> adjusted_gross_in_2023_dollar))</span>
+<span id="annotated-cell-2-37"><a href="#annotated-cell-2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-38"><a href="#annotated-cell-2-38" aria-hidden="true" tabindex="-1"></a>treemap <span class="ot">&lt;-</span></span>
+<span id="annotated-cell-2-39"><a href="#annotated-cell-2-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">treemapify</span>(ind_tab, <span class="at">area =</span> <span class="st">"adjusted_gross_in_2023_dollar"</span>)</span>
+<span id="annotated-cell-2-40"><a href="#annotated-cell-2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-41"><a href="#annotated-cell-2-41" aria-hidden="true" tabindex="-1"></a>treemap <span class="ot">&lt;-</span></span>
+<span id="annotated-cell-2-42"><a href="#annotated-cell-2-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ind_tab, treemap <span class="sc">|&gt;</span> <span class="fu">select</span>(title, ymax<span class="sc">:</span>xmax))</span>
+<span id="annotated-cell-2-43"><a href="#annotated-cell-2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-44"><a href="#annotated-cell-2-44" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">sum</span>(ind_tab<span class="sc">$</span>adjusted_gross_in_2023_dollar)</span>
+<span id="annotated-cell-2-45"><a href="#annotated-cell-2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-46"><a href="#annotated-cell-2-46" aria-hidden="true" tabindex="-1"></a><span class="co"># https://github.com/wilkox/treemapify/issues/37</span></span>
+<span id="annotated-cell-2-47"><a href="#annotated-cell-2-47" aria-hidden="true" tabindex="-1"></a>treemap <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-2-48"><a href="#annotated-cell-2-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="annotated-cell-2-49"><a href="#annotated-cell-2-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="annotated-cell-2-50"><a href="#annotated-cell-2-50" aria-hidden="true" tabindex="-1"></a>      <span class="at">area =</span> adjusted_gross_in_2023_dollar2,</span>
+<span id="annotated-cell-2-51"><a href="#annotated-cell-2-51" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill =</span> title,</span>
+<span id="annotated-cell-2-52"><a href="#annotated-cell-2-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">paste</span>(title, scales<span class="sc">::</span><span class="fu">dollar</span>(adjusted_gross_in_2023_dollar), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="annotated-cell-2-53"><a href="#annotated-cell-2-53" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="annotated-cell-2-54"><a href="#annotated-cell-2-54" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="annotated-cell-2-55"><a href="#annotated-cell-2-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-2-56"><a href="#annotated-cell-2-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap_text</span>(</span>
+<span id="annotated-cell-2-57"><a href="#annotated-cell-2-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"#1D1E3C"</span>,</span>
+<span id="annotated-cell-2-58"><a href="#annotated-cell-2-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">place =</span> <span class="st">"center"</span>,</span>
+<span id="annotated-cell-2-59"><a href="#annotated-cell-2-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">grow =</span> <span class="cn">TRUE</span>,</span>
+<span id="annotated-cell-2-60"><a href="#annotated-cell-2-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">reflow =</span> <span class="cn">FALSE</span>,</span>
+<span id="annotated-cell-2-61"><a href="#annotated-cell-2-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">"abril-fatface"</span></span>
+<span id="annotated-cell-2-62"><a href="#annotated-cell-2-62" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="annotated-cell-2-63"><a href="#annotated-cell-2-63" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ggfittext::geom_fit_text(</span></span>
+<span id="annotated-cell-2-64"><a href="#annotated-cell-2-64" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   family = "abril-fatface",</span></span>
+<span id="annotated-cell-2-65"><a href="#annotated-cell-2-65" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   color = "white",</span></span>
+<span id="annotated-cell-2-66"><a href="#annotated-cell-2-66" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   place = "center",</span></span>
+<span id="annotated-cell-2-67"><a href="#annotated-cell-2-67" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   grow = FALSE,</span></span>
+<span id="annotated-cell-2-68"><a href="#annotated-cell-2-68" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   rich = TRUE,</span></span>
+<span id="annotated-cell-2-69"><a href="#annotated-cell-2-69" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   contrast = TRUE</span></span>
+<span id="annotated-cell-2-70"><a href="#annotated-cell-2-70" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ) +</span></span>
+<span id="annotated-cell-2-71"><a href="#annotated-cell-2-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> scales<span class="sc">::</span><span class="fu">dollar</span>(total)) <span class="sc">+</span></span>
+<span id="annotated-cell-2-72"><a href="#annotated-cell-2-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-2-73"><a href="#annotated-cell-2-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="annotated-cell-2-74"><a href="#annotated-cell-2-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="annotated-cell-2-75"><a href="#annotated-cell-2-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(</span>
+<span id="annotated-cell-2-76"><a href="#annotated-cell-2-76" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">70</span>,</span>
+<span id="annotated-cell-2-77"><a href="#annotated-cell-2-77" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"abril-fatface"</span>,</span>
+<span id="annotated-cell-2-78"><a href="#annotated-cell-2-78" aria-hidden="true" tabindex="-1"></a>      <span class="at">hjust =</span> <span class="fl">0.5</span>,</span>
+<span id="annotated-cell-2-79"><a href="#annotated-cell-2-79" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">"#1D1E3C"</span></span>
+<span id="annotated-cell-2-80"><a href="#annotated-cell-2-80" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="annotated-cell-2-81"><a href="#annotated-cell-2-81" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="annotated-cell-2-82"><a href="#annotated-cell-2-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#b9d2b5"</span>,</span>
+<span id="annotated-cell-2-83"><a href="#annotated-cell-2-83" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#f4cb8d"</span>,</span>
+<span id="annotated-cell-2-84"><a href="#annotated-cell-2-84" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#b5e9f6"</span>,</span>
+<span id="annotated-cell-2-85"><a href="#annotated-cell-2-85" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#d1b2d2"</span>,</span>
+<span id="annotated-cell-2-86"><a href="#annotated-cell-2-86" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#CFCAC6"</span>,</span>
+<span id="annotated-cell-2-87"><a href="#annotated-cell-2-87" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#C8AE95"</span>)) <span class="ot">-&gt;</span> taylor_treemap</span>
+<span id="annotated-cell-2-88"><a href="#annotated-cell-2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-89"><a href="#annotated-cell-2-89" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(taylor_treemap, <span class="at">file =</span> <span class="st">"images/taylor_treemap.rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -1563,7 +695,53 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"openEffect":"zoom"});</script>
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Proudly supported by <a href="https://posit.co"><img src="https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg" class="img-fluid" alt="Posit" width="65"></a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ Appendix
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../appendix.html">
+<p>Appendix</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/company/posit-software/">
+      <i class="bi bi-linkedin" role="img" aria-label="Posit LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@Posit">
+      <i class="bi bi-mastodon" role="img" aria-label="Posit Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.tiktok.com/@posit_pbc">
+      <i class="bi bi-tiktok" role="img" aria-label="Posit TikTok">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.instagram.com/posit.pbc/">
+      <i class="bi bi-instagram" role="img" aria-label="Posit Instagram">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
 
 
 

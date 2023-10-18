@@ -136,6 +136,8 @@ plot_name <- paste("p_", country, sep = "")
 
 purrr::map2(.f = country_plots, .x = countries, .y = colors)
 
+# One specifically for Taylor Swift
+
 p_blank <-
   ggplot() +
   labs(title = "Taylor Swift",

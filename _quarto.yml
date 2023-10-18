@@ -16,7 +16,26 @@ website:
           - icon: github
             text: "See the code on GitHub"
     footer: spotify_playlist.html
-
+  page-footer:
+    left: |
+      Proudly supported by
+      [![](https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg){fig-alt="Posit" width=65px}](https://posit.co)
+    center:
+      - href: appendix.qmd
+    right:
+      - icon: linkedin
+        href: https://www.linkedin.com/company/posit-software/
+        aria-label: Posit LinkedIn
+      - icon: mastodon
+        href: https://fosstodon.org/@Posit
+        aria-label: Posit Mastodon
+      - icon: tiktok
+        href: https://www.tiktok.com/@posit_pbc
+        aria-label: Posit TikTok
+      - icon: instagram
+        href: https://www.instagram.com/posit.pbc/
+        aria-label: Posit Instagram
+        
 execute:
   freeze: true
 
@@ -30,9 +49,6 @@ format:
     page-layout: full
     include-in-header: 
       - progress-bar.html
-    filters:
-      - lightbox
     lightbox: auto
     grid:
       sidebar-width: 300px
-

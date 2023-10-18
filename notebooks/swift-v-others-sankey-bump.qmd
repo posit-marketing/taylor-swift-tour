@@ -7,6 +7,8 @@ format:
 editor: visual
 editor_options: 
   chunk_output_type: console
+execute:
+  eval: false
 ---
 
 ```{r}
@@ -26,10 +28,9 @@ library(colorspace)
 library(ggh4x)
 ```
 
-Borrowing heavily from [Georgios Karamanis'](https://www.linkedin.com/in/georgios-karamanis-a54926153/)   [#TidyTuesday post, where he shared an alluvial bump chart made with {ggsankey} with data from UNHCR, the UN Refugee Agency](https://www.linkedin.com/posts/georgios-karamanis-a54926153_tidytuesday-rstats-dataviz-activity-7101468916958322688-7UxN) The heaviest lift came from [{`ggsankey`}, the R Package for making beautiful sankey, alluvial and sankey bump plots in ggplot2](https://github.com/davidsjoberg/ggsankey)
+Borrowing heavily from [Georgios Karamanis'](https://www.linkedin.com/in/georgios-karamanis-a54926153/) [#TidyTuesday post, where he shared an alluvial bump chart made with {ggsankey} with data from UNHCR, the UN Refugee Agency](https://www.linkedin.com/posts/georgios-karamanis-a54926153_tidytuesday-rstats-dataviz-activity-7101468916958322688-7UxN) The heaviest lift came from [{`ggsankey`}, the R Package for making beautiful sankey, alluvial and sankey bump plots in ggplot2](https://github.com/davidsjoberg/ggsankey)
 
-
-First, we're going to load our data, collected manually from Pollstar reporting over the last 20 years. Artist names need to be cleaned up, and we need to structure our dataset for the Sankey Bump plot. 
+First, we're going to load our data, collected manually from Pollstar reporting over the last 20 years. Artist names need to be cleaned up, and we need to structure our dataset for the Sankey Bump plot.
 
 ```{r}
 #| message: false
@@ -107,10 +108,9 @@ rank_concert_tours$artist <- factor(
 
 ```
 
+Now, let's use `ggplot`, `ggsankey` to build this plot.
 
-Now, let's use `ggplot`, `ggsankey` to build this plot. 
-
-The placement of much of the annotations is optimized for the square image output. 
+The placement of much of the annotations is optimized for the square image output.
 
 ```{r}
 #| message: false
@@ -255,8 +255,7 @@ ggsave(
 
 ```
 
-
-Rectangle Version, for blog post. 
+Rectangle Version, for blog post.
 
 ```{r}
 #| message: false
@@ -381,4 +380,3 @@ ggsave(
 )
 
 ```
-
