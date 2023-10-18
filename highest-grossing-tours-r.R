@@ -13,7 +13,6 @@ library(polite)
 # To visualize data
 library(ggplot2)
 library(showtext)
-library(viridis)
 
 font_add_google("Abril Fatface", "abril-fatface")
 font_add_google("Lato", "lato")

@@ -6,7 +6,7 @@ website:
     style: "floating"
     search: false
     contents:
-      - section: "Want to walk through the code?"
+      - section: "Walk through the code"
         contents:
           - text: "🐍 See the code in Python"
             href: py.qmd
@@ -15,6 +15,7 @@ website:
           - text: "☁️ Open the project in Posit Cloud"
           - icon: github
             text: "See the code on GitHub"
+    footer: spotify_playlist.html
 
 execute:
   freeze: true
@@ -29,3 +30,9 @@ format:
     page-layout: full
     include-in-header: 
       - progress-bar.html
+    filters:
+      - lightbox
+    lightbox: auto
+    grid:
+      sidebar-width: 300px
+

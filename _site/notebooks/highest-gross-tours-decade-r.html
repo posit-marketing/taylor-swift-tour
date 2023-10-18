@@ -73,6 +73,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -145,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">Want to walk through the code?</span></a>
+ <span class="menu-text">Walk through the code</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -176,7 +179,9 @@ document.addEventListener("DOMContentLoaded", function() {
     </ul>
     </div>
     
-</nav>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p>spotify_playlist.html</p>
+</div></div></nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
@@ -265,7 +270,7 @@ Tip
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Highest-grossing tours by decade"</span>) <span class="sc">+</span></span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="fu">ymd</span>(<span class="st">"1980-01-01"</span>), <span class="fu">ymd</span>(<span class="st">"2028-01-01"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><a href="highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></a></p>
 </div>
 </div>
 <div class="cell">
@@ -273,7 +278,7 @@ Tip
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> shows, <span class="at">y =</span> adjusted_gross_in_2022_dollar)) <span class="sc">+</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><a href="highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></a></p>
 </div>
 </div>
 <div class="cell">
@@ -281,7 +286,7 @@ Tip
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> shows, <span class="at">y =</span> adjusted_gross_in_2022_dollar)) <span class="sc">+</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><a href="highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="highest-gross-tours-decade-r_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></a></p>
 </div>
 </div>
 </div>
@@ -682,6 +687,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","loop":false});</script>
 
 
 

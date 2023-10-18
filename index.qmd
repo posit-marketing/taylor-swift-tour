@@ -9,47 +9,85 @@ title-block-banner: images/hero.png
 #| message: false
 #| label: source-files
 library(leaflet)
+library(bslib)
+library(bsicons)
+library(shiny)
 source(knitr::purl("notebooks/highest-grossing-tours-r.qmd"))
 map_html_geo <- read_rds("data/map_html_geo.Rds")
 ```
-
-# Taylor Swift's Tour in the Pantheon of Music
 
 ## Introduction
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum.
 
-:::{style="font-family: Abril Fatface"}
+::: {style="font-family: Abril Fatface"}
 ## The Eras Tour
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum. 
 
-:::{style="font-family: Abril Fatface"}
+{{< video https://www.youtube.com/embed/KudedLV0tP0?si=lGitLqDuHeJ6W_Hi >}}
+
+::: {style="font-family: Abril Fatface"}
 ### Setting the stage
 :::
 
+```{r}
+#| echo: false
+value_box(
+  title = "Number of shows",
+  value = "146",
+  showcase = bs_icon("calendar-event"),
+  theme = "#b9d2b5"
+)
+```
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. 
 
-:::{style="font-family: Abril Fatface"}
+```{r}
+#| echo: false
+value_box(
+  title = "Number of cities",
+  value = "10,512,000",
+    showcase = bs_icon("building"),
+    theme = "#f4cb8d",
+  p("based on 72k average attendance per show", bs_icon("music-note"))
+)
+```
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+```{r}
+#| echo: false
+value_box(
+  title = "Estimated total attendance",
+  value = "10,512,000",
+  showcase = bs_icon("airplane"),
+  theme = "#823549",
+  p("based on 72k average attendance per show", bs_icon("music-note")))
+```
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. 
+
+::: {style="font-family: Abril Fatface"}
 ### Attendance
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-:::{style="font-family: Abril Fatface"}
+::: {style="font-family: Abril Fatface"}
 #### How many people have attended the Eras tour?
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-:::{style="font-family: Abril Fatface"}
+::: {style="font-family: Abril Fatface"}
 #### How many cities and states has Taylor Swift held a concert in?
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-:::{.column-page}
+::: {.column-page}
 
 ```{r}
 #| echo: false
@@ -59,8 +97,10 @@ pal <- colorFactor(
   domain = map_html_geo$occurred
 )
 
-leaflet(options = leafletOptions(zoomControl = FALSE)) |>
-  addProviderTiles("Esri.WorldGrayCanvas") |>
+leaflet(options = leafletOptions(zoomControl = FALSE,
+                                 maxZoom = 12)) |>
+  addProviderTiles("Esri.WorldGrayCanvas",
+                   options = tileOptions(maxZoom = 12)) |>
   setMaxBounds(
     lng1 = -90,
     lat1 = -180,
@@ -90,45 +130,47 @@ leaflet(options = leafletOptions(zoomControl = FALSE)) |>
 
 :::
 
-:::{style="font-family: Abril Fatface"}
+::: {style="font-family: Abril Fatface"}
 #### Eras tour compared to her previous tours
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-:::{style="font-family: Abril Fatface"}
+```{r}
+#| echo: false
+#| label: taylor-performances-treemap
+#| fig-align: center
+load(here::here("images", "taylor_treemap.rdata"))
+taylor_treemap
+```
+
+::: {style="font-family: Abril Fatface"}
 ### Revenue
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-:::{style="font-family: Abril Fatface"}
+```{r}
+#| echo: false
+#| label: gdp-comparison-plot
+#| fig-align: center
+load(here::here("images", "gdp_plot.rdata"))
+gdp_plot
+```
+
+::: {style="font-family: Abril Fatface"}
 #### Highest-grossing tours
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-`r knitr::include_graphics("images/highest-grossing-tours-r-1.png")`
+`r knitr::include_graphics("images/tswift-v-other-sankey-bump.png")`
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-`r knitr::include_graphics("images/annual-highest-grossing-tours-bar-1.png")`
+`r knitr::include_graphics("images/highest-grossing-tour-decade.png")`
 
 :::{style="font-family: Abril Fatface"}
-#### Number of shows vs. income
-:::
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-`r knitr::include_graphics("images/num-shows-vs-income-1.png")`
-
-:::{style="font-family: Abril Fatface"}
-#### Cost per ticket
-:::
-
-`r knitr::include_graphics("images/cost-per-ticket-scatterplot-1.png")`
-
-:::{style="font-family: Oswald"}
 # Taylor's Music
 :::
 

@@ -1,0 +1,14 @@
+{
+  "hash": "5afb6b73b685ea783289beb70ff6327c",
+  "result": {
+    "markdown": "::: {.cell}\n\n```{.r .cell-code}\n# To clean data\nlibrary(tidyverse)\nlibrary(janitor)\n\n# To scrape data\nlibrary(rvest)\nlibrary(httr)\nlibrary(polite)\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nstreams_url <-\n  \"https://en.wikipedia.org/wiki/List_of_most-streamed_artists_on_Spotify\"\n\nstreams_url_bow <- polite::bow(streams_url)\n\nind_html <-\n  polite::scrape(streams_url_bow) |>  # <1>\n  rvest::html_nodes(\"table.wikitable\") |> # <2>\n  rvest::html_table(fill = TRUE)\n```\n:::\n\n1. Scrape the webpage\n2. Pull out anything that is a `wikitable` \n\n\n::: {.cell}\n\n```{.r .cell-code}\ntop_listeners_tab <- \n  ind_html[[4]] |> \n  clean_names()\n\nmost_followed_tab <- \n  ind_html[[5]] |> \n  clean_names()\n\nspotify_data <-\n  left_join(top_listeners_tab, most_followed_tab, join_by(artist == artist_68)) |> \n  rename(monthly_listeners_millions_rank = rank.x,\n         followers_millions_rank = rank.y)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
