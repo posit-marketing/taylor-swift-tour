@@ -281,7 +281,7 @@ In the 2020s, the music tour industry appears to be reaching unprecedented heigh
 
 ```{r}
 #| echo: false
-vbs <- list(
+vbs4 <- list(
   value_box(
     title = "Monthly Listeners",
     value = "101M",
@@ -307,7 +307,7 @@ vbs <- list(
 
 layout_column_wrap(
   width = "250px",
-  !!!vbs
+  !!!vbs4
 )
 ```
 
