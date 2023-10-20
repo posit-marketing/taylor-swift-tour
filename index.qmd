@@ -40,24 +40,47 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 ```{r}
 #| echo: false
-value_box(
-  title = "Number of shows",
-  value = "146",
-  showcase = bs_icon("calendar-event"),
-  theme = "#b9d2b5"
+vbs <- list(
+  value_box(
+    title = "Dates",
+    value = "March '23 - Nov '24",
+    style = 'background-color: #647A99!important;',
+    showcase = bs_icon("calendar-range")
+  ),
+  value_box(
+    title = "Set list",
+    value = "44 songs",
+    showcase = bs_icon("music-note"),
+    style = 'background-color: #6D6268!important;'
+  )
+)
+
+layout_column_wrap(
+  width = "250px",
+  !!!vbs
 )
 ```
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum. 
 
 ```{r}
 #| echo: false
+vbs2 <- list(value_box(
+  title = "Number of shows",
+  value = "146",
+  style = 'background-color: #1D203A!important;',
+  showcase = bs_icon("ticket-perforated")
+),
 value_box(
-  title = "Number of cities",
+  title = "Estimated attendance",
   value = "10,512,000",
-    showcase = bs_icon("building"),
-    theme = "#f4cb8d",
-  p("based on 72k average attendance per show", bs_icon("music-note"))
+  showcase = bs_icon("people"),
+  style = 'background-color: #823549!important;'
+))
+
+layout_column_wrap(
+  width = "250px",
+  !!!vbs2
 )
 ```
 
@@ -65,12 +88,25 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 ```{r}
 #| echo: false
-value_box(
-  title = "Estimated total attendance",
-  value = "10,512,000",
-  showcase = bs_icon("airplane"),
-  theme = "#823549",
-  p("based on 72k average attendance per show", bs_icon("music-note")))
+vbs3 <- list(
+  value_box(
+    title = "Number of countries",
+    value = "17",
+    showcase = bs_icon("globe"),
+    style = 'background-color: #154E52!important;'
+  ),
+  value_box(
+    title = "Number of cities",
+    value = "50",
+    showcase = bs_icon("pin-map"),
+    style = 'background-color: #656766!important;'
+  )
+)
+
+layout_column_wrap(
+  width = "250px",
+  !!!vbs3
+)
 ```
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. 
@@ -177,10 +213,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-
-
-:::: .column-screen-right
-
 ::: {.panel-tabset}
 
 ### 1980s
@@ -245,29 +277,45 @@ In the 2020s, the music tour industry appears to be reaching unprecedented heigh
 
 :::
 
-::::
-
 :::{style="font-family: Abril Fatface"}
 # Taylor's Music
 :::
 
+## Spotify
+
+```{r}
+#| echo: false
+vbs4 <- list(
+  value_box(
+    title = "Monthly Listeners",
+    value = "101M",
+    style = 'background-color: #647A99!important;',
+    showcase = bs_icon("music-note")
+  ),
+  value_box(
+    title = "Followers",
+    value = "89M",
+    showcase = bs_icon("music-note")
+  ),
+    value_box(
+    title = "Playlists",
+    value = "64.2K",
+    showcase = bs_icon("music-note")
+  ),
+      value_box(
+    title = "Playlist Reach",
+    value = "1.11B",
+    showcase = bs_icon("music-note")
+  )
+)
+
+layout_column_wrap(
+  width = "250px",
+  !!!vbs4
+)
+```
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-:::
-
-::: {.column width="50%"}
-
-{{< include notebooks/taylor-music.qmd >}}
-
-:::
-
-:::
 
 ## Openers
 
