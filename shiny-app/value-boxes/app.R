@@ -3,48 +3,51 @@ library(shiny)
 library(bsicons)
 library(glue)
 library(readr)
+
 spotify_data <- read_csv(
-  "~/Dropbox/rstudio_git/taylor-swift-tour/data/spotify_data.csv", 
+  here::here("data/spotify_data.csv"),
   col_types = cols(
-    monthly_listeners_millions_rank = col_integer(), 
-    monthly_listeners_millions = col_number()) 
+    monthly_listeners_millions_rank = col_integer(),
+    monthly_listeners_millions = col_number()
+  )
 )
 
 vbs <- list()
 cp <- c("#201F39", "#A91E47", "#7E6358", "#B0A49A", "#DDD8C9")
 
-for (i in 1:5){
+for (i in 1:5) {
+  row_vals <- spotify_data[i, ]
   
-  row_vals <- spotify_data[i,]
-  
-  vbs[[row_vals$artist]] <-  
-    list(
-      layout_column_wrap(
-        width = "250px",
-        !!!list(
-          value_box(
-            title = h1(glue("{row_vals$artist} on Spotify")),
-            value = NULL,
-            p(),
-            h4(glue("{row_vals$monthly_listeners_millions} million")),
-            p("Monthly Spotify Listeners"),
-            showcase = div(htmltools::img(src = glue("artist-images/{row_vals$artist}.png"), width="100%")),
-            br(),
-            hr(),
-            br(),
-            h4(glue("{row_vals$monthly_listeners_millions} million")),
-            p("Spotify Follower"),
-            style = glue('background-color: {cp[i%% 5+1]}!important;'),
-          )
-        )
-      ),
-      br()
-    )
+  vbs[[row_vals$artist]] <-
+    list(layout_column_wrap(width = "250px",!!!list(
+      value_box(
+        title = h1(glue("{row_vals$artist} on Spotify")),
+        value = NULL,
+        p(),
+        h4(glue(
+          "{row_vals$monthly_listeners_millions} million"
+        )),
+        p("Monthly Spotify Listeners"),
+        showcase = div(htmltools::img(
+          src = glue("artist-images/{row_vals$artist}.png"),
+          width = "100%"
+        )),
+        br(),
+        hr(),
+        br(),
+        h4(glue(
+          "{row_vals$monthly_listeners_millions} million"
+        )),
+        p("Spotify Follower"),
+        style = glue('background-color: {cp[i%% 5+1]}!important;'),
+      )
+    )),
+    br())
 }
 
 
 
-# tswift <- 
+# tswift <-
 #   layout_column_wrap(
 #     width = "250px",
 #     !!!list(
@@ -73,20 +76,15 @@ for (i in 1:5){
 
 
 # Define UI for application that draws a histogram
-ui <- fluidPage(
-  
-  # Application title
+ui <- fluidPage(# Application title
   titlePanel("Value boxes"),
   
-  vbs
-  
-)
+  vbs)
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
-  
 }
 
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)
