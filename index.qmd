@@ -1,6 +1,8 @@
 ---
 title: "Taylor Swift's Tour in the Pantheon of Music"
-format: html
+format: 
+  html:
+    mainfont: Lato
 title-block-banner: images/hero.png
 ---
 
@@ -9,47 +11,87 @@ title-block-banner: images/hero.png
 #| message: false
 #| label: source-files
 library(leaflet)
+library(bslib)
+library(bsicons)
+library(shiny)
 source(knitr::purl("notebooks/highest-grossing-tours-r.qmd"))
 map_html_geo <- read_rds("data/map_html_geo.Rds")
 ```
 
-# Taylor Swift's Tour in the Pantheon of Music
-
+::: {style="font-family: Abril Fatface"}
 ## Introduction
+:::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum.
 
-:::{style="font-family: Abril Fatface"}
+::: {style="font-family: Abril Fatface"}
 ## The Eras Tour
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum. 
 
-:::{style="font-family: Abril Fatface"}
+{{< video https://www.youtube.com/embed/KudedLV0tP0?si=lGitLqDuHeJ6W_Hi >}}
+
+::: {style="font-family: Abril Fatface"}
 ### Setting the stage
 :::
 
+```{r}
+#| echo: false
+value_box(
+  title = "Number of shows",
+  value = "146",
+  showcase = bs_icon("calendar-event"),
+  theme = "#b9d2b5"
+)
+```
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. 
 
-:::{style="font-family: Abril Fatface"}
+```{r}
+#| echo: false
+value_box(
+  title = "Number of cities",
+  value = "10,512,000",
+    showcase = bs_icon("building"),
+    theme = "#f4cb8d",
+  p("based on 72k average attendance per show", bs_icon("music-note"))
+)
+```
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+```{r}
+#| echo: false
+value_box(
+  title = "Estimated total attendance",
+  value = "10,512,000",
+  showcase = bs_icon("airplane"),
+  theme = "#823549",
+  p("based on 72k average attendance per show", bs_icon("music-note")))
+```
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. 
+
+::: {style="font-family: Abril Fatface"}
 ### Attendance
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-:::{style="font-family: Abril Fatface"}
+::: {style="font-family: Abril Fatface"}
 #### How many people have attended the Eras tour?
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-:::{style="font-family: Abril Fatface"}
+::: {style="font-family: Abril Fatface"}
 #### How many cities and states has Taylor Swift held a concert in?
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-:::{.column-page}
+::: {.column-page}
 
 ```{r}
 #| echo: false
@@ -59,8 +101,11 @@ pal <- colorFactor(
   domain = map_html_geo$occurred
 )
 
-leaflet(options = leafletOptions(zoomControl = FALSE)) |>
-  addProviderTiles("Esri.WorldGrayCanvas") |>
+leaflet(options = leafletOptions(zoomControl = FALSE,
+                                 scrollWheelZoom = FALSE,
+                                 maxZoom = 12)) |>
+  addProviderTiles("Esri.WorldGrayCanvas",
+                   options = tileOptions(maxZoom = 12)) |>
   setMaxBounds(
     lng1 = -90,
     lat1 = -180,
@@ -90,45 +135,115 @@ leaflet(options = leafletOptions(zoomControl = FALSE)) |>
 
 :::
 
-:::{style="font-family: Abril Fatface"}
+::: {style="font-family: Abril Fatface"}
 #### Eras tour compared to her previous tours
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-:::{style="font-family: Abril Fatface"}
+```{r}
+#| echo: false
+#| label: taylor-performances-treemap
+#| fig-align: center
+load(here::here("images", "taylor_treemap.rdata"))
+taylor_treemap
+```
+
+::: {style="font-family: Abril Fatface"}
 ### Revenue
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-:::{style="font-family: Abril Fatface"}
+```{r}
+#| echo: false
+#| label: gdp-comparison-plot
+#| fig-align: center
+load(here::here("images", "gdp_plot.rdata"))
+gdp_plot
+```
+
+::: {style="font-family: Abril Fatface"}
 #### Highest-grossing tours
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-`r knitr::include_graphics("images/highest-grossing-tours-r-1.png")`
+`r knitr::include_graphics("images/tswift-v-other-sankey-bump.png")`
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-`r knitr::include_graphics("images/annual-highest-grossing-tours-bar-1.png")`
 
-:::{style="font-family: Abril Fatface"}
-#### Number of shows vs. income
+
+:::: .column-screen-right
+
+::: {.panel-tabset}
+
+### 1980s
+
+```{r}
+#| echo: false
+#| label: 1980s-plot
+#| fig-align: center
+load(here::here("images", "highest-grossing-tour-1980s.rdata"))
+p
+```
+
+Pink Floyd's "A Momentary Lapse of Reason Tour" takes the top spot of the 1980s with $135 million, which would be about $319 million today. Michael Jackson's "Bad" tour is second, making $125 million. The Rolling Stones and Bruce Springsteen also did really well. It's interesting to see that some tours had fewer shows but made more money per show, like Michael Jackson and The Rolling Stones.
+
+### 1990s
+
+```{r}
+#| echo: false
+#| label: 1990s-plot
+#| fig-align: center
+load(here::here("images", "highest-grossing-tour-1990s.rdata"))
+p
+```
+
+The 1990s saw even bigger numbers for concert tours than the 1980s. The Rolling Stones topped the list again but with much higher earnings. Their "Voodoo Lounge Tour" made a massive $320 million, which is more than double their highest-earning tour from the 1980s. Pink Floyd and Michael Jackson also remained strong, each earning more in the '90s than they did in the '80s. Overall, tours in the '90s made more money, and the average earnings per show also went up, showing that concerts were becoming a bigger business.
+
+### 2000s
+
+```{r}
+#| echo: false
+#| label: 2000s-plot
+#| fig-align: center
+load(here::here("images", "highest-grossing-tour-2000s.rdata"))
+p
+```
+
+In the 2000s, music tours reached new heights in terms of earnings, far surpassing the numbers seen in the 1980s and 1990s. The Rolling Stones led the pack with their "A Bigger Bang Tour" from 2005–2007, pulling in an adjusted gross of about $788 million. They were followed by Madonna's "Sticky & Sweet Tour" and U2's "Vertigo Tour," both earning over $560 million when adjusted for inflation. The Police and a second tour by U2 also made it into the top 5, each earning over $425 million in today's money. These figures make the blockbuster tours of the 80s and 90s look modest in comparison. Even the highest-grossing tours of those decades, like Michael Jackson's "Bad World Tour," paled in terms of financial success. This shows that live music has become an increasingly lucrative business, with top artists raking in nearly unthinkable sums.
+
+### 2010s
+
+```{r}
+#| echo: false
+#| label: 2010s-plot
+#| fig-align: center
+load(here::here("images", "highest-grossing-tour-2010s.rdata"))
+p
+```
+
+In the 2010s, music tours continued to break records, with some even surpassing the massive earnings of the 2000s. Ed Sheeran's "÷ Tour" from 2017–2019 topped the list with an adjusted gross of about $888 million, outdoing even the Rolling Stones' 2000s blockbuster "A Bigger Bang Tour." Guns N' Roses and Coldplay also pulled in impressive numbers, each earning over $600 million in adjusted gross. These earnings show a continued upward trend from the 2000s, which were already a leap forward from the 1980s and 1990s. Artists like Michael Jackson and Madonna had set high standards in those earlier decades, but the financial success of tours has reached new heights in recent years. In comparison to the 2000s, artists like U2 and the Rolling Stones remained strong contenders in the 2010s, showing that while new artists have emerged, the classics still hold significant pulling power. Overall, the 2010s continued to prove that live music is an increasingly lucrative business, drawing in fans and dollars like never before.
+
+### 2020s
+
+```{r}
+#| echo: false
+#| label: 2020s-plot
+#| fig-align: center
+load(here::here("images", "highest-grossing-tour-2020s.rdata"))
+p_2020s
+```
+
+In the 2020s, the music tour industry appears to be reaching unprecedented heights. Taylor Swift's projected gross for "The Eras Tour" in 2023 is a staggering $2.2 billion, which would shatter all previous records. Even her actual gross of $780 million for only 56 shows is already near the top of the charts, averaging nearly $14 million per show. This is a massive leap from top-grossing tours of the past decades. For context, Ed Sheeran's "÷ Tour," which was the highest-grossing tour of the 2010s, had an adjusted gross of about $888 million. And if we go further back to the 1980s and 1990s, stars like Michael Jackson and Madonna were making history with numbers that are now dwarfed by current figures. Other artists in the 2020s, like Coldplay, Harry Styles, and Beyoncé, are also pulling in huge numbers, each earning over $500 million in gross. Overall, the 2020s are showing that live music has become an even more massive money-maker, reaching income levels that were once unthinkable.
+
 :::
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-`r knitr::include_graphics("images/num-shows-vs-income-1.png")`
+::::
 
 :::{style="font-family: Abril Fatface"}
-#### Cost per ticket
-:::
-
-`r knitr::include_graphics("images/cost-per-ticket-scatterplot-1.png")`
-
-:::{style="font-family: Oswald"}
 # Taylor's Music
 :::
 

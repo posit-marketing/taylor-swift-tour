@@ -1,0 +1,171 @@
+```{r}
+#| message: false
+#| warning: false
+#| eval: false
+# To clean data
+library(tidyverse)
+library(janitor)
+
+# To scrape data
+library(rvest)
+library(httr)
+library(polite)
+
+# To visualize data
+library(ggplot2)
+library(showtext)
+library(cowplot)
+
+font_add_google("Abril Fatface", "abril-fatface")
+font_add_google("Lato", "lato")
+
+showtext::showtext_auto()
+```
+
+```{r}
+#| eval: false
+url <-
+  "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)"
+
+url_bow <- polite::bow(url)
+url_bow
+
+ind_html <-
+  polite::scrape(url_bow) |>  # <1>
+  rvest::html_nodes("table.wikitable") |> # <2>
+  rvest::html_table(fill = TRUE) 
+
+ind_tab <- 
+  ind_html[[1]] |> 
+  janitor::clean_names() |> 
+  slice(-1) |> 
+  dplyr::mutate(across(
+    c(imf_1_13,
+      world_bank_14,
+      united_nations_15),
+    ~ as.numeric(str_replace_all(.x, "[$,]", ""))
+  )) |> 
+  filter(world_bank_14 < 10000 & world_bank_14 > 4900) |> 
+  arrange(desc(world_bank_14))
+url <-
+  "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)"
+
+url_bow <- polite::bow(url)
+url_bow
+
+ind_html <-
+  polite::scrape(url_bow) |>  # <1>
+  rvest::html_nodes("table.wikitable") |> # <2>
+  rvest::html_table(fill = TRUE) 
+
+ind_tab <- 
+  ind_html[[1]] |> 
+  janitor::clean_names() |> 
+  slice(-1) |> 
+  dplyr::mutate(across(
+    c(imf_1_13,
+      world_bank_14,
+      united_nations_15),
+    ~ as.numeric(str_replace_all(.x, "[$,]", ""))
+  )) |> 
+  filter(world_bank_14 < 10000 & world_bank_14 > 4000) |> 
+  arrange(desc(world_bank_14))
+
+countries <- unique(ind_tab$country_territory)
+```
+
+```{r}
+#| eval: false
+library(rnaturalearth)
+
+fiji <- 
+  ne_countries(scale = 10, returnclass = "sf", country = "Fiji") 
+
+p_Fiji <-
+  ggplot(fiji) +
+  geom_sf(fill = "#823549",
+          color = "black") +
+  coord_sf(
+    crs = 3460, # https://epsg.io/3460
+    ) +
+  theme_void() +
+  labs(title = ind_tab |> filter(country_territory == "Fiji") |> pull(country_territory),
+       subtitle = scales::dollar(ind_tab |> filter(country_territory == "Fiji") |> pull(world_bank_14), scale=1e6)) +
+    theme(
+      plot.subtitle = element_text(size = 12,
+                                   family = "lato",
+                                   hjust = 0.5),
+      plot.title = element_text(hjust = 0.5),
+      title = element_text(size = 16,
+                           family = "abril-fatface")
+    )
+
+countries <- c("Kosovo", "Somalia", "Togo", "Bermuda", "Montenegro", "Barbados", "Eswatini")
+
+colors <- c("#b9d2b5", "#f4cb8d", "#d1b2d2", "#b5e9f6", "#F9B2D0", "#CFCAC6", "#C8AE95")
+  
+country_plots <- function(country, fill){
+  country_data <-
+    ne_countries(scale = 10, returnclass = "sf", country = country)
+
+  p <- ggplot(country_data) +
+    geom_sf(fill = fill,
+            color = "black") +
+    coord_sf() +
+    theme_void() +
+    labs(
+      title = ind_tab |> filter(country_territory == country) |> pull(country_territory),
+      subtitle = scales::dollar(
+        ind_tab |> filter(country_territory == country) |> pull(world_bank_14),
+        scale = 1e6
+      )
+    ) +
+    theme(
+      plot.subtitle = element_text(size = 12,
+                                   family = "lato",
+                                   hjust = 0.5),
+      plot.title = element_text(hjust = 0.5),
+      title = element_text(size = 16,
+                           family = "abril-fatface")
+    )
+  
+plot_name <- paste("p_", country, sep = "")
+  assign(plot_name, p, envir = .GlobalEnv)
+
+}
+
+purrr::map2(.f = country_plots, .x = countries, .y = colors)
+
+# One specifically for Taylor Swift
+
+p_blank <-
+  ggplot() +
+  labs(title = "Taylor Swift",
+       subtitle = "$6,300,000,000") +
+  theme_void() +
+  theme(
+    plot.subtitle = element_text(size = 12,
+                                 family = "lato",
+                                 hjust = 0.5),
+    plot.title = element_text(hjust = 0.5),
+    title = element_text(size = 24,
+                         family = "abril-fatface",
+                         hjust = 1,
+                         color = "#434961"))
+```
+
+```{r}
+#| eval: false
+gdp_plot <-
+  plot_grid(p_Kosovo, p_Somalia, p_Togo, p_Bermuda, p_blank, p_Montenegro, p_Barbados, p_Fiji, p_Eswatini, align = "v" ) + 
+  draw_image(
+    here::here("notebooks", "t_swift.jpg"),
+    x = 0.4,
+    y = 0.35,
+    width = 0.2,
+    height = 0.2
+  )
+
+save(gdp_plot, file = here::here("images", "gdp_plot.rdata"))
+```
+

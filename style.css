@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato&display=swap');
+
+.p {
+  font-family: 'Lato', sans-serif;
+}
+
+a {
+  color: #823549;
+}
 
 .title-block-header {
   margin-block-end: 1rem;

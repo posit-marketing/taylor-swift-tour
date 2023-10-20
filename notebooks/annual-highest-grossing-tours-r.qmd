@@ -1,3 +1,8 @@
+---
+execute:
+  eval: false
+---
+
 <details><summary>See R code</summary>
 
 ```{r}

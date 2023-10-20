@@ -1,9 +1,14 @@
+---
+execute:
+  eval: false
+---
 <details><summary>See R code</summary>
 
 ::: {.callout-tip}
 
 ```{r}
 #| include: false
+library(ggh4x)
 source(here::here("highest-grossing-tours-r.R"))
 
 font_add_google("Abril Fatface", "abril-fatface")
@@ -40,55 +45,224 @@ tours_by_decade <-
     c(adjusted_gross_in_2022_dollar,
       averagegross,
       actual_gross),
-    ~ as.numeric(str_replace_all(.x, "[$,]", "")))) |>
-  mutate(start_year = str_sub(year_s, start = 1, end = 4),
-         year = lubridate::ymd(start_year, truncated = 2L)) |> 
-  mutate(decade = paste0(str_sub(as.factor(floor_date(year, years(10))), start = 1, end = 4), "s"),
-         `Adjusted Gross in 2022 Dollars` = -adjusted_gross_in_2022_dollar,
-         `Average Gross` = averagegross) |> 
-  pivot_longer(cols = c(`Adjusted Gross in 2022 Dollars`, `Average Gross`)) |> 
-  select(name, tour_title, value, decade, year)
+    ~ as.numeric(str_replace_all(.x, "[$,]", ""))
+  )) |>
+  mutate(
+    start_year = str_sub(year_s, start = 1, end = 4),
+    year = lubridate::ymd(start_year, truncated = 2L)
+  ) |>
+  mutate(
+    decade = paste0(str_sub(
+      as.factor(floor_date(year, years(10))), start = 1, end = 4
+    ), "s"),
+    `Adjusted Gross` = -adjusted_gross_in_2022_dollar,
+    `Average Gross` = averagegross) |>
+  pivot_longer(cols = c(`Adjusted Gross`, `Average Gross`)) |>
+  mutate(title = case_when(str_detect(tour_title, artist) ~ tour_title,
+                           .default = paste0(artist, " ", tour_title)))
 ```
 
 ```{r}
+#| label: all-decades-plot
+
 ggplot(tours_by_decade) +
-  geom_col(aes(value, fct_reorder(tour_title, year, .desc = TRUE), fill = abs(value))) +
-  geom_text(
-    data = . %>% filter(name == "Adjusted Gross in 2022 Dollars"),
-    aes(800000000, tour_title, label = tour_title),
-    hjust = 0.5,
-    family = "lato",
-    size = 3.5
-  ) +
-  facet_grid2(
-    rows = vars(decade),
-    cols = vars(toupper(name)),
-    scales = "free",
-    space = "free_y",
-    strip = strip_split(
-      c("top", "top"),
-      text_x = elem_list_text(color = c("#903345", "grey60")),
-      by_layer_x = TRUE
-    )
-  ) +
+  geom_col(aes(value, 
+               fct_reorder(tour_title, year, .desc = TRUE), 
+               fill = decade)) +
+  geom_text(data = tours_by_decade |> filter(name == "Average Gross"),
+            aes(x = 0, tour_title, label = title),
+            hjust = 0.5,
+            nudge_x = -5000000,
+            family = "lato",
+            size = 3.5) +
+  facet_grid2(rows = vars(decade),
+              cols = vars(toupper(name)),
+              scales = "free",
+              space = "free_y",
+              strip = strip_split(
+                c("top", "top"),
+                text_x = elem_list_text(color = c("#903345", "grey60")),
+                by_layer_x = TRUE)) +
+  scale_x_facet(PANEL == 1, limits = c(-900000000, 0), labels = abs) +
+  scale_x_facet(PANEL == 2, limits = c(0, 14000000)) +
   labs(title = "Top 10 highest-grossing tours by decade",
-       caption = "Source: Wikipedia · Graphic: Inspired by Georgios Karamanis") +
+       caption = "Source: Wikipedia · † Indicates the tour ongoing · Graphic: Inspired by Georgios Karamanis") +
   theme_minimal() +
   coord_cartesian(clip = "off") +
   theme(
+    panel.spacing.x=unit(4, "lines"),
     legend.position = "none",
-    plot.background = element_rect(fill = "grey99", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
     axis.text.y = element_blank(),
     axis.title = element_blank(),
-    panel.grid.major.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
     strip.text = element_text(size = 12, face = "bold"),
-    plot.title = element_text(face = "bold", size = 16),
-    plot.margin = margin(10, 10, 10, 10),
-    title = element_text(size = 16,
-                             family = "abril-fatface"),
+    plot.title = element_text(face = "bold",
+                              size = 20,
+                              family = "abril-fatface"),
     text = element_text(size = 9,
                             family = "lato")
-  )
+  ) +
+  scale_fill_manual(values = c("1980s" = "#434961", 
+                               "1990s" = "#421E18", 
+                               "2000s" = "#EBBED3", 
+                               "2010s" = "#AA9EB6", 
+                               "2020s" = "#A91E47"))
+
+# ggsave(
+#   file = "images/highest-grossing-tour-decade.png",
+#   width = 4,
+#   height = 8,
+#   dpi = 300
+# )
+```
+
+```{r}
+#| label: individual-decade-plot
+
+decades <- c("1980s", "1990s", "2000s", "2010s")
+
+decade_plots <- function(individual_decade){
+  
+  decade_dat <- tours_by_decade |> 
+    filter(decade == individual_decade)
+  
+  p <-
+    ggplot(decade_dat) +
+    geom_col(aes(value,
+                 fct_reorder(tour_title, year, .desc = TRUE),
+                 fill = decade)) +
+    geom_text(
+      data = decade_dat |> filter(name == "Average Gross"),
+      aes(x = 0, tour_title, label = title),
+      hjust = 0.5,
+      nudge_x = -12500000,
+      family = "lato",
+      size = 3.5
+    ) +
+    facet_grid2(
+      rows = vars(decade),
+      cols = vars(toupper(name)),
+      scales = "free",
+      space = "free_y",
+      strip = strip_split(
+        c("top", "top"),
+        text_x = elem_list_text(color = c("#903345", "grey60")),
+        by_layer_x = TRUE
+      )
+    ) +
+    scale_x_facet(PANEL == 1, limits = c(-3000000000, 0), labels = abs) +
+    scale_x_facet(PANEL == 2, limits = c(0, 14000000)) +
+    theme_minimal() +
+    coord_cartesian(clip = "off") +
+    theme(
+      panel.spacing.x = unit(15, "lines"),
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      axis.text.y = element_blank(),
+      axis.title = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      strip.text = element_text(size = 12, face = "bold"),
+      plot.title = element_text(
+        face = "bold",
+        size = 20,
+        family = "abril-fatface"
+      ),
+      text = element_text(size = 9,
+                          family = "lato")
+    ) +
+    scale_fill_manual(
+      values = c(
+        "1980s" = "#434961",
+        "1990s" = "#421E18",
+        "2000s" = "#EBBED3",
+        "2010s" = "#AA9EB6"
+      )
+    )
+  
+  save(p,
+       file = paste0("images/highest-grossing-tour-", individual_decade, ".rdata"))
+  
+}
+
+purrr::map(.f = decade_plots, .x = decades)
+```
+
+```{r}
+#| label: 2020s-decade-plot
+# https://stackoverflow.com/questions/39584669/r-dotted-predicted-above-solid-bars-in-bar-graph
+
+tour_2020_data <- 
+  tours_by_decade |> 
+  filter(decade == "2020s") |>
+  mutate(group = "b") |> 
+  add_row(adjusted_gross_in_2022_dollar = 2200000000, 
+          artist = "Taylor Swift",
+          shows = 146,
+          start_year = "2023",
+          year = as.Date("2023-01-01"),
+          name = "Adjusted Gross",
+          value = -2200000000,
+          title = "Taylor Swift The Eras Tour †",
+          tour_title = "The Eras Tour †",
+          year_s = "2023",
+          averagegross = 13928571,
+          decade = "2020s",
+          group = "a")
+
+p_2020s <-
+  tour_2020_data |>
+  ggplot() +
+    geom_col(aes(value,
+                 fct_reorder(tour_title, year, .desc = TRUE),
+                 fill = group)) +
+    geom_text(
+      data = tour_2020_data |> filter(name == "Average Gross"),
+      aes(x = 0, tour_title, label = title),
+      hjust = 0.5,
+      nudge_x = -12500000,
+      family = "lato",
+      size = 3.5
+    ) +
+    facet_grid2(
+      rows = vars(decade),
+      cols = vars(toupper(name)),
+      scales = "free",
+      space = "free_y",
+      strip = strip_split(
+        c("top", "top"),
+        text_x = elem_list_text(color = c("#903345", "grey60")),
+        by_layer_x = TRUE
+      )
+    ) +
+    scale_x_facet(PANEL == 1, limits = c(-3000000000, 0), labels = abs) +
+    scale_x_facet(PANEL == 2, limits = c(0, 14000000)) +
+    theme_minimal() +
+    coord_cartesian(clip = "off") +
+    theme(
+      panel.spacing.x = unit(15, "lines"),
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      axis.text.y = element_blank(),
+      axis.title = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      strip.text = element_text(size = 12, face = "bold"),
+      plot.title = element_text(
+        face = "bold",
+        size = 20,
+        family = "abril-fatface"
+      ),
+      text = element_text(size = 9,
+                          family = "lato")
+    ) +
+    scale_fill_manual(
+      values = c("#29384D", "#A91E47")
+      )
+
+save(p_2020s, file = "images/highest-grossing-tour-2020s.rdata")
 ```
 
 :::

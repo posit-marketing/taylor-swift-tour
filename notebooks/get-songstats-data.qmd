@@ -74,7 +74,7 @@ artist_data_list <-
 combined_artist_data <-
   bind_rows(artist_data_list)
 
-write_rds(combined_artist_data, "data/combined_artist_data.rds")
+write_rds(combined_artist_data, "secret-data/combined_artist_data.rds")
 ```
 :::
 </summary>

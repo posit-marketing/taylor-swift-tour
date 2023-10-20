@@ -8,7 +8,7 @@ library(gtExtras)
 library(ggplot2)
 
 openers <-
-  read_rds(here::here("data", "combined_artist_data.rds")) |> 
+  read_rds(here::here("secret-data", "combined_artist_data.rds")) |> 
   filter(artist != "Taylor Swift") |> 
   mutate(date = as.Date(date)) |> 
   filter(date > as.Date("2022-01-01"))
