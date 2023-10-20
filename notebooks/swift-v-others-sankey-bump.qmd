@@ -26,10 +26,9 @@ library(colorspace)
 library(ggh4x)
 ```
 
-Borrowing heavily from [Georgios Karamanis'](https://www.linkedin.com/in/georgios-karamanis-a54926153/)   [#TidyTuesday post, where he shared an alluvial bump chart made with {ggsankey} with data from UNHCR, the UN Refugee Agency](https://www.linkedin.com/posts/georgios-karamanis-a54926153_tidytuesday-rstats-dataviz-activity-7101468916958322688-7UxN) The heaviest lift came from [{`ggsankey`}, the R Package for making beautiful sankey, alluvial and sankey bump plots in ggplot2](https://github.com/davidsjoberg/ggsankey)
+Borrowing heavily from [Georgios Karamanis'](https://www.linkedin.com/in/georgios-karamanis-a54926153/) [#TidyTuesday post, where he shared an alluvial bump chart made with {ggsankey} with data from UNHCR, the UN Refugee Agency](https://www.linkedin.com/posts/georgios-karamanis-a54926153_tidytuesday-rstats-dataviz-activity-7101468916958322688-7UxN) The heaviest lift came from [{`ggsankey`}, the R Package for making beautiful sankey, alluvial and sankey bump plots in ggplot2](https://github.com/davidsjoberg/ggsankey)
 
-
-First, we're going to load our data, collected manually from Pollstar reporting over the last 20 years. Artist names need to be cleaned up, and we need to structure our dataset for the Sankey Bump plot. 
+First, we're going to load our data, collected manually from Pollstar reporting over the last 20 years. Artist names need to be cleaned up, and we need to structure our dataset for the Sankey Bump plot.
 
 ```{r}
 #| message: false
@@ -107,10 +106,9 @@ rank_concert_tours$artist <- factor(
 
 ```
 
+Now, let's use `ggplot`, `ggsankey` to build this plot.
 
-Now, let's use `ggplot`, `ggsankey` to build this plot. 
-
-The placement of much of the annotations is optimized for the square image output. 
+The placement of much of the annotations is optimized for the square image output.
 
 ```{r}
 #| message: false
@@ -120,6 +118,32 @@ The placement of much of the annotations is optimized for the square image outpu
 #| fig.show: hide
 #| fig.path: "../images/"
 #| label: tswift-v-others-sankey-square
+
+
+# Update with taylor swift colors, https://www.color-hex.com/color-palette/1029201
+#b9d2b5	(185,210,181)
+ts_pal <- tribble(
+  ~artist,                                  ~hex_color,
+  "Taylor Swift",                           "#823549",
+  "Ed Sheeran",                             "#f4cb8d", 
+  "The Rolling Stones",                     "#1EB3B3", 
+  "Bruce Springsteen & the E Street Band",  "#0041CC",
+  "U2",                                     "#76ad6d",
+  "Elton John",                             "#cc86cf",
+  "Bad Bunny",                              "#6bddfa"            
+)
+# Old colors
+# ts_pal <- tribble(
+#   ~artist,                                  ~hex_color,
+#   "Bad Bunny",                              "#1EB3B3", 
+#   "Bruce Springsteen & the E Street Band",  "#0041CC", 
+#   "Ed Sheeran",                             "#e17d17", 
+#   "Elton John",                             "#A713CC",
+#   "Taylor Swift",                           "#CE1126", 
+#   "The Rolling Stones",                     "#877DB8",
+#   "U2",                                     "#38C754"
+# )
+# ts_pal <- c("#1EB3B3","#0041CC","#e17d17","#A713CC","#CE1126","#877DB8","#38C754")
 
 # set text and position of major artist and tour annotation. 
 annot <- tribble(
@@ -135,15 +159,7 @@ annot <- tribble(
   mutate(
     label = glue("**{artist}**<br>{scales::dollar(total)} {note}")
   )
-artist_levels <- c(
-  "Taylor Swift",
-  "Ed Sheeran",
-  "The Rolling Stones",
-  "Bruce Springsteen & the E Street Band",
-  "U2",
-  "Elton John",
-  "Bad Bunny"
-)
+
 annot$artist <- factor(
   x = annot$artist,
   levels = artist_levels
@@ -152,11 +168,13 @@ annot$artist <- factor(
 f1 <- "Lato"
 f2 <- "Abril Fatface"
 
+# Borrowing (stealling liberally) from Georgios Karamanis:
 # exporting manually: 
 p <- rank_concert_tours |> 
   mutate(
     fill = artist,
-    fill = ifelse(artist %in% annot$artist, artist, NA)
+    fill = ifelse(artist %in% annot$artist, artist, NA),
+    fill = as.factor(fill)
   ) |> 
   ggplot( ) +
   # create Sankey bump plot
@@ -213,9 +231,9 @@ p <- rank_concert_tours |>
     minor_breaks = NULL
   ) +
   scale_fill_manual(
-    values = c("#1EB3B3", "#0041CC", "#e17d17", "#A713CC","#CE1126", "#877DB8","#38C754"), na.value = "grey80") +
+    values = ts_pal$hex_color, na.value = "grey80") +
   scale_color_manual(
-    values = c("#1EB3B3", "#0041CC", "#e17d17", "#A713CC","#CE1126", "#877DB8","#38C754"), na.value = "grey80") +
+    values = ts_pal$hex_color, na.value = "grey80") +
   scale_size_continuous(range = c(4, 6)) +
   coord_cartesian(clip = "off", expand = FALSE) +
   labs(
@@ -235,7 +253,7 @@ p <- rank_concert_tours |>
     plot.caption = element_text(margin = margin(10, 0, 0, 0))
   )
 
-p
+# p
 
 ggsave(
   filename = "../images/tswift-v-others-sankey-sqr.png",
@@ -255,8 +273,7 @@ ggsave(
 
 ```
 
-
-Rectangle Version, for blog post. 
+Rectangle Version, for blog post.
 
 ```{r}
 #| message: false
@@ -267,12 +284,34 @@ Rectangle Version, for blog post.
 #| fig.path: "../images/"
 #| label: tswift-v-others-sankey-rect
 
+ts_pal_fill <- tribble(
+  ~artist,                                  ~hex_color,
+  "Taylor Swift",                           "#823549",
+  "Ed Sheeran",                             "#f4cb8d", 
+  "The Rolling Stones",                     "#1EB3B3", 
+  "Bruce Springsteen & the E Street Band",  "#0041CC",
+  "U2",                                     "#76ad6d",
+  "Elton John",                             "#cc86cf",
+  "Bad Bunny",                              "#6bddfa"            
+)
+
+# Set color for annotation
+ts_pal_annotcolor <- tribble(
+  ~artist,                                  ~hex_color,
+  "Bad Bunny",                              "#6bddfa",
+  "Bruce Springsteen & the E Street Band",  "#0041CC", 
+  "Ed Sheeran",                             "#f4cb8d", 
+  "Elton John",                             "#cc86cf",
+  "Taylor Swift",                           "#823549",
+  "The Rolling Stones",                     "#1EB3B3",
+  "U2",                                     "#76ad6d"            
+)
 # set text and position of major artist and tour annotation. 
 annot <- tribble(
   ~artist, ~x, ~y, ~total, ~note, ~size,
   "The Rolling Stones",2004.5, 1100,1216000000,"between 2013-2023",5,
   "Bruce Springsteen & the E Street Band",2012,1550,268300000,"in 2016",4.9,
-  "U2", 2015, 1900, 316000000,"in 2017",4.9,
+  "U2", 2015.2, 1900, 316000000,"in 2017",4.9,
   "Ed Sheeran",2017,2200,768200000,"between 2017-2019",5.1,
   "Elton John",2020,2550,334400000,"in 2022",4.8,
   "Bad Bunny",2020,2800,373500000,"in 2022",4.8,
@@ -282,18 +321,28 @@ annot <- tribble(
     label = glue("**{artist}**<br>{scales::dollar(total)} {note}")
   )
 
+annot$artist <- factor(
+  x = annot$artist,
+  levels = artist_levels
+)
+
 f1 <- "Lato"
 f2 <- "Abril Fatface"
 
 # exporting manually: 
-p <- rank_concert_tours |> 
+p2 <- rank_concert_tours |> 
+  mutate(
+    fill = artist,
+    fill = ifelse(artist %in% annot$artist, artist, NA),
+    fill = as.factor(fill)
+  ) |> 
   ggplot( ) +
   # create Sankey bump plot
   geom_sankey_bump(
     aes(
       x = year, 
       node = artist, 
-      fill = ifelse(artist %in% annot$artist, artist, NA),
+      fill = fill,
       value = gross,
       color = after_scale(colorspace::lighten(fill, 0.4))
     ), 
@@ -323,7 +372,12 @@ p <- rank_concert_tours |>
     "text", x = 2000, y = 3500, 
     label = str_wrap("How does Taylor Swift's Eras Tour Compare to Others?", indent = 0), 
     size = 8, family = f2, fontface = "bold", hjust = 0, color = "#181716") +
-  annotate("text", x = 2000, y = 3370, label = str_wrap("This plot shows rankings and revenue from each year's top ten international music tours between 2000 and 2023. Other top tours & artists are highlighted. ", 66), 
+  annotate("text", x = 2000, y = 3370, 
+           label = paste0(
+             str_wrap("This plot shows rankings and revenue from each year's top ten international music tours between 2000 and 2023.", 60),
+             "\n",
+             "Other top tours & artists are highlighted."
+           ), 
            size = 5.5, family = f1, hjust = 0, vjust = 1, color = "#393433",
            lineheight = .9) +
   
@@ -342,9 +396,9 @@ p <- rank_concert_tours |>
     minor_breaks = NULL
   ) +
   scale_fill_manual(
-    values = c("#1EB3B3", "#0041CC", "#e17d17", "#A713CC","#CE1126", "#877DB8","#38C754"), na.value = "grey80") +
+    values = ts_pal_fill$hex_color, na.value = "grey80") +
   scale_color_manual(
-    values = c("#1EB3B3", "#0041CC", "#e17d17", "#A713CC","#CE1126", "#877DB8","#38C754"), na.value = "grey80") +
+    values = ts_pal_fill$hex_color, na.value = "grey80") +
   scale_size_continuous(range = c(4, 6)) +
   coord_cartesian(clip = "off", expand = FALSE) +
   labs(
@@ -361,14 +415,14 @@ p <- rank_concert_tours |>
     # axis.ticks.x = element_line(color = "grey70"),
     # ggh4x.axis.ticks.length.minor = rel(1),
     plot.margin = margin(20, 75, 30, 35),
-    plot.caption = element_text(margin = margin(10, 500, 0, 0))
+    plot.caption = element_text(margin = margin(10, 0, 0, 0))
   )
 
-# p
+# p2
 
 ggsave(
   filename = "../images/tswift-v-others-sankey-rect.png",
-  plot = p,
+  plot = p2,
   device = jpeg,
   path = NULL,
   scale = 1,
@@ -381,4 +435,3 @@ ggsave(
 )
 
 ```
-
