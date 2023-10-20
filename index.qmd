@@ -4,6 +4,8 @@ format:
   html:
     mainfont: Lato
 title-block-banner: images/hero.png
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r}
@@ -145,6 +147,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 #| echo: false
 #| label: taylor-performances-treemap
 #| fig-align: center
+library(treemapify)
 load(here::here("images", "taylor_treemap.rdata"))
 taylor_treemap
 ```
@@ -159,6 +162,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 #| echo: false
 #| label: gdp-comparison-plot
 #| fig-align: center
+library(ggplot2)
 load(here::here("images", "gdp_plot.rdata"))
 gdp_plot
 ```
