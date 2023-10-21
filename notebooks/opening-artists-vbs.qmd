@@ -1,0 +1,350 @@
+---
+title: "opening-artists-vbs"
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+This notebook creates plots and value boxes for the Taylor Swift opening acts section. 
+
+Some of the work here is done in `opening-data.qmd`. 
+
+-----
+
+Load data.
+
+Data to create these visualizations were granted to us under license. We may not be able to share it. 
+
+```{r}
+library(tidyverse)
+library(plotly)
+library(shiny)
+library(bslib)
+library(glue)
+library(bsicons)
+openers <-
+  read_rds(here::here("secret-data", "combined_artist_data.rds")) |> 
+  filter(artist != "Taylor Swift") |> 
+  mutate(date = as.Date(date)) |> 
+  filter(date > as.Date("2022-01-01"))
+
+```
+
+```{r}
+#| echo: false
+ggplot(
+  openers %>%
+    filter(stats.source == "shazam",
+           date > as.Date(2022-01-01)),
+  aes(x = as.Date(date), y = shazams_total)
+) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              aes(color = time_frame)) +
+  facet_wrap( ~ artist, scales = "free")
+```
+
+
+Creating a single artist's set of plots. 
+
+```{r}
+#| echo: false
+
+vbs_artists <- list()
+
+# iterate through all the artists
+for (i in 1:length(openers$artist |> unique())){
+  artist_i <- (openers$artist |> unique())[i]
+  
+  # shazam
+  
+  p_shazam <- openers |> 
+    filter(
+      stats.source == "shazam",
+      date > as.Date(2022-01-01)
+    ) |>
+    filter(
+      artist == artist_i
+    ) |> 
+    mutate(
+      date = as.Date(date)
+    ) |>
+    rename(
+      Date = date,
+      Shazams = shazams_total,
+      "Time Frame" = time_frame
+    ) |> 
+    ggplot(
+      aes(x = Date, 
+          y = Shazams,
+          text = NULL
+      )
+    ) +
+    geom_line(
+      color= "white",
+      size = 1.4
+    ) +
+    geom_smooth(
+      xmethod = "lm",
+      aes(color = `Time Frame`),
+      se = FALSE,
+      size = 0.7) +
+    scale_color_manual(
+      values=c(`after announcement`="#823549", `before announcement`="#0041CC")) +
+    theme(axis.text.x = element_text(colour="white"))
+  
+  sparkline_shazam <- p_shazam |> 
+    ggplotly(
+    ) |>
+    config(displayModeBar = F) |> 
+    layout(
+      showlegend = FALSE,
+      xaxis = list(visible = F, showgrid = F, title = ""),
+      yaxis = list(visible = F, showgrid = F, title = ""),
+      hovermode = "none",
+      margin = list(t = 0, r = 0, l = 0, b = 0),
+      font = list(color = "white"),
+      paper_bgcolor = "transparent",
+      plot_bgcolor = "transparent"
+    ) |> 
+    htmlwidgets::onRender(
+      "function(el) {
+      var ro = new ResizeObserver(function() {
+         var visible = el.offsetHeight > 200;
+         Plotly.relayout(el, {'xaxis.visible': visible});
+      });
+      ro.observe(el);
+    }"
+    )
+  
+  
+  
+  shazams_total = (openers |> 
+                     filter(
+                       artist == artist_i,
+                       source_ids == "shazam") |> 
+                     arrange(desc(date)) |> 
+                     slice(1))$shazams_total |> 
+    formatC(big.mark=",")
+  
+  
+  # YouTube
+  
+  p_yt <- openers |> 
+    filter(
+      stats.source == "youtube",
+      date > as.Date(2022-01-01)
+    ) |>
+    filter(
+      artist == artist_i
+    ) |> 
+    mutate(
+      video_views_total_2 = video_views_total,
+      date = as.Date(date)
+    ) |>
+    rename(
+      Date = date,
+      YouTube = video_views_total,
+      "Time Frame" = time_frame
+    ) |> 
+    ggplot(
+      aes(
+        x = Date, 
+        y = YouTube
+      ) 
+    ) +
+    geom_line(
+      color= "grey20",
+      size = 1.4
+    ) +
+    geom_smooth(
+      xmethod = "lm",
+      aes(color = `Time Frame`
+      ),
+      se = FALSE,
+      size = 0.7) +
+    scale_y_continuous(trans='log2') +
+    scale_color_manual(
+      values=c(`after announcement`="#efc0cc", `before announcement`="#b7c8ed")) +
+    theme(axis.text.x = element_text(colour="white"))
+  
+  sparkline_yt <- p_yt |> 
+    ggplotly(
+    ) |>
+    config(displayModeBar = F) |> 
+    layout(
+      showlegend = FALSE,
+      xaxis = list(visible = F, showgrid = F, title = ""),
+      yaxis = list(visible = F, showgrid = F, title = ""),
+      hovermode = "none",
+      margin = list(t = 0, r = 0, l = 0, b = 0),
+      font = list(color = "white"),
+      paper_bgcolor = "transparent",
+      plot_bgcolor = "transparent"
+    ) |> 
+    htmlwidgets::onRender(
+      "function(el) {
+      var ro = new ResizeObserver(function() {
+         var visible = el.offsetHeight > 200;
+         Plotly.relayout(el, {'xaxis.visible': visible});
+      });
+      ro.observe(el);
+    }"
+    )
+  
+  sparkline_yt$data[[1]]$hoverinfo='none'
+  
+  yt_subs = (openers |> 
+               filter(
+                 artist == artist_i,
+                 source_ids == "youtube") |> 
+               arrange(desc(date)) |> 
+               slice(1))$subscribers_total |> 
+    prettyNum(big.mark=",")
+  yt_views <- (openers |> 
+                 filter(
+                   artist == artist_i,
+                   source_ids == "youtube") |> 
+                 arrange(desc(date)) |> 
+                 slice(1))$video_views_total |> 
+    prettyNum(big.mark=",")
+  
+  # Spotify
+  
+  
+  
+  
+  p_spotify <- openers |> 
+    filter(
+      stats.source == "spotify",
+      date > as.Date(2022-01-01)
+    ) |>
+    filter(
+      artist == artist_i
+    ) |> 
+    mutate(
+      date = as.Date(date)
+    ) |>
+    rename(
+      Date = date,
+      `Monthly Listeners` = monthly_listeners_current,
+      "Time Frame" = time_frame
+    ) |> 
+    ggplot(
+      aes(x = Date, 
+          y = `Monthly Listeners`,
+          text = NULL
+      )
+    ) +
+    geom_line(
+      color= "grey90",
+      size = 1.4
+    ) +
+    geom_smooth(
+      xmethod = "lm",
+      aes(color = `Time Frame`),
+      se = FALSE,
+      size = 0.7) +
+    scale_color_manual(
+      values=c(`after announcement`="#823549", `before announcement`="#0041CC")) +
+    theme(axis.text.x = element_text(colour="white"))
+  
+  sparkline_spotify <- p_spotify |> 
+    ggplotly(
+    ) |>
+    config(displayModeBar = F) |> 
+    layout(
+      showlegend = FALSE,
+      xaxis = list(
+        visible = F, 
+        showgrid = F, 
+        title = list(
+          text =''
+        )
+      ),
+      yaxis = list(visible = F, showgrid = F, title = ""),
+      hovermode = "none",
+      margin = list(t = 0, r = 0, l = 0, b = 0),
+      font = list(color = "white"),
+      paper_bgcolor = "transparent",
+      plot_bgcolor = "transparent"
+    ) |> 
+    htmlwidgets::onRender(
+      "function(el) {
+      var ro = new ResizeObserver(function() {
+         var visible = el.offsetHeight > 200;
+         Plotly.relayout(el, {'xaxis.visible': visible});
+      });
+      ro.observe(el);
+    }"
+    )
+  
+  
+  
+  spotify_total = (openers |> 
+                     filter(
+                       artist == artist_i,
+                       source_ids == "spotify") |> 
+                     arrange(desc(date)) |> 
+                     slice(1))$followers_total |> 
+    formatC(big.mark=",")
+  
+  
+  # create our value boxes
+  
+  vbs_artists[[artist_i]] <- list(
+    
+    value_box(
+      title = "Artist",
+      value = h3(glue("{artist_i}")),
+      p(),
+      showcase = bs_icon("music-note-beamed"),
+      style = 'background-color: #3dadad!important;'
+    ),
+    value_box(
+      title = "YouTube subscribers",
+      h3(glue("{yt_subs}")),
+      hr(),
+      h3(glue("{yt_views}")),
+      p("Total Views"),
+      hr(),
+      p("Plot shows total channel views"),
+      p("Between Jan 2022 & Oct 2023"),
+      showcase = sparkline_yt,
+      full_screen = TRUE,
+      style = 'background-color: #b2071d!important;'
+    ),
+    value_box(
+      title = "Shazam Total Plays",
+      value = h3(glue("{shazams_total}")),
+      p(),
+      p("Plot shows total Shazams"),
+      p("Between Jan 2022 & Oct 2023"),
+      showcase = sparkline_shazam,
+      full_screen = TRUE,
+      style = 'background-color: #01a7ff!important;'
+    ),
+    value_box(
+      title = "Spotify Total Followers",
+      value = h3(glue("{spotify_total}")),
+      p(),
+      p("Plot shows monthly listeners"),
+      p("Between Jan 2022 & Oct 2023"),
+      showcase = sparkline_spotify,
+      full_screen = TRUE,
+      style = 'background-color: #1DB954!important;'
+    )
+  )
+}
+
+# layout_column_wrap(
+#   width = "300px",
+#   !!!vbs_artists[[artist_i]]
+# )
+
+
+saveRDS(vbs_artists,
+        "../data/vbs_artists.RDS")
+
+```
+

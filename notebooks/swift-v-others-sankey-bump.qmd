@@ -423,7 +423,7 @@ p2 <- rank_concert_tours |>
 # p2
 
 ggsave(
-  filename = "../images/tswift-v-others-sankey-rect.png",
+  filename = "../images/tswift-v-others-sankey-rect.jpg",
   plot = p2,
   device = jpeg,
   path = NULL,

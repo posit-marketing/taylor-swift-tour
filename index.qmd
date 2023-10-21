@@ -209,7 +209,37 @@ gdp_plot
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-`r knitr::include_graphics("images/tswift-v-other-sankey-bump.png")`
+**<a href="#" data-micromodal-trigger="mymodal" tabindex="0">
+  <div class = "zoom-img">`r knitr::include_graphics("images/tswift-v-others-sankey-rect.jpg")`</div>
+</a>**
+
+<!-- modal popup! -->
+<!-- Implementing https://jimjam-slam.github.io/quarto-experiments/modal-dialog/ -->
+
+```{ojs}
+//| include: false
+
+micro = require("micromodal@0.4.10");
+
+micro.init({
+  awaitOpenAnimation: true,
+  awaitCloseAnimation: true
+});
+```
+
+<!-- and here's the popup itself! -->
+
+:::::: {#mymodal .modal .micromodal-slide aria-hidden="true"}
+::::: {.modal__overlay tabindex="-1" data-micromodal-close="true"}
+:::: {.modal__container role="dialog" aria-modal="true" aria-labelledby="mymodal-title" top="20px"}
+<button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+::: {#modal-1-content}
+`r knitr::include_graphics("images/tswift-v-others-sankey-rect.jpg")`
+:::
+...
+::::
+:::::
+::::::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
@@ -223,7 +253,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 #| fig-align: center
 load(here::here("images", "highest-grossing-tour-1980s.rdata"))
 p
+
 ```
+
 
 Pink Floyd's "A Momentary Lapse of Reason Tour" takes the top spot of the 1980s with $135 million, which would be about $319 million today. Michael Jackson's "Bad" tour is second, making $125 million. The Rolling Stones and Bruce Springsteen also did really well. It's interesting to see that some tours had fewer shows but made more money per show, like Michael Jackson and The Rolling Stones.
 
@@ -319,4 +351,126 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 ## Openers
 
-{{< include notebooks/opener-data.qmd >}}
+
+```{r}
+#| echo: false
+
+vbs_artists <- readRDS("data/vbs_artists.RDS")
+
+```
+
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = "300px",
+  !!!vbs_artists[['Gracie Abrams']]
+)
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = "300px",
+  !!!vbs_artists[['Paramore']]
+)
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = "300px",
+  !!!vbs_artists[['Beabadoobee']]
+)
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = "300px",
+  !!!vbs_artists[['Phoebe Bridgers']]
+)
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = "300px",
+  !!!vbs_artists[['Girl In Red']]
+)
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = "300px",
+  !!!vbs_artists[['MUNA']]
+)
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = "300px",
+  !!!vbs_artists[['OWENN']]
+)
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = "300px",
+  
+  heights_equal = "row",
+  !!!vbs_artists[['HAIM']]
+)
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = "300px",
+  
+  heights_equal = "row",
+  !!!vbs_artists[['GAYLE']]
+)
+
+
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.

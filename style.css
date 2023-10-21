@@ -25,3 +25,16 @@ a {
 .quarto-title > h1.title {
   opacity: 0 !important;
 }
+
+.bslib-value-box {
+  border-radius: 8px;
+  -bslib-value-box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 50%);
+      box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 50%);
+      border-width: 0 0.5rem 1rem rgb(0 0 0 / 90%);
+
+  
+}
+
+.modal__container{
+  top: 20px;
+}
