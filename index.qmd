@@ -6,6 +6,8 @@ format:
 title-block-banner: images/hero.png
 editor_options: 
   chunk_output_type: console
+filters:
+   - lightbox
 ---
 
 ```{r}
@@ -207,39 +209,9 @@ gdp_plot
 #### Highest-grossing tours
 :::
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-**<a href="#" data-micromodal-trigger="mymodal" tabindex="0">
-  <div class = "zoom-img">`r knitr::include_graphics("images/tswift-v-others-sankey-rect.jpg")`</div>
-</a>**
+![How does Taylor Swift's Eras Tour Compare to Others?](images/tswift-v-others-sankey-rect.jpg){.lightbox}
 
-<!-- modal popup! -->
-<!-- Implementing https://jimjam-slam.github.io/quarto-experiments/modal-dialog/ -->
-
-```{ojs}
-//| include: false
-
-micro = require("micromodal@0.4.10");
-
-micro.init({
-  awaitOpenAnimation: true,
-  awaitCloseAnimation: true
-});
-```
-
-<!-- and here's the popup itself! -->
-
-:::::: {#mymodal .modal .micromodal-slide aria-hidden="true"}
-::::: {.modal__overlay tabindex="-1" data-micromodal-close="true"}
-:::: {.modal__container role="dialog" aria-modal="true" aria-labelledby="mymodal-title" top="20px"}
-<button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-::: {#modal-1-content}
-`r knitr::include_graphics("images/tswift-v-others-sankey-rect.jpg")`
-:::
-...
-::::
-:::::
-::::::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
