@@ -26,19 +26,123 @@ map_html_geo <- read_rds("data/map_html_geo.Rds")
 ## Introduction
 :::
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum.
+It’s good to be Taylor Swift. 
+
+The 33-year-old singer is a megastar like no other. 
+
+Seven months since the first show in Glendale, Arizona, her Eras Tour has done a projected \$2 billion in ticket sales and generated an additional \$6.3 billion in direct consumer spending. 
+
+Figures that are more in line with the yearly GDP of small nations than a music tour. 
+<br>
+<br>
+```{r}
+#| echo: false
+#| label: gdp-comparison-plot
+#| fig-align: center
+library(ggplot2)
+library(confetti)
+diy_confetti("confetti")
+load(here::here("images", "gdp_plot.rdata"))
+gdp_plot
+```
+
+What’s remarkable is that the Eras Tour has lined up every demographic and knocked them down like bowling pins. 
+
+It’s almost unfathomable to think that you don’t know at least someone who went. 
+
+She’s always had teenage girls and moms. But now she has the dads, boyfriends, [billionaire tech CEOs](https://people.com/girl-dad-mark-zuckerberg-brings-family-to-taylor-swift-eras-tour-7567325), and even [NFL linemen](https://www.billboard.com/music/music-news/jj-watt-taylor-swift-eras-tour-reaction-1235289563/) singing _karma is my boyfriend_ as <b onmouseover="trigger_con()">confetti</b> falls and fireworks shoot into the night sky of whatever city-turned-Taylorpalooza she’s touring in that evening.
+
+She is the undisputed queen on the pop-culture chessboard, moving seven spaces left, right, up, down, and diagonally, from city to city, picking up everyone in her way and leaving no crumbs. 
+
+Just how permeating is Taylor Swift this year? 
+
+She and The Eras Tour have done the seemingly impossible: displace football (and virtually every other topic) as the most powerful weekly constant in America’s weekly media diet. 
+
+And speaking of football, her new love interest, [NFL superstar Travis Kelce](https://www.rollingstone.com/music/music-news/taylor-swift-travis-kelces-complete-timeline-1234853777/), is being called out by another [NFL superstar Aaron Rodgers](https://www.youtube.com/watch?v=3IANdT1GdRE), for starring in a Pfizer commercial. Just months _after_ Aaron Rodgers [went viral](https://www.greenbaypressgazette.com/story/sports/nfl/packers/fans/2023/05/30/aaron-rodgers-shows-off-his-swiftie-moves-at-taylor-swifts-eras-tour/70268160007/) for dancing to the live rendition of Style at Taylor’s concert in East Rutherford, New Jersey. 
+
+All while [CBS Sports](https://www.cbssports.com/nfl/news/look-taylor-swift-arrives-at-broncos-chiefs-thursday-night-game-to-watch-travis-kelce/), [Fox Sports](https://www.foxsports.com/stories/nfl/taylor-swift-expected-to-attend-chiefs-broncos-travis-kelce-questionable), and [ESPN](https://www.espn.com/video/clip/_/id/38647723) simply can’t keep their cameras focused on the football field, but instead, on her.
+
+It’s fitting that she shouldered her way into the spotlight of one of America’s most sacred traditions: Sunday football, a ritual traditionally associated with beer-drinking boyfriends and middle-aged men who want nothing to do with pop culture. 
+
+Yet, there’s Taylor on their screens. 
+
+The Eras Tour has simply transcended music. If you were planning to release a song or tour, do it next year. Beetmania, The Rolling Stones, Coldplay, Michael Jackson - Taylor trumps them all. 
+We’re so fascinated by the cultural and economic movement that is The Eras Tour, that we wanted to break it down ourselves. Let’s see what the data says.
 
 ::: {style="font-family: Abril Fatface"}
-## The Eras Tour
+## Setting the stage
 :::
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum. 
+Taylor Swift’s first tour in 5 years kicked off in Glendale, Arizona, on March 17th, after six months of rabid internet behavior by millions of Swifties doing everything and anything trying to get a ticket. 
 
-{{< video https://www.youtube.com/embed/KudedLV0tP0?si=lGitLqDuHeJ6W_Hi >}}
+Demand was crushing. And Ticketmaster, the sole supplier of 2023’s golden ticket, [totally botched it](https://www.bbc.com/news/entertainment-arts-64384304).
+
+Some lucky fans were given presale codes. Most were demoted to a waitlist. The only two other options were testing your luck during the general sale (following the presale) or preparing yourself to swallow the stomach-churning premiums priced into resale tickets. 
+
+None of those logistical details ended up meaning anything. 
+
+On November 15th, the first day of the pre-sale, Ticketmaster’s website crashed within an hour, leaving most fans with presale codes stranded in confusion and endlessly bouncing around in the purchase queue.
+
+<center>
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@pineapplepaperco/video/7166268846976896299" data-video-id="7166268846976896299" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@pineapplepaperco" href="https://www.tiktok.com/@pineapplepaperco?refer=embed">@pineapplepaperco</a> Thanks Ticketmaster, for being lame. 😡😡😡😡 We will see how this plays out I guess <a title="taylorswift" target="_blank" href="https://www.tiktok.com/tag/taylorswift?refer=embed">#taylorswift</a> <a title="taylornation" target="_blank" href="https://www.tiktok.com/tag/taylornation?refer=embed">#taylornation</a> <a title="taylorswiftchallenge" target="_blank" href="https://www.tiktok.com/tag/taylorswiftchallenge?refer=embed">#taylorswiftchallenge</a> <a target="_blank" title="♬ Anti-Hero - Taylor Swift" href="https://www.tiktok.com/music/Anti-Hero-7156822419213125634?refer=embed">♬ Anti-Hero - Taylor Swift</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
+</center>
+
+
+There may be some rhyme or reason to which fans were able to get tickets, but the simplest (and non-scientific) way to explain it is that a majority of Swifties, presale code or not, were simply ~~shit~~ entirely out of luck. 
+
+Popular gambling website Bookies.com estimates that [only 5% of fans with presale codes](https://bookies.com/picks/taylor-swift-tickets-odds#:~:text=According%20to%20our%20calculations%2C%20you,via%20the%20Taylor%20Swift%20presale.) could purchase a ticket directly via the process.
+
+Ticketmaster then double-downed on its incompetency, canceling the general sale of tickets, causing the price of resale tickets to [surge to thousands of dollars per ticket](https://www.businessinsider.com/resale-price-taylor-swift-eras-tour-reputation-ticket-pitchfork-report-2023-8) for some shows.
+
+All of this triggered what can most aptly be called the Taylor Economy. 
+
+Millions of Swifties hit up every person they could think of who had a shot at procuring them tickets. Estranged family members, coworkers they don’t particularly like, sisters of ex-boyfriends – hopeful tour goers sent out feelers equivalent to a shameless “u up?” 2 AM text to any potential lead. 
+
+The algebra suddenly became _it’s cheaper to fly to Denver and spend a night at a hotel than it is to see her just 15 minutes away in Downtown LA. _
+
+Speaking of hospitality, every major hotel chain and airline CFO needs to put Taylor Swift on their lists of people who deserve a generous bonus come the holiday season. 
+
+According to research firm STR, The Eras Tour [generated almost $100M in hotel revenue](https://str.com/data-insights-blog/us-hotel-performance-enchanted-by-taylor-swifts-eras-tour) in its first three months. 
+
+In Cincinnati, a single room at the Days Inn was going for [over $1,000 during her tour dates](https://www.cincinnati.com/story/entertainment/2023/06/07/where-to-stay-cincinnati-taylor-swift-concert/70298225007/), compared to just $72 one week later. [In Atlanta](https://www.bizjournals.com/atlanta/news/2023/03/31/swifties-surge-taylor-swift-hotel-prices.html), $900.
+
+The power of Taylor Swift is that none of this chaos ultimately mattered. 
+
+She [denounced Ticketmaster](https://musicmayhemmagazine.com/taylor-swift-breaks-silence-on-eras-tour-ticketmaster-fiasco-issues-statement-apologizing-to-fans/) in an Instagram story and apologized to her fans, comparing the process of getting a ticket to going through _several_ bear attacks. 
+
+And on March 17th, kicked off the tour with _Miss Americana & The Heartbreak Prince _in front of 75,000 [shrieking, crying, and euphoric Swifties](https://youtu.be/GSVrEZCmfPM?si=6tGUaglLgK2I6vYf) at State Farm Stadium. The several bear attacks endured to get there – forgotten.
 
 ::: {style="font-family: Abril Fatface"}
-### Setting the stage
+## Attendance
 :::
+
+Seven months in, there’s no other way to put it. 
+
+The Eras Tour is a massive success. 
+
+Over 10 million estimated attendees. $2 billion in estimated gross revenue. 17 countries. 50 cities. Almost 150 shows. 44 songs topping 3 hours. 
+
+To put these numbers into perspective, her 2018 Reputation Tour had 3 million attendees and did only $345 million gross. 
+
+```{r}
+#| echo: false
+#| label: taylor-performances-treemap
+#| fig-align: center
+library(treemapify)
+load(here::here("images", "taylor_treemap.rdata"))
+taylor_treemap
+```
+
+The Eras Tour will also dwarf every other tour in the history of music performance-wise. 
+
+![](images/tswift-v-others-sankey-rect.jpg)
+
+Within this context, the Eras Tour is staggering. 
+
+You can flip through and across decades in the application below and reach the same conclusion we did: there is simply no one like Taylor Swift and nothing like this tour. 
+
+Not the Rolling Stones. Not Bruce Springsteenen. Not Elton John, Ed Sheeran, or U2. 
+
 
 ```{r}
 #| echo: false
@@ -113,9 +217,7 @@ layout_column_wrap(
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. 
 
-::: {style="font-family: Abril Fatface"}
-### Attendance
-:::
+
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
@@ -181,37 +283,12 @@ leaflet(options = leafletOptions(zoomControl = FALSE,
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-```{r}
-#| echo: false
-#| label: taylor-performances-treemap
-#| fig-align: center
-library(treemapify)
-load(here::here("images", "taylor_treemap.rdata"))
-taylor_treemap
-```
 
 ::: {style="font-family: Abril Fatface"}
 ### Revenue
 :::
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-```{r}
-#| echo: false
-#| label: gdp-comparison-plot
-#| fig-align: center
-library(ggplot2)
-load(here::here("images", "gdp_plot.rdata"))
-gdp_plot
-```
-
-::: {style="font-family: Abril Fatface"}
-#### Highest-grossing tours
-:::
-
-
-![How does Taylor Swift's Eras Tour Compare to Others?](images/tswift-v-others-sankey-rect.jpg){.lightbox}
-
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 

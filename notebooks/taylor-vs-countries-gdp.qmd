@@ -24,19 +24,19 @@ showtext::showtext_auto()
 
 ```{r}
 #| eval: false
-url <-
+url_gdp <-
   "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)"
 
-url_bow <- polite::bow(url)
-url_bow
+url_gdp_bow <- polite::bow(url_gdp)
+url_gdp_bow
 
-ind_html <-
-  polite::scrape(url_bow) |>  # <1>
-  rvest::html_nodes("table.wikitable") |> # <2>
+gdp_html <-
+  polite::scrape(url_gdp_bow) |>
+  rvest::html_nodes("table.wikitable") |>
   rvest::html_table(fill = TRUE) 
 
-ind_tab <- 
-  ind_html[[1]] |> 
+gdp_tab <- 
+  gdp_html[[1]] |> 
   janitor::clean_names() |> 
   slice(-1) |> 
   dplyr::mutate(across(
@@ -47,19 +47,20 @@ ind_tab <-
   )) |> 
   filter(world_bank_14 < 10000 & world_bank_14 > 4900) |> 
   arrange(desc(world_bank_14))
-url <-
+
+url_gdp <-
   "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)"
 
-url_bow <- polite::bow(url)
-url_bow
+url_gdp_bow <- polite::bow(url_gdp)
+url_gdp_bow
 
-ind_html <-
-  polite::scrape(url_bow) |>  # <1>
+gdp_html <-
+  polite::scrape(url_gdp_bow) |>  # <1>
   rvest::html_nodes("table.wikitable") |> # <2>
   rvest::html_table(fill = TRUE) 
 
-ind_tab <- 
-  ind_html[[1]] |> 
+gdp_tab <- 
+  gdp_html[[1]] |> 
   janitor::clean_names() |> 
   slice(-1) |> 
   dplyr::mutate(across(
@@ -71,7 +72,7 @@ ind_tab <-
   filter(world_bank_14 < 10000 & world_bank_14 > 4000) |> 
   arrange(desc(world_bank_14))
 
-countries <- unique(ind_tab$country_territory)
+countries <- unique(gdp_tab$country_territory)
 ```
 
 ```{r}
@@ -114,9 +115,9 @@ country_plots <- function(country, fill){
     coord_sf() +
     theme_void() +
     labs(
-      title = ind_tab |> filter(country_territory == country) |> pull(country_territory),
+      title = gdp_tab |> filter(country_territory == country) |> pull(country_territory),
       subtitle = scales::dollar(
-        ind_tab |> filter(country_territory == country) |> pull(world_bank_14),
+        gdp_tab |> filter(country_territory == country) |> pull(world_bank_14),
         scale = 1e6
       )
     ) +
@@ -151,7 +152,7 @@ p_blank <-
     title = element_text(size = 24,
                          family = "abril-fatface",
                          hjust = 1,
-                         color = "#434961"))
+                         color = "#823549"))
 ```
 
 ```{r}
@@ -159,7 +160,7 @@ p_blank <-
 gdp_plot <-
   plot_grid(p_Kosovo, p_Somalia, p_Togo, p_Bermuda, p_blank, p_Montenegro, p_Barbados, p_Fiji, p_Eswatini, align = "v" ) + 
   draw_image(
-    here::here("notebooks", "t_swift.jpg"),
+    here::here("notebooks", "t_swift.png"),
     x = 0.4,
     y = 0.35,
     width = 0.2,
@@ -168,4 +169,3 @@ gdp_plot <-
 
 save(gdp_plot, file = here::here("images", "gdp_plot.rdata"))
 ```
-
