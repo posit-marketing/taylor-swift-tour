@@ -436,16 +436,22 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 layout_column_wrap(
   width = 1/2,
-  height = 550,
+  height = 220,
   card(
     card_header(h3("Paramore")),
     card_image(
       file = "images/artists/paramore.PNG",
-      height = "167px",
-      width = "200px"
+      height = "300px",
+      width = "140"
     )
   ),
-   !!!vbs_artists[['Paramore']]
+   !!!vbs_artists[['Paramore']][1]
+)
+br()
+layout_column_wrap(
+  width = 1/2,
+  height = 200,
+  !!!vbs_artists[['Beabadoobee']][2:3]
 )
 
 ```
@@ -459,18 +465,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 layout_column_wrap(
   width = 1/2,
-  height = 550,
+  height = 220,
   card(
     card_header(h3("Beabadoobee")),
     card_image(
       file = "images/artists/beabadobee.PNG",
-      height = "200px",
-      width = "110px"
+      height = "150px",
+      width = "80px"
     )
   ),
-   !!!vbs_artists[['Beabadoobee']]
+   !!!vbs_artists[['Beabadoobee']][1]
 )
-
+br()
+layout_column_wrap(
+  width = 1/2,
+  height = 200,
+  !!!vbs_artists[['Beabadoobee']][2:3]
+)
 ```
 
 

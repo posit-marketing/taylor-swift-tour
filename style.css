@@ -44,8 +44,8 @@ a {
   
     border-radius: 8px;
   -bslib-value-box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 50%);
-      box-shadow: 0 0.2rem .5rem rgb(0 0 0 / 20%);
-      border-width: 0 0.2rem .5rem rgb(0 0 0 / 40%);
+      box-shadow: 0 0.2rem .5rem rgb(0 0 0 / 02%);
+      border-width: 0 0.2rem .5rem rgb(0 0 0 / 05%);
 
 }
 .card-header {

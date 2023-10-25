@@ -311,8 +311,7 @@ for (i in 1:length(openers$artist |> unique())){
       h3(glue("{yt_views}")),
       p("Total Views"),
       hr(),
-      p("Plot shows total channel views"),
-      p("Between Jan 2022 & Oct 2023"),
+      p("Plot shows total channel views, Jan 2022 to Oct 2023"),
       showcase = sparkline_yt,
       full_screen = TRUE,
       style = 'background-color: #b2071d!important;'
