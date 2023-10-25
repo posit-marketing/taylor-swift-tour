@@ -43,7 +43,7 @@ format:
   html:
     theme: cosmo
     mainfont: Lato
-    page-layout: full
+    page-layout: article
     css: style.css
     toc: true
     toc-location: left
