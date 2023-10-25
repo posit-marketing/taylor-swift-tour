@@ -17,6 +17,7 @@ library(leaflet)
 library(bslib)
 library(bsicons)
 library(shiny)
+library(htmltools)
 source(knitr::purl("notebooks/highest-grossing-tours-r.qmd"))
 map_html_geo <- read_rds("data/map_html_geo.Rds")
 ```
@@ -415,18 +416,136 @@ vbs_artists <- readRDS("data/vbs_artists.RDS")
 ```{r}
 #| echo: false
 
-layout_column_wrap(
-  width = 1/2,
-  height = 550,
-  card(
-    card_header(h3("Gracie Abrams")),
-    card_image(
-      file = "images/artists/gracie.PNG",
-      height = "250px",
-      width = "110px"
+
+
+card(
+  card_header(
+    a(
+      style = 'color: var(--bs-body-color);text-decoration:none;',
+      h3("Gracie Abrams"),
+      href = "https://open.spotify.com/artist/4tuJ0bMpJh08umKkEXKUI5"
     )
   ),
-  !!!vbs_artists[['Gracie Abrams']]
+  
+  
+  
+  layout_column_wrap(
+    width = NULL, height = 300, fill = FALSE,
+    style = css(grid_template_columns = "1fr 3fr"),
+    
+    card_image(
+      file = "images/artists/gracie.PNG",
+      max_height = "200px",
+      max_width = "200px",
+      width = "150px",
+      fill = FALSE
+    ),
+    
+    card(
+      p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula."),
+      p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula."),
+      style = "border:0px;"
+    )
+    
+  )
+)
+
+layout_column_wrap(
+  width = 1/2,
+  height = 200,
+  !!!vbs_artists[['Gracie Abrams']][2:3]
+)
+
+
+```
+
+<br><br>
+
+<hr>
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = 1/2,
+  height = 600,
+  
+  
+  layout_column_wrap(
+    width = 1,
+    height = 300,
+    card(
+      card_header(
+        a(
+          style = 'color: var(--bs-body-color);text-decoration:none;',
+          h3("Gracie Abrams"),
+          href = "https://open.spotify.com/artist/4tuJ0bMpJh08umKkEXKUI5"
+        )
+      ),
+      layout_column_wrap(
+        width = 1/2,
+        height = 300,
+        card_image(
+          file = "images/artists/gracie.PNG",
+          max_height = "200px",
+          max_width = "200px",
+          width = "150px",
+          fill = FALSE
+        ),
+        card(
+          p("something short"),
+          p("Somethign else short"),
+          style = "border:0px;"
+        )
+      )
+      
+    )
+  ),
+  
+  layout_column_wrap(
+    width = 1,
+    height = 600,
+    !!!vbs_artists[['Gracie Abrams']]
+  )
+  
+  
+  
+)
+
+
+```
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+
+<hr>
+
+```{r}
+#| echo: false
+
+layout_column_wrap(
+  width = 1/2,
+  height = 220,
+  card(
+    card_header(
+      a(
+        style = 'color: var(--bs-body-color);text-decoration:none;',
+        h3("Gracie Abrams"),
+        href = "https://open.spotify.com/artist/4tuJ0bMpJh08umKkEXKUI5"
+      )
+    ),
+    card_image(
+      file = "images/artists/gracie.PNG",
+      height = "220px",
+      width = "80px"
+    )
+  ),
+  !!!vbs_artists[['Gracie Abrams']][1]
+)
+br()
+layout_column_wrap(
+  width = 1/2,
+  height = 200,
+  !!!vbs_artists[['Gracie Abrams']][2:3]
 )
 
 ```
@@ -441,20 +560,26 @@ layout_column_wrap(
   width = 1/2,
   height = 220,
   card(
-    card_header(h3("Paramore")),
+    card_header(
+      a(
+        style = 'color: var(--bs-body-color);text-decoration:none;',
+        h3("Paramore"),
+        href = "https://open.spotify.com/artist/74XFHRwlV6OrjEM0A2NCMF"
+      )
+    ),
     card_image(
       file = "images/artists/paramore.PNG",
       height = "300px",
       width = "140"
     )
   ),
-   !!!vbs_artists[['Paramore']][1]
+  !!!vbs_artists[['Paramore']][1]
 )
 br()
 layout_column_wrap(
   width = 1/2,
   height = 200,
-  !!!vbs_artists[['Beabadoobee']][2:3]
+  !!!vbs_artists[['Paramore']][2:3]
 )
 
 ```
@@ -470,14 +595,20 @@ layout_column_wrap(
   width = 1/2,
   height = 220,
   card(
-    card_header(h3("Beabadoobee")),
+    card_header(
+      a(
+        style = 'color: var(--bs-body-color);text-decoration:none;',
+        h3("Beabadoobee"),
+        href = "https://open.spotify.com/artist/35l9BRT7MXmM8bv2WDQiyB"
+      )
+    ),
     card_image(
       file = "images/artists/beabadobee.PNG",
       height = "150px",
       width = "80px"
     )
   ),
-   !!!vbs_artists[['Beabadoobee']][1]
+  !!!vbs_artists[['Beabadoobee']][1]
 )
 br()
 layout_column_wrap(
@@ -485,6 +616,7 @@ layout_column_wrap(
   height = 200,
   !!!vbs_artists[['Beabadoobee']][2:3]
 )
+
 ```
 
 
@@ -495,17 +627,30 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 layout_column_wrap(
   width = 1/2,
-  height = 550,
+  height = 220,
   card(
-    card_header(h3("Phoebe Bridgers")),
+    card_header(
+      a(
+        style = 'color: var(--bs-body-color);text-decoration:none;',
+        h3("Phoebe Bridgers"),
+        href = "https://open.spotify.com/artist/1r1uxoy19fzMxunt3ONAkG"
+      )
+    ),
     card_image(
       file = "images/artists/Phoebe.PNG",
       height = "200px",
-      width = "110px"
+      width = "70px"
     )
   ),
-   !!!vbs_artists[['Phoebe Bridgers']]
+  !!!vbs_artists[['Phoebe Bridgers']][1]
 )
+br()
+layout_column_wrap(
+  width = 1/2,
+  height = 200,
+  !!!vbs_artists[['Phoebe Bridgers']][2:3]
+)
+
 ```
 
 

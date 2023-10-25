@@ -49,6 +49,14 @@ Creating a single artist's set of plots.
 ```{r}
 #| echo: false
 
+# yt_color <- "#b2071d"
+# spotify_color <- "#1DB954"
+# shazam_color <- "#01a7ff"
+
+yt_color <- "#d1b2d2"
+spotify_color <- "#b9d2b5"
+shazam_color <- "#b5e9f6"
+  
 vbs_artists <- list()
 
 # iterate through all the artists
@@ -175,10 +183,8 @@ for (i in 1:length(openers$artist |> unique())){
     config(displayModeBar = F) |> 
     layout(
       showlegend = FALSE,
-      xaxis = list(visible = F, showgrid = F, title = "",
-                   mirror=FALSE,showline=FALSE),
-      yaxis = list(visible = F, showgrid = F, title = "",
-                   mirror=FALSE,showline=FALSE),
+      xaxis = list(visible = F, showgrid = F, title = ""),
+      yaxis = list(visible = F, showgrid = F, title = ""),
       hovermode = "none",
       margin = list(t = 0, r = 0, l = 0, b = 0),
       font = list(color = "white"),
@@ -260,10 +266,7 @@ for (i in 1:length(openers$artist |> unique())){
       showlegend = FALSE,
       xaxis = list(
         visible = F, 
-        showgrid = F, 
-        title = list(
-          text =''
-        )
+        showgrid = F
       ),
       yaxis = list(visible = F, showgrid = F, title = ""),
       hovermode = "none",
@@ -314,7 +317,7 @@ for (i in 1:length(openers$artist |> unique())){
       p("Plot shows total channel views, Jan 2022 to Oct 2023"),
       showcase = sparkline_yt,
       full_screen = TRUE,
-      style = 'background-color: #b2071d!important;'
+      style = glue('background-color: {yt_color}!important;')
     ),
     value_box(
       title = "Shazam Total Plays",
@@ -324,7 +327,7 @@ for (i in 1:length(openers$artist |> unique())){
       p("Between Jan 2022 & Oct 2023"),
       showcase = sparkline_shazam,
       full_screen = TRUE,
-      style = 'background-color: #01a7ff!important;'
+      style = glue('background-color: {shazam_color}!important;')
     ),
     value_box(
       title = "Spotify Total Followers",
@@ -334,15 +337,15 @@ for (i in 1:length(openers$artist |> unique())){
       p("Between Jan 2022 & Oct 2023"),
       showcase = sparkline_spotify,
       full_screen = TRUE,
-      style = 'background-color: #1DB954!important;'
+      style = glue('background-color: {spotify_color}!important;')
     )
   )
 }
 
-# layout_column_wrap(
-#   width = "300px",
-#   !!!vbs_artists[[artist_i]]
-# )
+layout_column_wrap(
+  width = "300px",
+  !!!vbs_artists[[artist_i]]
+)
 
 
 saveRDS(
