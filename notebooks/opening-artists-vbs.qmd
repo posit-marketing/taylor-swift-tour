@@ -53,9 +53,9 @@ Creating a single artist's set of plots.
 # spotify_color <- "#1DB954"
 # shazam_color <- "#01a7ff"
 
-yt_color <- "#d1b2d2"
-spotify_color <- "#b9d2b5"
-shazam_color <- "#b5e9f6"
+yt_color <- "#c681c8"
+spotify_color <- "#8dd07f"
+shazam_color <- "#6fc3d8"
   
 vbs_artists <- list()
 
@@ -161,7 +161,7 @@ for (i in 1:length(openers$artist |> unique())){
       ) 
     ) +
     geom_line(
-      color= "grey20",
+      color= "white",
       size = 1.4
     ) +
     geom_smooth(
