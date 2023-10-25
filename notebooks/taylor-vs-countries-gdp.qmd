@@ -1,7 +1,8 @@
+
 ```{r}
 #| message: false
 #| warning: false
-#| eval: false
+#| eval: true
 # To clean data
 library(tidyverse)
 library(janitor)
@@ -23,7 +24,7 @@ showtext::showtext_auto()
 ```
 
 ```{r}
-#| eval: false
+#| eval: true
 url_gdp <-
   "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)"
 
@@ -35,17 +36,17 @@ gdp_html <-
   rvest::html_nodes("table.wikitable") |>
   rvest::html_table(fill = TRUE) 
 
-gdp_tab <- 
-  gdp_html[[1]] |> 
-  janitor::clean_names() |> 
-  slice(-1) |> 
+gdp_tab <-
+  gdp_html[[1]] |>
+  janitor::clean_names() |>
+  slice(-1) |>
   dplyr::mutate(across(
     c(imf_1_13,
       world_bank_14,
       united_nations_15),
     ~ as.numeric(str_replace_all(.x, "[$,]", ""))
-  )) |> 
-  filter(world_bank_14 < 10000 & world_bank_14 > 4900) |> 
+  )) |>
+  filter(world_bank_14 < 10000 & world_bank_14 > 4900) |>
   arrange(desc(world_bank_14))
 
 url_gdp <-
@@ -55,28 +56,28 @@ url_gdp_bow <- polite::bow(url_gdp)
 url_gdp_bow
 
 gdp_html <-
-  polite::scrape(url_gdp_bow) |>  # <1>
-  rvest::html_nodes("table.wikitable") |> # <2>
+  polite::scrape(url_gdp_bow) |>
+  rvest::html_nodes("table.wikitable") |>
   rvest::html_table(fill = TRUE) 
 
-gdp_tab <- 
-  gdp_html[[1]] |> 
-  janitor::clean_names() |> 
-  slice(-1) |> 
+gdp_tab <-
+  gdp_html[[1]] |>
+  janitor::clean_names() |>
+  slice(-1) |>
   dplyr::mutate(across(
     c(imf_1_13,
       world_bank_14,
       united_nations_15),
     ~ as.numeric(str_replace_all(.x, "[$,]", ""))
-  )) |> 
-  filter(world_bank_14 < 10000 & world_bank_14 > 4000) |> 
+  )) |>
+  filter(world_bank_14 < 10000 & world_bank_14 > 4000) |>
   arrange(desc(world_bank_14))
 
 countries <- unique(gdp_tab$country_territory)
 ```
 
 ```{r}
-#| eval: false
+#| eval: true
 library(rnaturalearth)
 
 fiji <- 
@@ -90,20 +91,23 @@ p_Fiji <-
     crs = 3460, # https://epsg.io/3460
     ) +
   theme_void() +
-  labs(title = ind_tab |> filter(country_territory == "Fiji") |> pull(country_territory),
-       subtitle = scales::dollar(ind_tab |> filter(country_territory == "Fiji") |> pull(world_bank_14), scale=1e6)) +
+  labs(title = gdp_tab |> filter(country_territory == "Fiji") |> pull(country_territory),
+       subtitle = scales::dollar(gdp_tab |> filter(country_territory == "Fiji") |> pull(world_bank_14), big.mark = ".", scale = 1e-3, suffix = "B")) +
     theme(
       plot.subtitle = element_text(size = 12,
+                                   margin = margin(5.5, 0, 8.5, 0, unit = "pt"), 
                                    family = "lato",
                                    hjust = 0.5),
-      plot.title = element_text(hjust = 0.5),
+      plot.title = element_text(hjust = 0.5,
+                                margin = margin(24, 0, 5.5, 0, unit = "pt"), ),
       title = element_text(size = 16,
-                           family = "abril-fatface")
+                           family = "abril-fatface",
+                           margin = margin(24, 0, 5.5, 0, unit = "pt"), )
     )
 
 countries <- c("Kosovo", "Somalia", "Togo", "Bermuda", "Montenegro", "Barbados", "Eswatini")
 
-colors <- c("#b9d2b5", "#f4cb8d", "#d1b2d2", "#b5e9f6", "#F9B2D0", "#CFCAC6", "#C8AE95")
+colors <- c("#b9d2b5", "#f4cb8d", "#d1b2d2", "#CFCAC6", "#C8AE95", "#b5e9f6", "#F9B2D0")
   
 country_plots <- function(country, fill){
   country_data <-
@@ -117,16 +121,19 @@ country_plots <- function(country, fill){
     labs(
       title = gdp_tab |> filter(country_territory == country) |> pull(country_territory),
       subtitle = scales::dollar(
-        gdp_tab |> filter(country_territory == country) |> pull(world_bank_14),
-        scale = 1e6
+        gdp_tab |> filter(country_territory == country) |> pull(world_bank_14), big.mark = ".", scale = 1e-3, suffix = "B"
       )
     ) +
     theme(
       plot.subtitle = element_text(size = 12,
                                    family = "lato",
+                                   margin = margin(5.5, 0, 8.5, 0, unit = "pt"), 
                                    hjust = 0.5),
-      plot.title = element_text(hjust = 0.5),
+      plot.title = element_text(hjust = 0.5,
+                                lineheight = 6.5,
+                                margin = margin(24, 0, 5.5, 0, unit = "pt")),
       title = element_text(size = 16,
+                           margin = margin(24, 0, 5.5, 0, unit = "pt"), 
                            family = "abril-fatface")
     )
   
@@ -142,30 +149,44 @@ purrr::map2(.f = country_plots, .x = countries, .y = colors)
 p_blank <-
   ggplot() +
   labs(title = "Taylor Swift",
-       subtitle = "$6,300,000,000") +
+       subtitle = "$6.30B") +
   theme_void() +
   theme(
-    plot.subtitle = element_text(size = 12,
+    plot.subtitle = element_text(margin = margin(5.5, 0, 5.5, 0, unit = "pt"), 
+                                 size = 12,
                                  family = "lato",
                                  hjust = 0.5),
-    plot.title = element_text(hjust = 0.5),
-    title = element_text(size = 24,
+    plot.title = element_text(hjust = 0.5,
+                              margin = margin(24, 0, 5.5, 0, unit = "pt")),
+    title = element_text(margin = margin(24, 0, 5.5, 0, unit = "pt"), 
+                         size = 24,
                          family = "abril-fatface",
                          hjust = 1,
                          color = "#823549"))
 ```
 
 ```{r}
-#| eval: false
-gdp_plot <-
-  plot_grid(p_Kosovo, p_Somalia, p_Togo, p_Bermuda, p_blank, p_Montenegro, p_Barbados, p_Fiji, p_Eswatini, align = "v" ) + 
+#| eval: true
+(gdp_plot <-
+  plot_grid(
+    p_Kosovo,
+    p_Somalia,
+    p_Togo,
+    p_Bermuda,
+    p_blank,
+    p_Montenegro,
+    p_Barbados,
+    p_Fiji,
+    p_Eswatini,
+    align = "v"
+  ) +
   draw_image(
     here::here("notebooks", "t_swift.png"),
     x = 0.4,
-    y = 0.35,
+    y = 0.3,
     width = 0.2,
     height = 0.2
-  )
+  ))
 
 save(gdp_plot, file = here::here("images", "gdp_plot.rdata"))
 ```
