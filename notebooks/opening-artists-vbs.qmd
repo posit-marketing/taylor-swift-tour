@@ -5,15 +5,15 @@ editor_options:
   chunk_output_type: console
 ---
 
-This notebook creates plots and value boxes for the Taylor Swift opening acts section. 
+This notebook creates plots and value boxes for the Taylor Swift opening acts section.
 
-Some of the work here is done in `opening-data.qmd`. 
+Some of the work here is done in `opening-data.qmd`.
 
------
+------------------------------------------------------------------------
 
 Load data.
 
-Data to create these visualizations were granted to us under license. We may not be able to share it. 
+Data to create these visualizations were granted to us under license. We may not be able to share it.
 
 ```{r}
 library(tidyverse)
@@ -44,8 +44,7 @@ ggplot(
   facet_wrap( ~ artist, scales = "free")
 ```
 
-
-Creating a single artist's set of plots. 
+Creating a single artist's set of plots.
 
 ```{r}
 #| echo: false
@@ -166,7 +165,9 @@ for (i in 1:length(openers$artist |> unique())){
     scale_y_continuous(trans='log2') +
     scale_color_manual(
       values=c(`after announcement`="#efc0cc", `before announcement`="#b7c8ed")) +
-    theme(axis.text.x = element_text(colour="white"))
+    theme(
+      axis.text.x = element_text(colour="white")
+    )
   
   sparkline_yt <- p_yt |> 
     ggplotly(
@@ -174,8 +175,10 @@ for (i in 1:length(openers$artist |> unique())){
     config(displayModeBar = F) |> 
     layout(
       showlegend = FALSE,
-      xaxis = list(visible = F, showgrid = F, title = ""),
-      yaxis = list(visible = F, showgrid = F, title = ""),
+      xaxis = list(visible = F, showgrid = F, title = "",
+                   mirror=FALSE,showline=FALSE),
+      yaxis = list(visible = F, showgrid = F, title = "",
+                   mirror=FALSE,showline=FALSE),
       hovermode = "none",
       margin = list(t = 0, r = 0, l = 0, b = 0),
       font = list(color = "white"),
@@ -294,13 +297,13 @@ for (i in 1:length(openers$artist |> unique())){
   
   vbs_artists[[artist_i]] <- list(
     
-    value_box(
-      title = "Artist",
-      value = h3(glue("{artist_i}")),
-      p(),
-      showcase = bs_icon("music-note-beamed"),
-      style = 'background-color: #3dadad!important;'
-    ),
+    # value_box(
+    #   title = "Artist",
+    #   value = h3(glue("{artist_i}")),
+    #   p(),
+    #   showcase = bs_icon("music-note-beamed"),
+    #   style = 'background-color: #3dadad!important;'
+    # ),
     value_box(
       title = "YouTube subscribers",
       h3(glue("{yt_subs}")),
@@ -343,8 +346,9 @@ for (i in 1:length(openers$artist |> unique())){
 # )
 
 
-saveRDS(vbs_artists,
-        "../data/vbs_artists.RDS")
+saveRDS(
+  vbs_artists,
+  here::here("data", "vbs_artists.RDS")
+) 
 
 ```
-

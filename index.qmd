@@ -270,8 +270,8 @@ leaflet(options = leafletOptions(zoomControl = FALSE,
       lapply(htmltools::HTML)
   ) |> 
   addLegend("bottomright", pal = pal, values = map_html_geo$occurred,
-    title = "Event Status",
-    opacity = 1
+            title = "Event Status",
+            opacity = 1
   )
 ```
 
@@ -378,12 +378,12 @@ vbs4 <- list(
     value = "89M",
     showcase = bs_icon("music-note")
   ),
-    value_box(
+  value_box(
     title = "Playlists",
     value = "64.2K",
     showcase = bs_icon("music-note")
   ),
-      value_box(
+  value_box(
     title = "Playlist Reach",
     value = "1.11B",
     showcase = bs_icon("music-note")
@@ -413,9 +413,19 @@ vbs_artists <- readRDS("data/vbs_artists.RDS")
 #| echo: false
 
 layout_column_wrap(
-  width = "300px",
+  width = 1/2,
+  height = 550,
+  card(
+    card_header(h3("Gracie Abrams")),
+    card_image(
+      file = "images/artists/gracie.PNG",
+      height = "250px",
+      width = "110px"
+    )
+  ),
   !!!vbs_artists[['Gracie Abrams']]
 )
+
 ```
 
 
@@ -425,9 +435,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 #| echo: false
 
 layout_column_wrap(
-  width = "300px",
-  !!!vbs_artists[['Paramore']]
+  width = 1/2,
+  height = 550,
+  card(
+    card_header(h3("Paramore")),
+    card_image(
+      file = "images/artists/paramore.PNG",
+      height = "167px",
+      width = "200px"
+    )
+  ),
+   !!!vbs_artists[['Paramore']]
 )
+
 ```
 
 
@@ -438,9 +458,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 #| echo: false
 
 layout_column_wrap(
-  width = "300px",
-  !!!vbs_artists[['Beabadoobee']]
+  width = 1/2,
+  height = 550,
+  card(
+    card_header(h3("Beabadoobee")),
+    card_image(
+      file = "images/artists/beabadobee.PNG",
+      height = "200px",
+      width = "110px"
+    )
+  ),
+   !!!vbs_artists[['Beabadoobee']]
 )
+
 ```
 
 
@@ -450,75 +480,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 #| echo: false
 
 layout_column_wrap(
-  width = "300px",
-  !!!vbs_artists[['Phoebe Bridgers']]
+  width = 1/2,
+  height = 550,
+  card(
+    card_header(h3("Phoebe Bridgers")),
+    card_image(
+      file = "images/artists/Phoebe.PNG",
+      height = "200px",
+      width = "110px"
+    )
+  ),
+   !!!vbs_artists[['Phoebe Bridgers']]
 )
-```
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-```{r}
-#| echo: false
-
-layout_column_wrap(
-  width = "300px",
-  !!!vbs_artists[['Girl In Red']]
-)
-```
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-```{r}
-#| echo: false
-
-layout_column_wrap(
-  width = "300px",
-  !!!vbs_artists[['MUNA']]
-)
-```
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-```{r}
-#| echo: false
-
-layout_column_wrap(
-  width = "300px",
-  !!!vbs_artists[['OWENN']]
-)
-```
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-```{r}
-#| echo: false
-
-layout_column_wrap(
-  width = "300px",
-  
-  heights_equal = "row",
-  !!!vbs_artists[['HAIM']]
-)
-```
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-```{r}
-#| echo: false
-
-layout_column_wrap(
-  width = "300px",
-  
-  heights_equal = "row",
-  !!!vbs_artists[['GAYLE']]
-)
-
-
 ```
 
 
