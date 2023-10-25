@@ -1,9 +1,8 @@
 ---
 title: "Taylor Swift's Tour in the Pantheon of Music"
-format: 
-  html:
-    mainfont: Lato
-title-block-banner: images/hero.png
+format: html
+title-block-banner: "images/hero.png"
+fig-align: center
 editor_options: 
   chunk_output_type: console
 filters:
@@ -33,12 +32,11 @@ The 33-year-old singer is a megastar like no other.
 Seven months since the first show in Glendale, Arizona, her Eras Tour has done a projected \$2 billion in ticket sales and generated an additional \$6.3 billion in direct consumer spending. 
 
 Figures that are more in line with the yearly GDP of small nations than a music tour. 
-<br>
-<br>
+
 ```{r}
-#| echo: false
 #| label: gdp-comparison-plot
-#| fig-align: center
+#| echo: false
+#| fig-align: right
 library(ggplot2)
 library(confetti)
 diy_confetti("confetti")
@@ -73,6 +71,36 @@ We’re so fascinated by the cultural and economic movement that is The Eras Tou
 ## Setting the stage
 :::
 
+```{r}
+#| echo: false
+vbs <- list(
+  value_box(
+    title = "Dates",
+    value = "March '23 - Nov '24",
+    style = 'background-color: #647A99!important;',
+    showcase = bs_icon("calendar-range")
+  ),
+  value_box(
+    title = "Number of shows",
+    value = "146",
+    style = 'background-color: #1D203A!important;',
+    showcase = bs_icon("ticket-perforated")
+  ),
+  value_box(
+    title = "Setlist",
+    value = "44 songs",
+    style = 'background-color: #D1B2D2!important;',
+    showcase = bs_icon("music-note")
+  )
+)
+
+
+layout_column_wrap(
+  width = 1/3,
+  !!!vbs
+)
+```
+
 Taylor Swift’s first tour in 5 years kicked off in Glendale, Arizona, on March 17th, after six months of rabid internet behavior by millions of Swifties doing everything and anything trying to get a ticket. 
 
 Demand was crushing. And Ticketmaster, the sole supplier of 2023’s golden ticket, [totally botched it](https://www.bbc.com/news/entertainment-arts-64384304).
@@ -86,7 +114,6 @@ On November 15th, the first day of the pre-sale, Ticketmaster’s website crashe
 <center>
 <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@pineapplepaperco/video/7166268846976896299" data-video-id="7166268846976896299" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@pineapplepaperco" href="https://www.tiktok.com/@pineapplepaperco?refer=embed">@pineapplepaperco</a> Thanks Ticketmaster, for being lame. 😡😡😡😡 We will see how this plays out I guess <a title="taylorswift" target="_blank" href="https://www.tiktok.com/tag/taylorswift?refer=embed">#taylorswift</a> <a title="taylornation" target="_blank" href="https://www.tiktok.com/tag/taylornation?refer=embed">#taylornation</a> <a title="taylorswiftchallenge" target="_blank" href="https://www.tiktok.com/tag/taylorswiftchallenge?refer=embed">#taylorswiftchallenge</a> <a target="_blank" title="♬ Anti-Hero - Taylor Swift" href="https://www.tiktok.com/music/Anti-Hero-7156822419213125634?refer=embed">♬ Anti-Hero - Taylor Swift</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
 </center>
-
 
 There may be some rhyme or reason to which fans were able to get tickets, but the simplest (and non-scientific) way to explain it is that a majority of Swifties, presale code or not, were simply ~~shit~~ entirely out of luck. 
 
@@ -110,7 +137,7 @@ The power of Taylor Swift is that none of this chaos ultimately mattered.
 
 She [denounced Ticketmaster](https://musicmayhemmagazine.com/taylor-swift-breaks-silence-on-eras-tour-ticketmaster-fiasco-issues-statement-apologizing-to-fans/) in an Instagram story and apologized to her fans, comparing the process of getting a ticket to going through _several_ bear attacks. 
 
-And on March 17th, kicked off the tour with _Miss Americana & The Heartbreak Prince _in front of 75,000 [shrieking, crying, and euphoric Swifties](https://youtu.be/GSVrEZCmfPM?si=6tGUaglLgK2I6vYf) at State Farm Stadium. The several bear attacks endured to get there – forgotten.
+And on March 17th, kicked off the tour with _Miss Americana & The Heartbreak Prince_ in front of 75,000 [shrieking, crying, and euphoric Swifties](https://youtu.be/GSVrEZCmfPM?si=6tGUaglLgK2I6vYf) at State Farm Stadium. The several bear attacks endured to get there – forgotten.
 
 ::: {style="font-family: Abril Fatface"}
 ## Attendance
@@ -144,28 +171,10 @@ You can flip through and across decades in the application below and reach the s
 Not the Rolling Stones. Not Bruce Springsteenen. Not Elton John, Ed Sheeran, or U2. 
 
 
-```{r}
-#| echo: false
-vbs <- list(
-  value_box(
-    title = "Dates",
-    value = "March '23 - Nov '24",
-    style = 'background-color: #647A99!important;',
-    showcase = bs_icon("calendar-range")
-  ),
-  value_box(
-    title = "Set list",
-    value = "44 songs",
-    showcase = bs_icon("music-note"),
-    style = 'background-color: #6D6268!important;'
-  )
-)
+### Other things to add?
 
-layout_column_wrap(
-  width = "250px",
-  !!!vbs
-)
-```
+
+
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum. 
 
@@ -233,8 +242,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
 
-::: {.column-page}
-
 ```{r}
 #| echo: false
 #| message: false
@@ -275,8 +282,6 @@ leaflet(options = leafletOptions(zoomControl = FALSE,
   )
 ```
 
-:::
-
 ::: {style="font-family: Abril Fatface"}
 #### Eras tour compared to her previous tours
 :::
@@ -299,10 +304,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in l
 ```{r}
 #| echo: false
 #| label: 1980s-plot
-#| fig-align: center
 load(here::here("images", "highest-grossing-tour-1980s.rdata"))
 p
-
 ```
 
 

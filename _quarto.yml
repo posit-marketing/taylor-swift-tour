@@ -42,11 +42,12 @@ execute:
 format:
   html:
     theme: cosmo
+    mainfont: Lato
+    page-layout: full
     css: style.css
     toc: true
     toc-location: left
     toc-title: "Table of Contents"
-    page-layout: full
     include-in-header: 
       - progress-bar.html
     lightbox: auto

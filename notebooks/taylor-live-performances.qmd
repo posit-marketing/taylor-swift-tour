@@ -15,6 +15,7 @@ library(polite)
 library(ggplot2)
 library(showtext)
 library(treemapify)
+library(cowplot)
 
 font_add_google("Abril Fatface", "abril-fatface")
 font_add_google("Lato", "lato")
@@ -76,18 +77,27 @@ treemap |>
     aes(
       area = adjusted_gross_in_2023_dollar2,
       fill = title,
-      label = paste(title, scales::dollar(adjusted_gross_in_2023_dollar), sep = "\n")
+      label = paste(title, scales::dollar(adjusted_gross_in_2023_dollar, scale = 1e-9, suffix = "B"), sep = "\n"),
+      xmin = xmin,
+      ymin = ymin,
+      xmax = xmax,
+      ymax = ymax
     )
   ) +
   geom_treemap() +
+  draw_image(here::here("notebooks", "tours-images", "tours.png"),
+             scale = 1.45,
+             x = 0,
+             y = 0.162) +
   geom_treemap_text(
-    colour = "#1D1E3C",
+    colour = "white",
     place = "center",
     grow = TRUE,
     reflow = FALSE,
     family = "abril-fatface"
   ) +
   # ggfittext::geom_fit_text(
+  #   label = treemap$image,
   #   family = "abril-fatface",
   #   color = "white",
   #   place = "center",
@@ -95,12 +105,12 @@ treemap |>
   #   rich = TRUE,
   #   contrast = TRUE
   # ) +
-  labs(title = scales::dollar(total)) +
+  labs(title = scales::dollar(total, big.mark = ".", scale = 1e-9, suffix = "B"), sep = "\n") +
   theme_void() +
   theme(
     legend.position = "none",
     plot.title = element_text(
-      size = 70,
+      size = 80,
       family = "abril-fatface",
       hjust = 0.5,
       color = "#1D1E3C"

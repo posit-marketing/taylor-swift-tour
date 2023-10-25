@@ -31,12 +31,6 @@ a {
   -bslib-value-box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 50%);
       box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 50%);
       border-width: 0 0.5rem 1rem rgb(0 0 0 / 90%);
-
-  
-}
-
-.modal__container{
-  top: 20px;
 }
 
 .bslib-card {
@@ -53,5 +47,8 @@ a {
   background-color: rgba(255, 122, 89, .01);
 
 }
-  
+
+.img-fluid {
+ margin: auto;
+ display: block;
 }
