@@ -446,9 +446,9 @@ card(
     ),
     
     card(
-      p("Genre: Pop"),
-      p("Origin: Los Angles, CA"),
-      p("First Album: Good Riddance"),
+      p(strong("Genre:")," Pop"),
+      p(strong("Origin:")," Los Angles, CA"),
+      p(strong("First Album:")," Good Riddance"),
       p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula."),
       style = "border:0px;"
     )
@@ -485,7 +485,7 @@ card(
   
   
   layout_column_wrap(
-    width = NULL, height = 300, fill = FALSE,
+    width = NULL, height = 250, fill = FALSE,
     style = glue(
       '{css(grid_template_columns = "1fr 3fr")}'),
     
@@ -500,9 +500,9 @@ card(
     ),
     
     card(
-          p("Genre: Pop"),
-          p("Origin: London, England"),
-          p("First Album: Fake it Flowers"),
+          p(strong("Genre:")," Pop"),
+          p(strong("Origin:")," London, England"),
+          p(strong("First Album:")," Fake it Flowers"),
       p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula."),
       style = "border:0px;"
     )
@@ -539,7 +539,7 @@ card(
   
   
   layout_column_wrap(
-    width = NULL, height = 300, fill = FALSE,
+    width = NULL, height = 250, fill = FALSE,
     style = glue(
       '{css(grid_template_columns = "1fr 3fr")}'),
     
@@ -554,9 +554,9 @@ card(
     ),
     
     card(
-      p("Genre: Rock"),
-      p("Origin: Franklin, TN"),
-      p("First Album: All We Know is Falling"),
+      p(strong("Genre:")," Rock"),
+      p(strong("Origin:")," Franklin, TN"),
+      p(strong("First Album:")," All We Know is Falling"),
       p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula."),
       style = "border:0px;"
     )
