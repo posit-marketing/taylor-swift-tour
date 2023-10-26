@@ -465,19 +465,7 @@ layout_column_wrap(
 ```
 
 
-```{r}
-#| echo: false
-#| fig-cap: "MPG vs horsepower, colored by transmission."
-#| column: margin
-
-
-
-```
-
-<br><br>
-
 <hr>
-
 
 
 ```{r}
@@ -532,8 +520,6 @@ layout_column_wrap(
 
 ```
 
-<br><br>
-
 <hr>
 
 ```{r}
@@ -586,8 +572,6 @@ layout_column_wrap(
 
 
 ```
-
-<br><br>
 
 <hr>
 
