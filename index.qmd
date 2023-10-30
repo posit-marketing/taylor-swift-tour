@@ -357,7 +357,7 @@ card(
   ),
   
   layout_column_wrap(
-    width = NULL, height = 250, fill = FALSE,
+    width = NULL, height = 280, fill = FALSE,
     style = glue(
       '{css(grid_template_columns = "1fr 3fr")}'),
     
@@ -405,7 +405,7 @@ card(
   ),
 
   layout_column_wrap(
-    width = NULL, height = 250, fill = FALSE,
+    width = NULL, height = 280, fill = FALSE,
     style = glue(
       '{css(grid_template_columns = "1fr 3fr")}'),
     
@@ -456,7 +456,7 @@ card(
   ),
   
   layout_column_wrap(
-    width = NULL, height = 250, fill = FALSE,
+    width = NULL, height = 280, fill = FALSE,
     style = glue(
       '{css(grid_template_columns = "1fr 3fr")}'),
     
