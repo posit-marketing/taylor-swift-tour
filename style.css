@@ -52,3 +52,20 @@ a {
  margin: auto;
  display: block;
 }
+
+.leaflet-tooltip{
+  width: 150px; 
+  white-space: normal; 
+}
+
+.leaflet-tooltip{
+  width: 200px; 
+  white-space: normal; 
+}
+
+/*-- scss:rules --*/
+
+h2, h3 {
+  font-family: Abril Fatface;
+  color: "#1D1E3C" !important;
+}

@@ -55,7 +55,7 @@ map_html <-
   clean_names()
 ```
 
-Now we want to geocode the locations in our table. We have a number of cities and venues, but where exactly are they located on a map? We'll use the `geocode` function from the `tidygeocoder` package. Given these, it will return the geolocation, latitude and longitude based a specified geocoding service. We'll use `osm` for Open Street Map. 
+Now we want to geocode the locations in our table. We have a number of cities and venues, but where exactly are they located on a map? We'll use the `geocode` function from the `tidygeocoder` package. Given these, it will return the geolocation, latitude and longitude based a specified geocoding service. We'll use `osm` for Open Street Map.
 
 After that, we'll clean up our table a bit more. We'll note how many shows happen at each location and indicate whether those shows have happened yet. 
 
@@ -66,7 +66,7 @@ map_html_geocode <-
   map_html |>
   geocode(venue,
           method = "osm",
-          lat = latitude ,
+          lat = latitude,
           long = longitude)
 
 # A few geolocation appear incorrect. Let's correct them manually. 
@@ -116,14 +116,16 @@ pal <- colorFactor(
   domain = map_html_geo$occurred
 )
 
-leaflet(options = leafletOptions(zoomControl = FALSE)) |>
+leaflet(options = leafletOptions(zoomControl = FALSE,
+                                 scrollWheelZoom = FALSE,
+                                 maxZoom = 12)) |>
   addProviderTiles("Esri.WorldGrayCanvas",
-                   options = (noWrap = TRUE)) |>
+                   options = tileOptions(maxZoom = 12)) |>
   setMaxBounds(
-    lng1 = 180,
-    lat1 = 90,
-    lng2 = -180,
-    lat2 = -90
+    lng1 = -90,
+    lat1 = -180,
+    lng2 = 90,
+    lat2 = 180
   ) |> 
   addCircleMarkers(
     data = map_html_geo,

@@ -1,0 +1,81 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| message: false
+#| warning: false
+#| label: setup-map
+# To clean data
+library(tidyverse)
+
+# To geocode data
+library(tidygeocoder)
+
+# To make the map
+library(leaflet)
+library(htmltools)
+```
+
+```{r}
+impact <-
+  read_csv(here::here("data", "taylor-economic-impact.csv"))
+
+impact_geo <-
+  impact %>% 
+  geocode(location,
+          method = "osm",
+          lat = latitude,
+          long = longitude)
+
+taylorIcon <- makeIcon(
+  iconUrl = here::here("images", "face.png"),
+  iconWidth = 64, iconHeight = 64,
+  iconAnchorX = 22, iconAnchorY = 94,
+  shadowUrl = "http://leafletjs.com/examples/custom-icons/leaf-shadow.png",
+  shadowWidth = 50, shadowHeight = 64,
+  shadowAnchorX = 4, shadowAnchorY = 62
+)
+
+labelText = paste0(
+  "<b>",
+  impact_geo$location,
+  "</b>",
+  "<br/>",
+  "<br/>",
+  impact_geo$news,
+  "<br>",
+  "<br>",
+  '<a href="',
+  impact_geo$`...3`,
+  '">Source</a>'
+) %>% 
+  lapply(htmltools::HTML)
+
+leaflet(
+  data = impact_geo,
+  options = leafletOptions(
+    zoomControl = FALSE,
+    scrollWheelZoom = FALSE,
+    maxZoom = 12
+  )
+) |>
+  addProviderTiles("Esri.WorldGrayCanvas",
+                   options = tileOptions(maxZoom = 12)) |>
+  setMaxBounds(
+    lng1 = -90,
+    lat1 = -180,
+    lng2 = 90,
+    lat2 = 180
+  ) |>
+  addMarkers(
+    ~ longitude,
+    ~ latitude,
+    label = ~ labelText,
+    labelOptions = labelOptions(maxWidth = 50),
+    icon = taylorIcon
+  )
+```
+

@@ -12,14 +12,14 @@ website:
             href: py.qmd
           - text: "🔵 See the code in R"
             href: r.qmd
-          - text: "☁️ Open the project in Posit Cloud"
           - icon: github
             text: "See the code on GitHub"
+          - text: "☁️ Open the project in Posit Cloud"
     footer: spotify_playlist.html
   page-footer:
     left: |
       Proudly supported by
-      [![](https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg){fig-alt="Posit" width=65px}](https://posit.co)
+      [![](images/posit-logo-fullcolor-TM.png){fig-alt="Posit" width=65px}](https://posit.co)
     center:
       - href: appendix.qmd
     right:

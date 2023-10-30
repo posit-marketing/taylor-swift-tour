@@ -1,0 +1,15 @@
+{
+  "hash": "9fcd2ffaf0c7e6c4d62eee258d6ac52f",
+  "result": {
+    "engine": "knitr",
+    "markdown": "::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n\nticketmaster <-\n  read_csv(here::here('data', 'Trend by Device_ticketmaster.com_Visits_All devices_Jan – Dec 2022_United States.csv'))\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

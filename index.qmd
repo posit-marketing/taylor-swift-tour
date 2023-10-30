@@ -1,5 +1,5 @@
 ---
-title: "Taylor Swift's Tour in the Pantheon of Music"
+title: "Taylor Swift's Towering Year"
 format: html
 title-block-banner: "images/hero.png"
 fig-align: center
@@ -10,9 +10,9 @@ filters:
 ---
 
 ```{r}
+#| label: source-files
 #| include: false
 #| message: false
-#| label: source-files
 library(leaflet)
 library(bslib)
 library(bsicons)
@@ -23,9 +23,7 @@ source(knitr::purl("notebooks/highest-grossing-tours-r.qmd"))
 map_html_geo <- read_rds("data/map_html_geo.Rds")
 ```
 
-::: {style="font-family: Abril Fatface"}
 ## Introduction
-:::
 
 It’s good to be Taylor Swift. 
 
@@ -34,17 +32,6 @@ The 33-year-old singer is a megastar like no other.
 Seven months since the first show in Glendale, Arizona, her Eras Tour has done a projected \$2 billion in ticket sales and generated an additional \$6.3 billion in direct consumer spending. 
 
 Figures that are more in line with the yearly GDP of small nations than a music tour. 
-
-```{r}
-#| label: gdp-comparison-plot
-#| echo: false
-#| fig-align: right
-library(ggplot2)
-library(confetti)
-diy_confetti("confetti")
-load(here::here("images", "gdp_plot.rdata"))
-gdp_plot
-```
 
 What’s remarkable is that the Eras Tour has lined up every demographic and knocked them down like bowling pins. 
 
@@ -69,12 +56,175 @@ Yet, there’s Taylor on their screens.
 The Eras Tour has simply transcended music. If you were planning to release a song or tour, do it next year. Beetmania, The Rolling Stones, Coldplay, Michael Jackson - Taylor trumps them all. 
 We’re so fascinated by the cultural and economic movement that is The Eras Tour, that we wanted to break it down ourselves. Let’s see what the data says.
 
-::: {style="font-family: Abril Fatface"}
+```{r}
+#| label: gdp-comparison-plot
+#| echo: false
+#| fig-align: right
+library(ggplot2)
+library(confetti)
+diy_confetti("confetti")
+load(here::here("images", "gdp_plot.rdata"))
+gdp_plot
+```
+
 ## Setting the stage
+
+
+Taylor Swift’s first tour in 5 years kicked off in Glendale, Arizona, on March 17th, after six months of rabid internet behavior by millions of Swifties doing everything and anything trying to get a ticket. 
+
+Demand was crushing. And Ticketmaster, the sole supplier of 2023’s golden ticket, [totally botched it](https://www.bbc.com/news/entertainment-arts-64384304).
+
+![](images/ticketmaster_traffic.png)
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+On November 15th, the first day of the pre-sale, Ticketmaster’s website crashed within an hour, leaving most fans with presale codes stranded in confusion and endlessly bouncing around in the purchase queue.
+
+Some lucky fans were given presale codes. Most were demoted to a waitlist. The only two other options were testing your luck during the general sale (following the presale) or preparing yourself to swallow the stomach-churning premiums priced into resale tickets. None of those logistical details ended up meaning anything.
+
+Popular gambling website Bookies.com estimates that [only 5% of fans with presale codes](https://bookies.com/picks/taylor-swift-tickets-odds#:~:text=According%20to%20our%20calculations%2C%20you,via%20the%20Taylor%20Swift%20presale.) could purchase a ticket directly via the process.
 :::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="65%"}
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@pineapplepaperco/video/7166268846976896299" data-video-id="7166268846976896299" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@pineapplepaperco" href="https://www.tiktok.com/@pineapplepaperco?refer=embed">@pineapplepaperco</a> Thanks Ticketmaster, for being lame. 😡😡😡😡 We will see how this plays out I guess <a title="taylorswift" target="_blank" href="https://www.tiktok.com/tag/taylorswift?refer=embed">#taylorswift</a> <a title="taylornation" target="_blank" href="https://www.tiktok.com/tag/taylornation?refer=embed">#taylornation</a> <a title="taylorswiftchallenge" target="_blank" href="https://www.tiktok.com/tag/taylorswiftchallenge?refer=embed">#taylorswiftchallenge</a> <a target="_blank" title="♬ Anti-Hero - Taylor Swift" href="https://www.tiktok.com/music/Anti-Hero-7156822419213125634?refer=embed">♬ Anti-Hero - Taylor Swift</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
+:::
+::::
+
+Ticketmaster then double-downed on its incompetency, canceling the general sale of tickets, causing the price of resale tickets to [surge to thousands of dollars per ticket](https://www.businessinsider.com/resale-price-taylor-swift-eras-tour-reputation-ticket-pitchfork-report-2023-8) for some shows.
+
+All of this triggered what can most aptly be called the Taylor Economy. 
+
+Millions of Swifties hit up every person they could think of who had a shot at procuring them tickets. Estranged family members, coworkers they don’t particularly like, sisters of ex-boyfriends – hopeful tour goers sent out feelers equivalent to a shameless “u up?” 2 AM text to any potential lead. 
+
+The algebra suddenly became _it’s cheaper to fly to Denver and spend a night at a hotel than it is to see her just 15 minutes away in Downtown LA._
+
+And people _did_ fly. In droves. Imagine you’re settling on board in the middle seat at the back of an airplane - maybe a little groggy from the night before - and half the plane starts belting out _Love Story._
+
+<center><iframe width="315" height="560"
+src="https://www.youtube.com/embed/EGmx6UnLbl8"
+title="YouTube video player"
+frameborder="0"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+allowfullscreen></iframe></center>
+
+No distance was too far, no logistics were too insane for Swifties to get into the building - any building in any city - for the Eras Tour. 
+
+It is our humble belief that every major hotel chain and airline CFO needs to put Taylor Swift on their lists of people who deserve a generous bonus come the holiday season. 
+
+According to research firm STR, The Eras Tour [generated almost $100M in hotel revenue](https://str.com/data-insights-blog/us-hotel-performance-enchanted-by-taylor-swifts-eras-tour) in its first three months. 
+
+In Cincinnati, a single room at the Days Inn was going for [over $1,000 during her tour dates](https://www.cincinnati.com/story/entertainment/2023/06/07/where-to-stay-cincinnati-taylor-swift-concert/70298225007/), compared to just $72 one week later. [In Atlanta](https://www.bizjournals.com/atlanta/news/2023/03/31/swifties-surge-taylor-swift-hotel-prices.html), $900.
+
+:::{.column-page}
+
+```{r}
+#| label: taylor-economic-impact-map
+#| echo: false
+#| message: false
+impact_geo <- read_csv(here::here("data", "taylor-economic-impact_geocoded.csv")) 
+
+taylorIcon <- makeIcon(
+  iconUrl = here::here("images", "face.png"),
+  iconWidth = 64, iconHeight = 64,
+  iconAnchorX = 22, iconAnchorY = 94,
+  shadowUrl = "http://leafletjs.com/examples/custom-icons/leaf-shadow.png",
+  shadowWidth = 50, shadowHeight = 64,
+  shadowAnchorX = 4, shadowAnchorY = 62
+)
+
+labelText = paste0(
+  "<b>",
+  impact_geo$location,
+  "</b>",
+  "<br/>",
+  "<br/>",
+  impact_geo$news,
+  "<br>",
+  "<br>",
+  '<a href="',
+  impact_geo$Source,
+  '">Source</a>'
+) %>% lapply(htmltools::HTML)
+
+lng <- -102.3
+lat <- 36.8
+
+leaflet(
+  data = impact_geo,
+  options = leafletOptions(
+    zoomControl = FALSE,
+    scrollWheelZoom = FALSE  )
+) |>
+  setView(lng, lat, zoom = 4) |>
+  addProviderTiles("Esri.WorldGrayCanvas",
+                   options = tileOptions(maxZoom = 12)) |>
+  setMaxBounds(
+    lng1 = -153.8,
+    lat1 = -25.2,
+    lng2 = 176.7,
+    lat2 = 63.5
+  ) |>
+  addMarkers(
+    ~ longitude,
+    ~ latitude,
+    label = ~ labelText,
+    labelOptions = labelOptions(maxWidth = 50),
+    icon = taylorIcon
+  )
+```
+
+:::
+<br>
+The power of Taylor Swift is that none of this chaos ultimately mattered. 
+
+She [denounced Ticketmaster](https://musicmayhemmagazine.com/taylor-swift-breaks-silence-on-eras-tour-ticketmaster-fiasco-issues-statement-apologizing-to-fans/) in an Instagram story and apologized to her fans, comparing the process of getting a ticket to going through _several_ bear attacks. 
+
+And on March 17th, kicked off the tour with _Miss Americana & The Heartbreak Prince_ in front of 75,000 [shrieking, crying, and euphoric Swifties](https://youtu.be/GSVrEZCmfPM?si=6tGUaglLgK2I6vYf) at State Farm Stadium. The several bear attacks endured to get there – forgotten.
+
+## In the limelight
+
+Seven months in, there’s no other way to put it.
+
+::: {.column-margin}
+**The Eras Tour in Numbers**
+
+* 145 shows
+* 5 continents
+* 17 countries
+* 50 cities
+* 44 songs
+* $2.4B estimated gross
+* 10M estimated attendance
+:::
+
+The Eras Tour is a massive success.
+
+Over 10 million estimated attendees. $2 billion in estimated gross revenue. 17 countries. 50 cities. Almost 150 shows. 44 songs topping 3 hours. 
+
+To put these numbers into perspective, her 2018 Reputation Tour had 3 million attendees and did only $440 million gross. 
+<br>
 
 ```{r}
 #| echo: false
+#| label: taylor-performances-treemap
+#| fig-align: center
+library(treemapify)
+load(here::here("images", "taylor_treemap.rdata"))
+taylor_treemap
+```
+
+Ignoring the financials, The Eras Tour is just plain massive. A kaleidoscopic, cultural freight train spanning 18 months, 17 countries, 50 cities, 150 shows, and 44 songs topping 3 hours each show.
+
+:::{.column-page}
+```{r}
+#| label: stage-value-boxes
+#| eval: false
+#| include: false
 vbs <- list(
   value_box(
     title = "Dates",
@@ -102,323 +252,101 @@ layout_column_wrap(
   !!!vbs
 )
 ```
-
-Taylor Swift’s first tour in 5 years kicked off in Glendale, Arizona, on March 17th, after six months of rabid internet behavior by millions of Swifties doing everything and anything trying to get a ticket. 
-
-Demand was crushing. And Ticketmaster, the sole supplier of 2023’s golden ticket, [totally botched it](https://www.bbc.com/news/entertainment-arts-64384304).
-
-Some lucky fans were given presale codes. Most were demoted to a waitlist. The only two other options were testing your luck during the general sale (following the presale) or preparing yourself to swallow the stomach-churning premiums priced into resale tickets. 
-
-None of those logistical details ended up meaning anything. 
-
-On November 15th, the first day of the pre-sale, Ticketmaster’s website crashed within an hour, leaving most fans with presale codes stranded in confusion and endlessly bouncing around in the purchase queue.
-
-<center>
-<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@pineapplepaperco/video/7166268846976896299" data-video-id="7166268846976896299" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@pineapplepaperco" href="https://www.tiktok.com/@pineapplepaperco?refer=embed">@pineapplepaperco</a> Thanks Ticketmaster, for being lame. 😡😡😡😡 We will see how this plays out I guess <a title="taylorswift" target="_blank" href="https://www.tiktok.com/tag/taylorswift?refer=embed">#taylorswift</a> <a title="taylornation" target="_blank" href="https://www.tiktok.com/tag/taylornation?refer=embed">#taylornation</a> <a title="taylorswiftchallenge" target="_blank" href="https://www.tiktok.com/tag/taylorswiftchallenge?refer=embed">#taylorswiftchallenge</a> <a target="_blank" title="♬ Anti-Hero - Taylor Swift" href="https://www.tiktok.com/music/Anti-Hero-7156822419213125634?refer=embed">♬ Anti-Hero - Taylor Swift</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
-</center>
-
-There may be some rhyme or reason to which fans were able to get tickets, but the simplest (and non-scientific) way to explain it is that a majority of Swifties, presale code or not, were simply ~~shit~~ entirely out of luck. 
-
-Popular gambling website Bookies.com estimates that [only 5% of fans with presale codes](https://bookies.com/picks/taylor-swift-tickets-odds#:~:text=According%20to%20our%20calculations%2C%20you,via%20the%20Taylor%20Swift%20presale.) could purchase a ticket directly via the process.
-
-Ticketmaster then double-downed on its incompetency, canceling the general sale of tickets, causing the price of resale tickets to [surge to thousands of dollars per ticket](https://www.businessinsider.com/resale-price-taylor-swift-eras-tour-reputation-ticket-pitchfork-report-2023-8) for some shows.
-
-All of this triggered what can most aptly be called the Taylor Economy. 
-
-Millions of Swifties hit up every person they could think of who had a shot at procuring them tickets. Estranged family members, coworkers they don’t particularly like, sisters of ex-boyfriends – hopeful tour goers sent out feelers equivalent to a shameless “u up?” 2 AM text to any potential lead. 
-
-The algebra suddenly became _it’s cheaper to fly to Denver and spend a night at a hotel than it is to see her just 15 minutes away in Downtown LA. _
-
-Speaking of hospitality, every major hotel chain and airline CFO needs to put Taylor Swift on their lists of people who deserve a generous bonus come the holiday season. 
-
-According to research firm STR, The Eras Tour [generated almost $100M in hotel revenue](https://str.com/data-insights-blog/us-hotel-performance-enchanted-by-taylor-swifts-eras-tour) in its first three months. 
-
-In Cincinnati, a single room at the Days Inn was going for [over $1,000 during her tour dates](https://www.cincinnati.com/story/entertainment/2023/06/07/where-to-stay-cincinnati-taylor-swift-concert/70298225007/), compared to just $72 one week later. [In Atlanta](https://www.bizjournals.com/atlanta/news/2023/03/31/swifties-surge-taylor-swift-hotel-prices.html), $900.
-
-The power of Taylor Swift is that none of this chaos ultimately mattered. 
-
-She [denounced Ticketmaster](https://musicmayhemmagazine.com/taylor-swift-breaks-silence-on-eras-tour-ticketmaster-fiasco-issues-statement-apologizing-to-fans/) in an Instagram story and apologized to her fans, comparing the process of getting a ticket to going through _several_ bear attacks. 
-
-And on March 17th, kicked off the tour with _Miss Americana & The Heartbreak Prince_ in front of 75,000 [shrieking, crying, and euphoric Swifties](https://youtu.be/GSVrEZCmfPM?si=6tGUaglLgK2I6vYf) at State Farm Stadium. The several bear attacks endured to get there – forgotten.
-
-::: {style="font-family: Abril Fatface"}
-## Attendance
 :::
 
-Seven months in, there’s no other way to put it. 
+_Reputation_ was less than a full calendar year and had only 53 shows, approximately a third of the size of Eras in terms of sheer scale.
 
-The Eras Tour is a massive success. 
+But Taylor’s not just outdoing herself. We’ve simply never seen a tour quite like Eras.
 
-Over 10 million estimated attendees. $2 billion in estimated gross revenue. 17 countries. 50 cities. Almost 150 shows. 44 songs topping 3 hours. 
+In the visualization below, you can see how Eras compares to the most successful music tours in the 2000s. The visualization takes into consideration artists who tour over long periods of time, such as the Rolling Stones and Ed Sheeran. 
 
-To put these numbers into perspective, her 2018 Reputation Tour had 3 million attendees and did only $345 million gross. 
-
-```{r}
-#| echo: false
-#| label: taylor-performances-treemap
-#| fig-align: center
-library(treemapify)
-load(here::here("images", "taylor_treemap.rdata"))
-taylor_treemap
-```
-
-The Eras Tour will also dwarf every other tour in the history of music performance-wise. 
-
+:::{.column-body-outset}
 ![](images/tswift-v-others-sankey-rect.jpg)
+:::
+
+The Rolling Stones is the only other touring group to eclipse the billion-dollar revenue mark, but needed nearly ten years (a decade!) to do so. 
+
+In one shot - one tour - Eras is projected to do over $2B. 
 
 Within this context, the Eras Tour is staggering. 
 
-You can flip through and across decades in the application below and reach the same conclusion we did: there is simply no one like Taylor Swift and nothing like this tour. 
+You can flip through and across decades in the application below and reach the same conclusion we did: Taylor and Eras stand alone. 
 
-Not the Rolling Stones. Not Bruce Springsteenen. Not Elton John, Ed Sheeran, or U2. 
-
-
-### Other things to add?
-
-
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. Aliquam sit amet ipsum ut nisl gravida molestie. Morbi orci tortor, dapibus a dictum vitae, congue sit amet lorem. Praesent purus risus, auctor ac neque sed, interdum feugiat erat. Fusce gravida pellentesque lacus, eget sodales elit sodales vitae. Nunc porttitor pulvinar bibendum. 
-
-```{r}
-#| echo: false
-vbs2 <- list(value_box(
-  title = "Number of shows",
-  value = "146",
-  style = 'background-color: #1D203A!important;',
-  showcase = bs_icon("ticket-perforated")
-),
-value_box(
-  title = "Estimated attendance",
-  value = "10,512,000",
-  showcase = bs_icon("people"),
-  style = 'background-color: #823549!important;'
-))
-
-layout_column_wrap(
-  width = "250px",
-  !!!vbs2
-)
-```
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-```{r}
-#| echo: false
-vbs3 <- list(
-  value_box(
-    title = "Number of countries",
-    value = "17",
-    showcase = bs_icon("globe"),
-    style = 'background-color: #154E52!important;'
-  ),
-  value_box(
-    title = "Number of cities",
-    value = "50",
-    showcase = bs_icon("pin-map"),
-    style = 'background-color: #656766!important;'
-  )
-)
-
-layout_column_wrap(
-  width = "250px",
-  !!!vbs3
-)
-```
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula. 
-
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-::: {style="font-family: Abril Fatface"}
-#### How many people have attended the Eras tour?
-:::
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-::: {style="font-family: Abril Fatface"}
-#### How many cities and states has Taylor Swift held a concert in?
-:::
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-```{r}
-#| echo: false
-#| message: false
-pal <- colorFactor(
-  palette = c("#823549", "#1D1F38"),
-  domain = map_html_geo$occurred
-)
-
-leaflet(options = leafletOptions(zoomControl = FALSE,
-                                 scrollWheelZoom = FALSE,
-                                 maxZoom = 12)) |>
-  addProviderTiles("Esri.WorldGrayCanvas",
-                   options = tileOptions(maxZoom = 12)) |>
-  setMaxBounds(
-    lng1 = -90,
-    lat1 = -180,
-    lng2 = 90,
-    lat2 = 180
-  ) |> 
-  addCircleMarkers(
-    data = map_html_geo,
-    color = ~pal(occurred),
-    label = paste(
-      "Venue: ",
-      map_html_geo$venue,
-      "<br>",
-      "City: ",
-      map_html_geo$city,
-      "<br>",
-      "Number of Shows: ",
-      map_html_geo$number_shows
-    ) |>
-      lapply(htmltools::HTML)
-  ) |> 
-  addLegend("bottomright", pal = pal, values = map_html_geo$occurred,
-            title = "Event Status",
-            opacity = 1
-  )
-```
-
-::: {style="font-family: Abril Fatface"}
-#### Eras tour compared to her previous tours
-:::
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-
-::: {style="font-family: Abril Fatface"}
-### Revenue
-:::
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+There is simply no one like Taylor Swift and nothing like this tour.
 
 ::: {.panel-tabset}
 
-### 1980s
+## 1990s
 
 ```{r}
+#| label: top-gross-decades-1990s
 #| echo: false
-#| label: 1980s-plot
-load(here::here("images", "highest-grossing-tour-1980s.rdata"))
-p
+#| fig-align: right
+library(ggplot2)
+load(here::here("images", "highest-grossing-tour-bar-1990s.rdata"))
+bar_1990s
+```
+
+## 2000s
+
+```{r}
+#| label: top-gross-decades-2000s
+#| echo: false
+#| fig-align: right
+library(ggplot2)
+load(here::here("images", "highest-grossing-tour-bar-2000s.rdata"))
+bar_2000s
+```
+
+## 2010s
+
+```{r}
+#| label: top-gross-decades-2010s
+#| echo: false
+#| fig-align: right
+library(ggplot2)
+load(here::here("images", "highest-grossing-tour-bar-2010s.rdata"))
+bar_2010s
 ```
 
 
-Pink Floyd's "A Momentary Lapse of Reason Tour" takes the top spot of the 1980s with $135 million, which would be about $319 million today. Michael Jackson's "Bad" tour is second, making $125 million. The Rolling Stones and Bruce Springsteen also did really well. It's interesting to see that some tours had fewer shows but made more money per show, like Michael Jackson and The Rolling Stones.
-
-### 1990s
+## 2020s
 
 ```{r}
+#| label: top-gross-decades-2020s
 #| echo: false
-#| label: 1990s-plot
-#| fig-align: center
-load(here::here("images", "highest-grossing-tour-1990s.rdata"))
-p
+#| fig-align: right
+library(ggplot2)
+load(here::here("images", "highest-grossing-tour-bar-2020s.rdata"))
+bar_2020s
 ```
-
-The 1990s saw even bigger numbers for concert tours than the 1980s. The Rolling Stones topped the list again but with much higher earnings. Their "Voodoo Lounge Tour" made a massive $320 million, which is more than double their highest-earning tour from the 1980s. Pink Floyd and Michael Jackson also remained strong, each earning more in the '90s than they did in the '80s. Overall, tours in the '90s made more money, and the average earnings per show also went up, showing that concerts were becoming a bigger business.
-
-### 2000s
-
-```{r}
-#| echo: false
-#| label: 2000s-plot
-#| fig-align: center
-load(here::here("images", "highest-grossing-tour-2000s.rdata"))
-p
-```
-
-In the 2000s, music tours reached new heights in terms of earnings, far surpassing the numbers seen in the 1980s and 1990s. The Rolling Stones led the pack with their "A Bigger Bang Tour" from 2005–2007, pulling in an adjusted gross of about $788 million. They were followed by Madonna's "Sticky & Sweet Tour" and U2's "Vertigo Tour," both earning over $560 million when adjusted for inflation. The Police and a second tour by U2 also made it into the top 5, each earning over $425 million in today's money. These figures make the blockbuster tours of the 80s and 90s look modest in comparison. Even the highest-grossing tours of those decades, like Michael Jackson's "Bad World Tour," paled in terms of financial success. This shows that live music has become an increasingly lucrative business, with top artists raking in nearly unthinkable sums.
-
-### 2010s
-
-```{r}
-#| echo: false
-#| label: 2010s-plot
-#| fig-align: center
-load(here::here("images", "highest-grossing-tour-2010s.rdata"))
-p
-```
-
-In the 2010s, music tours continued to break records, with some even surpassing the massive earnings of the 2000s. Ed Sheeran's "÷ Tour" from 2017–2019 topped the list with an adjusted gross of about $888 million, outdoing even the Rolling Stones' 2000s blockbuster "A Bigger Bang Tour." Guns N' Roses and Coldplay also pulled in impressive numbers, each earning over $600 million in adjusted gross. These earnings show a continued upward trend from the 2000s, which were already a leap forward from the 1980s and 1990s. Artists like Michael Jackson and Madonna had set high standards in those earlier decades, but the financial success of tours has reached new heights in recent years. In comparison to the 2000s, artists like U2 and the Rolling Stones remained strong contenders in the 2010s, showing that while new artists have emerged, the classics still hold significant pulling power. Overall, the 2010s continued to prove that live music is an increasingly lucrative business, drawing in fans and dollars like never before.
-
-### 2020s
-
-```{r}
-#| echo: false
-#| label: 2020s-plot
-#| fig-align: center
-load(here::here("images", "highest-grossing-tour-2020s.rdata"))
-p_2020s
-```
-
-In the 2020s, the music tour industry appears to be reaching unprecedented heights. Taylor Swift's projected gross for "The Eras Tour" in 2023 is a staggering $2.2 billion, which would shatter all previous records. Even her actual gross of $780 million for only 56 shows is already near the top of the charts, averaging nearly $14 million per show. This is a massive leap from top-grossing tours of the past decades. For context, Ed Sheeran's "÷ Tour," which was the highest-grossing tour of the 2010s, had an adjusted gross of about $888 million. And if we go further back to the 1980s and 1990s, stars like Michael Jackson and Madonna were making history with numbers that are now dwarfed by current figures. Other artists in the 2020s, like Coldplay, Harry Styles, and Beyoncé, are also pulling in huge numbers, each earning over $500 million in gross. Overall, the 2020s are showing that live music has become an even more massive money-maker, reaching income levels that were once unthinkable.
 
 :::
 
-:::{style="font-family: Abril Fatface"}
-# Taylor's Music
-:::
+One thing that we think is worth calling out: the second highest-grossing tour in the 2020s (so far) was Beyoncé and her _Renaissance World Tour._
 
-## Spotify
+All to say: bow down to the queens 👑
 
-```{r}
-#| echo: false
-vbs4 <- list(
-  value_box(
-    title = "Monthly Listeners",
-    value = "101M",
-    style = 'background-color: #647A99!important;',
-    showcase = bs_icon("music-note")
-  ),
-  value_box(
-    title = "Followers",
-    value = "89M",
-    showcase = bs_icon("music-note")
-  ),
-  value_box(
-    title = "Playlists",
-    value = "64.2K",
-    showcase = bs_icon("music-note")
-  ),
-  value_box(
-    title = "Playlist Reach",
-    value = "1.11B",
-    showcase = bs_icon("music-note")
-  )
-)
+<center><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/CySi6aqO07D/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/reel/CySi6aqO07D/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/reel/CySi6aqO07D/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A post shared by Taylor Swift (@taylorswift)</a></p></div></blockquote> <script async src="//www.instagram.com/embed.js"></script></center>
 
-layout_column_wrap(
-  width = "250px",
-  !!!vbs4
-)
-```
+## Impact on Openers
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula.
+Finally, we looked at the impact of Taylor Swift on a few of her openers: Gracie Abrams, Beabadoobie, and Paramore. 
 
-## Openers
+We wondered: what dividend does Taylor pay to her music industry friends? 
 
+In the instances of Gracie Abrams and Beabadoobie, you can see a sharp uptick in metrics like Spotify followers, Shazam total plays, and YouTube subscribers immediately after they opened at Eras. 
+
+Interestingly, Paramore didn’t seem to benefit from opening at Eras by these metrics. One possible explanation is that Paramore is already hugely popular, so a sharp increase was unlikely.
 
 ```{r}
 #| echo: false
-
 vbs_artists <- readRDS("data/vbs_artists.RDS")
-
 ```
 
-
+:::{.column-body-outset}
 ```{r}
 #| echo: false
-
-
-
 card(
   card_header(
     a(
@@ -427,8 +355,6 @@ card(
       href = "https://open.spotify.com/artist/4tuJ0bMpJh08umKkEXKUI5"
     )
   ),
-  
-  
   
   layout_column_wrap(
     width = NULL, height = 250, fill = FALSE,
@@ -446,13 +372,12 @@ card(
     ),
     
     card(
-      p(strong("Genre:")," Pop"),
-      p(strong("Origin:")," Los Angles, CA"),
-      p(strong("First Album:")," Good Riddance"),
-      p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula."),
+      p("Genre: Pop"),
+      p("Origin: Los Angles, CA"),
+      p("First Album: Good Riddance"),
+      p('"I found out about (opening for Swift) through my agent and I immediately texted Taylor," Abrams said. "I don’t even remember. I just blacked out. I wouldn’t believe it at all. This couldn’t be real life. All I can think about is how insane an opportunity it is to watch her perform every night. I’m so lucky to be a part of that tour. It’s the greatest master class in the world, being able to see the person who’s the best at this, ever, do it so many times.'),
       style = "border:0px;"
     )
-    
   )
 )
 
@@ -463,16 +388,13 @@ layout_column_wrap(
 )
 
 ```
-
+:::
 
 <hr>
 
-
+:::{.column-body-outset}
 ```{r}
 #| echo: false
-
-
-
 card(
   card_header(
     a(
@@ -481,9 +403,7 @@ card(
       href = "https://open.spotify.com/artist/35l9BRT7MXmM8bv2WDQiyB"
     )
   ),
-  
-  
-  
+
   layout_column_wrap(
     width = NULL, height = 250, fill = FALSE,
     style = glue(
@@ -500,10 +420,12 @@ card(
     ),
     
     card(
-          p(strong("Genre:")," Pop"),
-          p(strong("Origin:")," London, England"),
-          p(strong("First Album:")," Fake it Flowers"),
-      p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula."),
+          p("Genre: Pop"),
+          p("Origin: London, England"),
+          p("First Album: Fake it Flowers"),
+      p('In an interview with People magazine, Bea shared that "It didn\'t feel real" when during Swift\'s acoustic portion of the show, the headliner revealed she read an interview with Bea, who grew up with Swift\'s debut LP. "I figured for her first show with us, I\'d play that specific song that she said she wanted to hear," Swift told her crowd, before performing "Our Song," in dedication to Bea.
+
+"Imagine someone that you\'ve listened to growing up and almost shaped your childhood being like, \'This is for young Bea.\' And I\'m like, well, f— my life. I\'m going to die. It\'s like all the problems have just been solved in that [moment]," shared Bea during her interview with People magazine.'),
       style = "border:0px;"
     )
     
@@ -516,17 +438,14 @@ layout_column_wrap(
   !!!vbs_artists[['Beabadoobee']][1],
   !!!vbs_artists[['Beabadoobee']][3]
 )
-
-
 ```
+:::
 
 <hr>
 
+:::{.column-body-outset}
 ```{r}
 #| echo: false
-
-
-
 card(
   card_header(
     a(
@@ -535,8 +454,6 @@ card(
       href = "https://open.spotify.com/artist/74XFHRwlV6OrjEM0A2NCMF"
     )
   ),
-  
-  
   
   layout_column_wrap(
     width = NULL, height = 250, fill = FALSE,
@@ -554,13 +471,12 @@ card(
     ),
     
     card(
-      p(strong("Genre:")," Rock"),
-      p(strong("Origin:")," Franklin, TN"),
-      p(strong("First Album:")," All We Know is Falling"),
-      p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sem in leo pharetra rhoncus in a felis. Etiam ligula elit, euismod in gravida in, fermentum sed ligula."),
+      p("Genre: Rock"),
+      p("Origin: Franklin, TN"),
+      p("First Album: All We Know is Falling"),
+      p('Really can’t contain my excitement because … we’re adding 14 new shows to The Eras Tour. And I get to travel the world doing shows with @paramore!! @yelyahwilliams and I have been friends since we were teens in Nashville and now we get to frolic around the UK/Europe next summer??? I’m screaming???" - Taylor Swift when announcing Paramore would be opening for her during the Eras Tour'),
       style = "border:0px;"
     )
-    
   )
 )
 
@@ -569,10 +485,19 @@ layout_column_wrap(
   max_width = "250px",
   !!!vbs_artists[['Paramore']][2:3]
 )
-
-
 ```
+:::
 
-<hr>
+## Curtain Call
 
+We’re inclined to say, “Take a bow, Taylor Swift!”
 
+But she’ll do that for at least another calendar year at the end of every show as Eras stretches into late 2024. 
+
+She is the tide that lifts all boats, flights, and hotel prices. 
+
+The Eras Tour is its own economy, dealing in billions of dollars with a capital B. 
+
+The five-year wait since Reputation, the hundred thousand dollar bonuses to her employees, and the bear attacks her millions of fans endured to get their hands on tickets – clearly, all worth it. 
+
+So kudos to you, Taylor: you and Eras are truly 1 of 1 in the pantheon of music.

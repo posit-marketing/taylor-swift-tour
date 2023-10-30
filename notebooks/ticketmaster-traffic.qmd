@@ -1,0 +1,53 @@
+```{r}
+#| eval: false
+library(tidyverse)
+
+font_add_google("Abril Fatface", "abril-fatface")
+font_add_google("Lato", "lato")
+
+showtext::showtext_auto()
+
+ticketmaster <-
+  read_csv(here::here('data', 'Trend by Device_ticketmaster.com_Visits_All devices_Jan – Dec 2022_United States.csv'))
+
+ticketmaster <- 
+  ticketmaster %>% 
+  mutate(week_of = paste0(str_extract(`...1`, "^[^-]*"), ", 2022")) %>% 
+  mutate(date = lubridate::mdy(week_of))
+```
+
+```{r}
+ticketmaster_traffic <-
+    ticketmaster %>%
+    filter(date < as.Date("2022-12-14")) %>% 
+    ggplot(aes(x = date, y = `All Devices`)) +
+    geom_line(color = "#1D1E3C") +
+    labs(title = "Average Weekly Traffic to Ticketmaster.com") +
+    geom_text(mapping = aes(x = as.Date("2022-12-14"), y = 55000000), label = "Taylor Swift Eras Tour Presale", family = "lato", color = "#813549", hjust = 1, size = 24) +
+    # geom_vline(xintercept = as_date("2022-11-14"),
+    #            color = "#813549")+
+    theme_void() +
+    theme(
+      axis.text.x = element_text(
+        angle = 45,
+        size = 48,
+        color = "#1D1E3C"
+      ),
+      title = element_text(
+        family = "abril-fatface",
+        color = "#1D1E3C",
+        size = 48
+      ),
+    ) +
+  scale_y_continuous(expand = expansion(mult = 0.2))
+```
+
+```{r}
+ggsave(
+  here::here("images", "ticketmaster_traffic.png"),
+  device = "png",
+  width = 16,
+  height = 4,
+  dpi = 300
+)
+```

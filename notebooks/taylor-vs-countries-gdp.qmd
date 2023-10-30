@@ -24,7 +24,7 @@ showtext::showtext_auto()
 ```
 
 ```{r}
-#| eval: true
+#| eval: false
 url_gdp <-
   "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)"
 
@@ -77,7 +77,7 @@ countries <- unique(gdp_tab$country_territory)
 ```
 
 ```{r}
-#| eval: true
+#| eval: false
 library(rnaturalearth)
 
 fiji <- 
@@ -86,7 +86,7 @@ fiji <-
 p_Fiji <-
   ggplot(fiji) +
   geom_sf(fill = "#823549",
-          color = "black") +
+          color = "#1D1E3C") +
   coord_sf(
     crs = 3460, # https://epsg.io/3460
     ) +
@@ -102,7 +102,7 @@ p_Fiji <-
                                 margin = margin(24, 0, 5.5, 0, unit = "pt"), ),
       title = element_text(size = 16,
                            family = "abril-fatface",
-                           margin = margin(24, 0, 5.5, 0, unit = "pt"), )
+                           margin = margin(24, 0, 5.5, 0, unit = "pt"))
     )
 
 countries <- c("Kosovo", "Somalia", "Togo", "Bermuda", "Montenegro", "Barbados", "Eswatini")
@@ -115,7 +115,7 @@ country_plots <- function(country, fill){
 
   p <- ggplot(country_data) +
     geom_sf(fill = fill,
-            color = "black") +
+            color = "#1D1E3C") +
     coord_sf() +
     theme_void() +
     labs(
@@ -157,8 +157,8 @@ p_blank <-
                                  family = "lato",
                                  hjust = 0.5),
     plot.title = element_text(hjust = 0.5,
-                              margin = margin(24, 0, 5.5, 0, unit = "pt")),
-    title = element_text(margin = margin(24, 0, 5.5, 0, unit = "pt"), 
+                              margin = margin(18, 0, 5.5, 0, unit = "pt")),
+    title = element_text(margin = margin(18, 0, 5.5, 0, unit = "pt"), 
                          size = 24,
                          family = "abril-fatface",
                          hjust = 1,
@@ -166,7 +166,7 @@ p_blank <-
 ```
 
 ```{r}
-#| eval: true
+#| eval: false
 (gdp_plot <-
   plot_grid(
     p_Kosovo,
@@ -183,9 +183,22 @@ p_blank <-
   draw_image(
     here::here("notebooks", "t_swift.png"),
     x = 0.4,
-    y = 0.3,
+    y = 0.28,
     width = 0.2,
     height = 0.2
+  ) +
+  draw_label("The GDP of Taylor",
+             x = 0.5,
+             y = 1.08,
+             hjust = 0.5, 
+             vjust = 1,
+             fontfamily = "abril-fatface",
+             size = 32,
+             color = "#1D1E3C") +
+   theme(
+    # add margin on the left of the drawing canvas,
+    # so title is aligned with left edge of first plot
+    plot.margin = margin(50, 0, 0, 0)
   ))
 
 save(gdp_plot, file = here::here("images", "gdp_plot.rdata"))

@@ -48,9 +48,9 @@ ind_tab <-
   )) |> 
   dplyr::mutate(attendance = case_when(title == "The Eras Tour" ~ 10512000,
                                        .default = attendance),
-                gross = case_when(title == "The Eras Tour" ~ 2200000000,
+                gross = case_when(title == "The Eras Tour" ~ 2400000000,
                                        .default = gross),
-                adjusted_gross_in_2023_dollar = case_when(title == "The Eras Tour" ~ 2200000000,
+                adjusted_gross_in_2023_dollar = case_when(title == "The Eras Tour" ~ 2400000000,
                                        .default = adjusted_gross_in_2023_dollar),
                 label = paste0(title, "<br><span style='font-size:30pt'>", scales::dollar(adjusted_gross_in_2023_dollar), "</span>"),
                 image = case_when(title == "The Eras Tour" ~ "<img src='notebooks/logo-images/eras.png'>",
