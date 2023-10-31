@@ -1,1 +1,3 @@
-# taylor-swift-tour
+# Taylor's Towering Year
+
+![](images/hero.jpg)
