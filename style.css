@@ -34,23 +34,20 @@ a {
 
 .bslib-card {
   border: 0px;
-  
-    border-radius: 8px;
+  border-radius: 8px;
   -bslib-value-box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 50%);
-      box-shadow: 0 0.2rem .5rem rgb(0 0 0 / 02%);
-      border-width: 0 0.2rem .5rem rgb(0 0 0 / 05%);
-
+  box-shadow: 0 0.2rem .5rem rgb(0 0 0 / 02%);
+  border-width: 0 0.2rem .5rem rgb(0 0 0 / 05%);
 }
+
 .card-header {
   border-bottom: 0px solid rgba(0,0,0,.125);
   background-color: rgba(255, 122, 89, .01);
-
 }
 
-
 .img-fluid {
- margin: auto;
- display: block;
+  margin: auto;
+  display: block;
 }
 
 .leaflet-tooltip{

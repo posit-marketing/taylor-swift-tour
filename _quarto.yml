@@ -21,7 +21,7 @@ website:
       Proudly supported by
       [![](images/posit-logo-fullcolor-TM.png){fig-alt="Posit" width=65px}](https://posit.co)
     center:
-      - href: appendix.qmd
+      - href: references.qmd
     right:
       - icon: linkedin
         href: https://www.linkedin.com/company/posit-software/

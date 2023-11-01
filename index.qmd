@@ -1,8 +1,8 @@
 ---
 title: "Taylor Swift's Towering Year"
-format: html
 title-block-banner: "images/hero.jpg"
 fig-align: center
+format: html
 editor_options: 
   chunk_output_type: console
 filters:
@@ -10,17 +10,10 @@ filters:
 ---
 
 ```{r}
-#| label: source-files
+#| label: setup
 #| include: false
 #| message: false
-library(leaflet)
-library(bslib)
-library(bsicons)
-library(shiny)
-library(htmltools)
-library(glue)
-source(knitr::purl("notebooks/highest-grossing-tours-r.qmd"))
-map_html_geo <- read_rds("data/map_html_geo.Rds")
+source("setup.R")
 ```
 
 ## Introduction
@@ -29,7 +22,7 @@ It’s good to be Taylor Swift.
 
 The 33-year-old singer is a megastar like no other. 
 
-Seven months since the first show in Glendale, Arizona, her Eras Tour has done a projected \$2 billion in ticket sales and generated an additional \$6.3 billion in direct consumer spending. 
+Seven months since the first show in Glendale, Arizona, her Eras Tour has done a projected \$2 billion in ticket sales and generated an additional \$6.3 billion in direct consumer spending.
 
 Figures that are more in line with the yearly GDP of small nations than a music tour. 
 
@@ -53,28 +46,23 @@ It’s fitting that she shouldered her way into the spotlight of one of America�
 
 Yet, there’s Taylor on their screens. 
 
-The Eras Tour has simply transcended music. If you were planning to release a song or tour, do it next year. Beetmania, The Rolling Stones, Coldplay, Michael Jackson - Taylor trumps them all. 
+The Eras Tour has simply transcended music. If you were planning to release a song or tour, do it next year. Beetmania, The Rolling Stones, Coldplay, Michael Jackson - Taylor trumps them all.
+
 We’re so fascinated by the cultural and economic movement that is The Eras Tour, that we wanted to break it down ourselves. Let’s see what the data says.
 
 ```{r}
-#| label: gdp-comparison-plot
+#| label: fig-gdp-comparison-plot
 #| echo: false
 #| fig-align: right
-library(ggplot2)
-library(confetti)
-diy_confetti("confetti")
 load(here::here("images", "gdp_plot.rdata"))
 gdp_plot
 ```
 
 ## Setting the stage
 
-
 Taylor Swift’s first tour in 5 years kicked off in Glendale, Arizona, on March 17th, after six months of rabid internet behavior by millions of Swifties doing everything and anything trying to get a ticket. 
 
 Demand was crushing. And Ticketmaster, the sole supplier of 2023’s golden ticket, [totally botched it](https://www.bbc.com/news/entertainment-arts-64384304).
-
-![](images/ticketmaster_traffic.png)
 
 :::: {.columns}
 
@@ -123,7 +111,7 @@ In Cincinnati, a single room at the Days Inn was going for [over $1,000 during h
 :::{.column-page}
 
 ```{r}
-#| label: taylor-economic-impact-map
+#| label: fig-taylor-economic-impact-map
 #| echo: false
 #| message: false
 impact_geo <- read_csv(here::here("data", "taylor-economic-impact_geocoded.csv")) 
@@ -177,7 +165,6 @@ leaflet(
     icon = taylorIcon
   )
 ```
-
 :::
 <br>
 The power of Taylor Swift is that none of this chaos ultimately mattered. 

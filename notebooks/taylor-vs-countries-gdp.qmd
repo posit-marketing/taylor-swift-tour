@@ -167,7 +167,7 @@ p_blank <-
 
 ```{r}
 #| eval: false
-(gdp_plot <-
+gdp_plot <-
   plot_grid(
     p_Kosovo,
     p_Somalia,
@@ -199,7 +199,19 @@ p_blank <-
     # add margin on the left of the drawing canvas,
     # so title is aligned with left edge of first plot
     plot.margin = margin(50, 0, 0, 0)
-  ))
+  )
 
-save(gdp_plot, file = here::here("images", "gdp_plot.rdata"))
+ggsave(
+  filename = here::here("images", "gdp_plot.png"),
+  plot = gdp_plot,
+  device = png,
+  path = NULL,
+  scale = 1,
+  width = 14,
+  height = 8,
+  units = "in",
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL
+)
 ```

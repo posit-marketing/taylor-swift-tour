@@ -1,0 +1,19 @@
+---
+title: "References"
+title-block-banner: "images/hero.jpg"
+---
+
+## References
+
+"Seven months since the first show in Glendale, Arizona, her Eras Tour has done a projected \$2 billion in ticket sales and generated an additional \$6.3 billion in direct consumer spending."[^1]
+
+[^1]: QuestionPro Survey
+
+index.qmd@fig-gdp-comparison-plot, "more in line with the yearly GDP of small nations than a music tour."[^2]
+
+[^2]: "List_of_countries_by_GDP_(nominal)." Wikipedia, The Free Encyclopedia, Wikimedia Foundation, 31 October 2023, https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal).
+
+
+
+
+

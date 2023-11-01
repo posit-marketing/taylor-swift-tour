@@ -4,14 +4,8 @@ execute:
 ---
 
 ```{r}
-library(ggpattern)
 
-source(here::here("highest-grossing-tours-r.R"))
-
-font_add_google("Abril Fatface", "abril-fatface")
-font_add_google("Lato", "lato")
-
-showtext::showtext_auto()
+source(here::here("setup.R"))
 
 annual_hi_gross_tours <- 
   ind_html[[9]] |>
