@@ -357,7 +357,9 @@ card(
   ),
   
   layout_column_wrap(
-    width = NULL, height = 280, fill = FALSE,
+    width = NULL, 
+    heights_equal = "all", 
+    fill = FALSE,
     style = glue(
       '{css(grid_template_columns = "1fr 3fr")}'),
     
@@ -372,9 +374,9 @@ card(
     ),
     
     card(
-      p("Genre: Pop"),
-      p("Origin: Los Angles, CA"),
-      p("First Album: Good Riddance"),
+      p(HTML(paste(strong("Genre:")," Pop"))),
+      p(HTML(paste(strong("Origon:")," Los Angles, CA"))),
+      p(HTML(paste(strong("First Album:")," Good Riddance"))),
       p('"I found out about (opening for Swift) through my agent and I immediately texted Taylor," Abrams said. "I don’t even remember. I just blacked out. I wouldn’t believe it at all. This couldn’t be real life. All I can think about is how insane an opportunity it is to watch her perform every night. I’m so lucky to be a part of that tour. It’s the greatest master class in the world, being able to see the person who’s the best at this, ever, do it so many times.'),
       style = "border:0px;"
     )
@@ -405,7 +407,9 @@ card(
   ),
 
   layout_column_wrap(
-    width = NULL, height = 280, fill = FALSE,
+    width = NULL, 
+    heights_equal = "all", 
+    fill = FALSE,
     style = glue(
       '{css(grid_template_columns = "1fr 3fr")}'),
     
@@ -420,9 +424,9 @@ card(
     ),
     
     card(
-          p("Genre: Pop"),
-          p("Origin: London, England"),
-          p("First Album: Fake it Flowers"),
+          p(HTML(paste(strong("Genre:")," Pop"))),
+          p(HTML(paste(strong("Origon:"),"London, England"))),
+          p(HTML(paste(strong("First Album:")," Fake it Flowers"))),
       p('In an interview with People magazine, Bea shared that "It didn\'t feel real" when during Swift\'s acoustic portion of the show, the headliner revealed she read an interview with Bea, who grew up with Swift\'s debut LP. "I figured for her first show with us, I\'d play that specific song that she said she wanted to hear," Swift told her crowd, before performing "Our Song," in dedication to Bea.
 
 "Imagine someone that you\'ve listened to growing up and almost shaped your childhood being like, \'This is for young Bea.\' And I\'m like, well, f— my life. I\'m going to die. It\'s like all the problems have just been solved in that [moment]," shared Bea during her interview with People magazine.'),
@@ -456,7 +460,9 @@ card(
   ),
   
   layout_column_wrap(
-    width = NULL, height = 280, fill = FALSE,
+    width = NULL, 
+    heights_equal = "all", 
+    fill = FALSE,
     style = glue(
       '{css(grid_template_columns = "1fr 3fr")}'),
     
@@ -471,9 +477,9 @@ card(
     ),
     
     card(
-      p("Genre: Rock"),
-      p("Origin: Franklin, TN"),
-      p("First Album: All We Know is Falling"),
+      p(HTML(paste(strong("Genre:")," Rock"))),
+      p(HTML(paste(strong("Origon:"),"Franklin, TN"))),
+      p(HTML(paste(strong("First Album:")," All We Know is Falling"))),
       p('Really can’t contain my excitement because … we’re adding 14 new shows to The Eras Tour. And I get to travel the world doing shows with @paramore!! @yelyahwilliams and I have been friends since we were teens in Nashville and now we get to frolic around the UK/Europe next summer??? I’m screaming???" - Taylor Swift when announcing Paramore would be opening for her during the Eras Tour'),
       style = "border:0px;"
     )
