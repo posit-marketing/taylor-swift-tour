@@ -1,7 +1,7 @@
 ---
 title: "Taylor Swift's Towering Year"
 format: html
-title-block-banner: "images/hero.png"
+title-block-banner: "images/hero.jpg"
 fig-align: center
 editor_options: 
   chunk_output_type: console
