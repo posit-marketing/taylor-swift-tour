@@ -13,7 +13,18 @@ index.qmd@fig-gdp-comparison-plot, "more in line with the yearly GDP of small na
 
 [^2]: "List_of_countries_by_GDP_(nominal)." Wikipedia, The Free Encyclopedia, Wikimedia Foundation, 31 October 2023, https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal).
 
+index.qmd@fig-taylor-economic-impact-map[^3]
 
+[^3]: See list of sources here: https://github.com/posit-marketing/taylor-swift-tour/blob/main/data/taylor-economic-impact.csv
 
+index.qmd@fig-taylor-performances-treemapher 2018 Reputation Tour had 3 million attendees and did only $440 million gross[^4]
 
+[^4]: "List of Taylor Swift live performances." Wikipedia, The Free Encyclopedia, Wikimedia Foundation, 31 October 2023, https://en.wikipedia.org/wiki/List_of_Taylor_Swift_live_performances.
 
+index.qmd@tswift-v-others-sankey, top-gross-decades plots [^5]
+
+[^5]: "List of highest-grossing concert tours." Wikipedia, The Free Encyclopedia, Wikimedia Foundation, 31 October 2023, https://en.wikipedia.org/wiki/List_of_highest-grossing_concert_tours.
+
+Eras is projected to do over $2B[^6]
+
+[^6]: Hur, Krystal. "First on CNN: Taylor Swift’s Eras tour could become the highest grossing tour of all time." CNN Business, 17 August 2023, https://www.cnn.com/2023/08/17/business/taylor-swift-eras-tour-two-billion/index.html.

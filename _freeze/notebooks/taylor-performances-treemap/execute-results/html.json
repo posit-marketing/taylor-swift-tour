@@ -1,0 +1,15 @@
+{
+  "hash": "20016a130fb0fdd64d301de6478800c6",
+  "result": {
+    "engine": "knitr",
+    "markdown": "::: {.cell}\n\n:::\n\n::: {.cell}\n::: {.cell-output .cell-output-stdout}\n\n```\n<polite session> https://en.wikipedia.org/wiki/List_of_Taylor_Swift_live_performances\n    User-agent: polite R package\n    robots.txt: 456 rules are defined for 33 bots\n   Crawl delay: 5 sec\n  The path is scrapable for this user-agent\n```\n\n\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

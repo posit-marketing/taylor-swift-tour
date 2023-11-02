@@ -1,18 +1,13 @@
 ---
 title: "Taylor Swift's Towering Year"
 title-block-banner: "images/hero.jpg"
-fig-align: center
 format: html
-editor_options: 
-  chunk_output_type: console
 filters:
    - lightbox
 ---
 
 ```{r}
 #| label: setup
-#| include: false
-#| message: false
 source("setup.R")
 ```
 
@@ -51,11 +46,8 @@ The Eras Tour has simply transcended music. If you were planning to release a so
 We’re so fascinated by the cultural and economic movement that is The Eras Tour, that we wanted to break it down ourselves. Let’s see what the data says.
 
 ```{r}
-#| label: fig-gdp-comparison-plot
-#| echo: false
-#| fig-align: right
-load(here::here("images", "gdp_plot.rdata"))
-gdp_plot
+#| label: gdp-comparison-plot
+knitr::include_graphics(here::here("images", "gdp_plot.png"))
 ```
 
 ## Setting the stage
@@ -112,8 +104,6 @@ In Cincinnati, a single room at the Days Inn was going for [over $1,000 during h
 
 ```{r}
 #| label: fig-taylor-economic-impact-map
-#| echo: false
-#| message: false
 impact_geo <- read_csv(here::here("data", "taylor-economic-impact_geocoded.csv")) 
 
 taylorIcon <- makeIcon(
@@ -125,45 +115,27 @@ taylorIcon <- makeIcon(
   shadowAnchorX = 4, shadowAnchorY = 62
 )
 
-labelText = paste0(
-  "<b>",
-  impact_geo$location,
-  "</b>",
-  "<br/>",
-  "<br/>",
-  impact_geo$news,
-  "<br>",
-  "<br>",
-  '<a href="',
-  impact_geo$Source,
-  '">Source</a>'
-) %>% lapply(htmltools::HTML)
+labelText = paste0("<b>", impact_geo$location, "</b>", "<br/>", "<br/>", impact_geo$news, "<br>", "<br>", '<a href="', impact_geo$Source,'">Source</a>') |> lapply(htmltools::HTML)
 
 lng <- -102.3
 lat <- 36.8
 
 leaflet(
   data = impact_geo,
-  options = leafletOptions(
-    zoomControl = FALSE,
-    scrollWheelZoom = FALSE  )
-) |>
+  options = leafletOptions(zoomControl = FALSE,
+                           scrollWheelZoom = FALSE)) |>
   setView(lng, lat, zoom = 4) |>
   addProviderTiles("Esri.WorldGrayCanvas",
                    options = tileOptions(maxZoom = 12)) |>
-  setMaxBounds(
-    lng1 = -153.8,
-    lat1 = -25.2,
-    lng2 = 176.7,
-    lat2 = 63.5
-  ) |>
-  addMarkers(
-    ~ longitude,
-    ~ latitude,
-    label = ~ labelText,
-    labelOptions = labelOptions(maxWidth = 50),
-    icon = taylorIcon
-  )
+  setMaxBounds(lng1 = -153.8,
+               lat1 = -25.2,
+               lng2 = 176.7,
+               lat2 = 63.5) |>
+  addMarkers(~ longitude,
+             ~ latitude,
+             label = ~ labelText,
+             labelOptions = labelOptions(maxWidth = 50),
+             icon = taylorIcon)
 ```
 :::
 <br>
@@ -191,55 +163,17 @@ Seven months in, there’s no other way to put it.
 
 The Eras Tour is a massive success.
 
-Over 10 million estimated attendees. $2 billion in estimated gross revenue. 17 countries. 50 cities. Almost 150 shows. 44 songs topping 3 hours. 
+Over 10 million estimated attendees. $2 billion in estimated gross revenue. 17 countries. 50 cities. Almost 150 shows. 44 songs topping 3 hours.
 
 To put these numbers into perspective, her 2018 Reputation Tour had 3 million attendees and did only $440 million gross. 
 <br>
 
 ```{r}
-#| echo: false
 #| label: taylor-performances-treemap
-#| fig-align: center
-library(treemapify)
-load(here::here("images", "taylor_treemap.rdata"))
-taylor_treemap
+knitr::include_graphics(here::here("images", "taylor_treemap.png"))
 ```
 
 Ignoring the financials, The Eras Tour is just plain massive. A kaleidoscopic, cultural freight train spanning 18 months, 17 countries, 50 cities, 150 shows, and 44 songs topping 3 hours each show.
-
-:::{.column-page}
-```{r}
-#| label: stage-value-boxes
-#| eval: false
-#| include: false
-vbs <- list(
-  value_box(
-    title = "Dates",
-    value = "March '23 - Nov '24",
-    style = 'background-color: #647A99!important;',
-    showcase = bs_icon("calendar-range")
-  ),
-  value_box(
-    title = "Number of shows",
-    value = "146",
-    style = 'background-color: #1D203A!important;',
-    showcase = bs_icon("ticket-perforated")
-  ),
-  value_box(
-    title = "Setlist",
-    value = "44 songs",
-    style = 'background-color: #D1B2D2!important;',
-    showcase = bs_icon("music-note")
-  )
-)
-
-
-layout_column_wrap(
-  width = 1/3,
-  !!!vbs
-)
-```
-:::
 
 _Reputation_ was less than a full calendar year and had only 53 shows, approximately a third of the size of Eras in terms of sheer scale.
 
@@ -248,7 +182,10 @@ But Taylor’s not just outdoing herself. We’ve simply never seen a tour quite
 In the visualization below, you can see how Eras compares to the most successful music tours in the 2000s. The visualization takes into consideration artists who tour over long periods of time, such as the Rolling Stones and Ed Sheeran. 
 
 :::{.column-body-outset}
-![](images/tswift-v-others-sankey-rect.jpg)
+```{r}
+#| label: tswift-v-others-sankey
+knitr::include_graphics(here::here("images", "tswift-v-others-sankey-rect.jpg"))
+```
 :::
 
 The Rolling Stones is the only other touring group to eclipse the billion-dollar revenue mark, but needed nearly ten years (a decade!) to do so. 
@@ -267,8 +204,6 @@ There is simply no one like Taylor Swift and nothing like this tour.
 
 ```{r}
 #| label: top-gross-decades-1990s
-#| echo: false
-#| fig-align: right
 library(ggplot2)
 load(here::here("images", "highest-grossing-tour-bar-1990s.rdata"))
 bar_1990s

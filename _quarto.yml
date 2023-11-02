@@ -8,18 +8,16 @@ website:
     contents:
       - section: "Walk through the code"
         contents:
-          - text: "🐍 See the code in Python"
-            href: py.qmd
           - text: "🔵 See the code in R"
             href: r.qmd
           - icon: github
             text: "See the code on GitHub"
+            href: https://github.com/posit-marketing/taylor-swift-tour
           - text: "☁️ Open the project in Posit Cloud"
     footer: spotify_playlist.html
   page-footer:
     left: |
-      Proudly supported by
-      [![](images/posit-logo-fullcolor-TM.png){fig-alt="Posit" width=65px}](https://posit.co)
+      Proudly supported by [![](images/posit-logo-fullcolor-TM.png){fig-alt="Posit" width=65px}](https://posit.co)
     center:
       - href: references.qmd
     right:
@@ -43,13 +41,19 @@ format:
   html:
     theme: cosmo
     mainfont: Lato
-    page-layout: article
     css: style.css
-    toc: true
-    toc-location: left
-    toc-title: "Table of Contents"
+    execute:
+      echo: false
+      message: false
+      fig-align: center
+      warning: false
+    grid:
+      sidebar-width: 300px
     include-in-header: 
       - progress-bar.html
     lightbox: auto
-    grid:
-      sidebar-width: 300px
+    page-layout: article
+    toc: true
+    toc-location: left
+    toc-title: "Table of Contents"
+    

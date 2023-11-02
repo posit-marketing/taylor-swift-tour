@@ -24,7 +24,7 @@ impact <-
   read_csv(here::here("data", "taylor-economic-impact.csv"))
 
 impact_geo <-
-  impact %>% 
+  impact |> 
   geocode(location,
           method = "osm",
           lat = latitude,
@@ -51,7 +51,7 @@ labelText = paste0(
   '<a href="',
   impact_geo$`...3`,
   '">Source</a>'
-) %>% 
+) |> 
   lapply(htmltools::HTML)
 
 leaflet(

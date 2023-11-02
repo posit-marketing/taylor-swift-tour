@@ -56,8 +56,8 @@ tours_by_decade <-
 ```{r}
 #| error: true
 tours_1980s <-
-  tours_by_decade %>% 
-  filter(decade == "1980s") %>% 
+  tours_by_decade |> 
+  filter(decade == "1980s") |> 
   mutate(image = case_when(title == "Bruce Springsteen and the E Street Band - Born in the U.S.A. Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/1980s/bruce.jpg",
                            title == "David Bowie - Glass Spider Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/1980s/bowie.jpg",
                            title == "Genesis - Invisible Touch Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/1980s/genesis.jpg",
@@ -69,7 +69,7 @@ tours_1980s <-
                            title == "Tina Turner - Break Every Rule World Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/1980s/tina.jpg",
                            title == "U2 - The Joshua Tree Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/1980s/u2.jpg"))
 
-tours_1980s %>% 
+tours_1980s |> 
   ggplot(
        aes(
          x = fct_reorder(title, adjusted_gross_in_2022_dollar),
@@ -110,8 +110,8 @@ save(bar_1980s, file = "images/highest-grossing-tour-bar-1980s.rdata")
 
 ```{r}
 tours_1990s <-
-  tours_by_decade %>% 
-  filter(decade == "1990s") %>% 
+  tours_by_decade |> 
+  filter(decade == "1990s") |> 
   mutate(image = case_when(artist == "Celine Dion" ~ "~/R/taylor-swift-tour/notebooks/tours-images/1990s/02dion.jpg",
                            artist == "Eagles" ~ "~/R/taylor-swift-tour/notebooks/tours-images/1990s/04eagles.jpg",
                            artist == "Garth Brooks" ~ "~/R/taylor-swift-tour/notebooks/tours-images/1990s/01brooks.jpg",
@@ -123,7 +123,7 @@ tours_1990s <-
                            artist == "U2" & tour_title == "PopMart Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/1990s/07u2_pop.jpg",
                            artist == "U2" & tour_title == "Zoo TV Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/1990s/06u2_zoo.jpg"))
 
-tours_1990s %>% 
+tours_1990s |> 
   ggplot(
        aes(
          x = fct_reorder(title, adjusted_gross_in_2022_dollar),
@@ -163,8 +163,8 @@ save(bar_1990s, file = "images/highest-grossing-tour-bar-1990s.rdata")
 
 ```{r}
 tours_2000s <-
-  tours_by_decade %>% 
-  filter(decade == "2000s") %>% 
+  tours_by_decade |> 
+  filter(decade == "2000s") |> 
   mutate(image = case_when(title == "The Rolling Stones - A Bigger Bang Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/2000s/stones_bang.jpg",
                            title == "Madonna - Sticky & Sweet Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/2000s/madonna.jpg",
                            title == "U2 - Vertigo Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/2000s/u2_vertigo.jpg",
@@ -176,7 +176,7 @@ tours_2000s <-
                            title == "AC/DC - Black Ice World Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/2000s/acdc.jpg",
                            title == "Bruce Springsteen and the E Street Band - Magic Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/2000s/bruce.jpg"))
 
-tours_2000s %>% 
+tours_2000s |> 
   ggplot(
        aes(
          x = fct_reorder(title, adjusted_gross_in_2022_dollar),
@@ -216,8 +216,8 @@ save(bar_2000s, file = "images/highest-grossing-tour-bar-2000s.rdata")
 
 ```{r}
 tours_2010s <-
-  tours_by_decade %>% 
-  filter(decade == "2010s") %>% 
+  tours_by_decade |> 
+  filter(decade == "2010s") |> 
   mutate(image = case_when(title == "Bruno Mars - 24K Magic World Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/2010s/bruno.jpg",
                            title == "Coldplay - A Head Full of Dreams Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/2010s/coldplay.jpg",
                            title == "The Rolling Stones - No Filter Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/2010s/stones.jpg",
@@ -229,7 +229,7 @@ tours_2010s <-
                            title == "U2 - The Joshua Tree Tours 2017 and 2019" ~ "~/R/taylor-swift-tour/notebooks/tours-images/2010s/u2_josh.jpg",
                            title == "U2 - U2 360° Tour" ~ "~/R/taylor-swift-tour/notebooks/tours-images/2010s/u2_360.jpg"))
 
-tours_2010s %>% 
+tours_2010s |> 
   ggplot(
        aes(
          x = fct_reorder(title, adjusted_gross_in_2022_dollar),
@@ -269,8 +269,8 @@ save(bar_2010s, file = "images/highest-grossing-tour-bar-2010s.rdata")
 
 ```{r}
 tours_2020s <-
-  tours_by_decade %>% 
-  filter(decade == "2020s") %>% 
+  tours_by_decade |> 
+  filter(decade == "2020s") |> 
   mutate(image = case_when(artist == "Beyoncé" ~ "~/R/taylor-swift-tour/notebooks/tours-images/beyonce2.jpg",
                            artist == "Harry Styles" ~ "~/R/taylor-swift-tour/notebooks/tours-images/harry2.jpg",
                            artist == "Coldplay" ~ "~/R/taylor-swift-tour/notebooks/tours-images/coldplay.jpg",
@@ -284,7 +284,7 @@ tours_2020s <-
 
 tours_2020s$artist <- factor(tours_2020s$artist, levels = c("Red Hot Chili Peppers", "Pink", "The Weeknd", "Bad Bunny", "Ed Sheeran", "Elton John", "Beyoncé", "Harry Styles", "Coldplay", "Taylor Swift"))
 
-tours_2020s %>% 
+tours_2020s |> 
   ggplot(
        aes(
          x = fct_reorder(title, adjusted_gross_in_2022_dollar),
