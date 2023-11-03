@@ -17,7 +17,7 @@ website:
     footer: spotify_playlist.html
   page-footer:
     left: |
-      Proudly supported by [![](images/posit-logo-fullcolor-TM.png){fig-alt="Posit" width=65px}](https://posit.co)
+      Proudly supported by [![](images/posit-logo.png){fig-alt="Posit" width=65px}](https://posit.co)
     center:
       - href: references.qmd
     right:

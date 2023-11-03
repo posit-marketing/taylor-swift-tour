@@ -207,43 +207,28 @@ There is simply no one like Taylor Swift and nothing like this tour.
 
 ```{r}
 #| label: top-gross-decades-1990s
-library(ggplot2)
-load(here::here("images", "highest-grossing-tour-bar-1990s.rdata"))
-bar_1990s
+knitr::include_graphics(here::here("images", "bar_1990s.png"))
 ```
 
 ## 2000s
 
 ```{r}
 #| label: top-gross-decades-2000s
-#| echo: false
-#| fig-align: right
-library(ggplot2)
-load(here::here("images", "highest-grossing-tour-bar-2000s.rdata"))
-bar_2000s
+knitr::include_graphics(here::here("images", "bar_2000s.png"))
 ```
 
 ## 2010s
 
 ```{r}
 #| label: top-gross-decades-2010s
-#| echo: false
-#| fig-align: right
-library(ggplot2)
-load(here::here("images", "highest-grossing-tour-bar-2010s.rdata"))
-bar_2010s
+knitr::include_graphics(here::here("images", "bar_2010s.png"))
 ```
-
 
 ## 2020s
 
 ```{r}
 #| label: top-gross-decades-2020s
-#| echo: false
-#| fig-align: right
-library(ggplot2)
-load(here::here("images", "highest-grossing-tour-bar-2020s.rdata"))
-bar_2020s
+knitr::include_graphics(here::here("images", "bar_2020s.png"))
 ```
 
 :::

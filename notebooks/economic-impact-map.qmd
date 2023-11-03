@@ -10,9 +10,7 @@ library(tidygeocoder)
 # To make the map
 library(leaflet)
 library(htmltools)
-```
 
-```{r}
 impact <-
   read_csv(here::here("data", "taylor-economic-impact.csv"))
 

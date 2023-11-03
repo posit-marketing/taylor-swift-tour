@@ -1,11 +1,16 @@
----
-execute:
-  eval: false
----
-
 ```{r}
-
 source(here::here("setup.R"))
+
+url <-
+  "https://en.wikipedia.org/wiki/List_of_highest-grossing_concert_tours"
+
+url_bow <- polite::bow(url)
+url_bow
+
+ind_html <-
+  polite::scrape(url_bow) |>
+  rvest::html_nodes("table.wikitable") |>
+  rvest::html_table(fill = TRUE)
 
 annual_hi_gross_tours <- 
   ind_html[[9]] |>
@@ -51,7 +56,6 @@ tours_by_decade <-
                                               .default = adjusted_gross_in_2022_dollar),
     title = paste0(artist, " - ", tour_title))
 ```
-
 
 ```{r}
 #| error: true
@@ -158,7 +162,19 @@ tours_1990s |>
             hjust = -0.1)) +
   ylim(0, 2600000000) -> bar_1990s
 
-save(bar_1990s, file = "images/highest-grossing-tour-bar-1990s.rdata")
+ggsave(
+  filename = here::here("images", "bar_1990s.png"),
+  plot = bar_1990s,
+  device = png,
+  path = NULL,
+  scale = 1,
+  width = 14,
+  height = 8,
+  units = "in",
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL
+)
 ```
 
 ```{r}
@@ -211,7 +227,19 @@ tours_2000s |>
             hjust = -0.1)) +
   ylim(0, 2600000000) -> bar_2000s
 
-save(bar_2000s, file = "images/highest-grossing-tour-bar-2000s.rdata")
+ggsave(
+  filename = here::here("images", "bar_2000s.png"),
+  plot = bar_2000s,
+  device = png,
+  path = NULL,
+  scale = 1,
+  width = 14,
+  height = 8,
+  units = "in",
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL
+)
 ```
 
 ```{r}
@@ -264,7 +292,19 @@ tours_2010s |>
             hjust = -0.1)) +
   ylim(0, 2600000000) -> bar_2010s
 
-save(bar_2010s, file = "images/highest-grossing-tour-bar-2010s.rdata")
+ggsave(
+  filename = here::here("images", "bar_2010s.png"),
+  plot = bar_2010s,
+  device = png,
+  path = NULL,
+  scale = 1,
+  width = 14,
+  height = 8,
+  units = "in",
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL
+)
 ```
 
 ```{r}
@@ -319,5 +359,17 @@ tours_2020s |>
             hjust = -0.1)) +
   ylim(0, 2600000000) -> bar_2020s
 
-save(bar_2020s, file = "images/highest-grossing-tour-bar-2020s.rdata")
+ggsave(
+  filename = here::here("images", "bar_2020s.png"),
+  plot = bar_2020s,
+  device = png,
+  path = NULL,
+  scale = 1,
+  width = 14,
+  height = 8,
+  units = "in",
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL
+)
 ```
