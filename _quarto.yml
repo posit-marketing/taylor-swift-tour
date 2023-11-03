@@ -43,9 +43,10 @@ format:
     mainfont: Lato
     css: style.css
     execute:
-      echo: false
-      message: false
+      echo: true
+      eval: false
       fig-align: center
+      message: false
       warning: false
     grid:
       sidebar-width: 300px
@@ -56,4 +57,3 @@ format:
     toc: true
     toc-location: left
     toc-title: "Table of Contents"
-    

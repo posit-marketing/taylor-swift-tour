@@ -1,12 +1,5 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
 
 ```{r}
-#| message: false
-#| warning: false
 #| label: setup-map
 # To clean data
 library(tidyverse)

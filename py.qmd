@@ -1,7 +1,0 @@
----
-title: "Taylor Swift's Tour in the Pantheon of Music"
-format: html
-title-block-banner: images/hero.png
----
-
-[to be added]

@@ -1,8 +1,7 @@
 {
-  "hash": "9fcd2ffaf0c7e6c4d62eee258d6ac52f",
+  "hash": "22355d46754ebea13c1e6a891bccb8eb",
   "result": {
-    "engine": "knitr",
-    "markdown": "::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n\nticketmaster <-\n  read_csv(here::here('data', 'Trend by Device_ticketmaster.com_Visits_All devices_Jan – Dec 2022_United States.csv'))\n```\n:::\n",
+    "markdown": "::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n\nfont_add_google(\"Abril Fatface\", \"abril-fatface\")\nfont_add_google(\"Lato\", \"lato\")\n\nshowtext::showtext_auto()\n\nticketmaster <-\n  read_csv(here::here('data', 'Trend by Device_ticketmaster.com_Visits_All devices_Jan – Dec 2022_United States.csv'))\n\nticketmaster <- \n  ticketmaster |> \n  mutate(week_of = paste0(str_extract(`...1`, \"^[^-]*\"), \", 2022\")) |> \n  mutate(date = lubridate::mdy(week_of))\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nticketmaster_traffic <-\n    ticketmaster |>\n    filter(date < as.Date(\"2022-12-14\")) |> \n    ggplot(aes(x = date, y = `All Devices`)) +\n    geom_line(color = \"#1D1E3C\") +\n    labs(title = \"Average Weekly Traffic to Ticketmaster.com\") +\n    geom_text(mapping = aes(x = as.Date(\"2022-12-14\"), y = 55000000), label = \"Taylor Swift Eras Tour Presale\", family = \"lato\", color = \"#813549\", hjust = 1, size = 24) +\n    # geom_vline(xintercept = as_date(\"2022-11-14\"),\n    #            color = \"#813549\")+\n    theme_void() +\n    theme(\n      axis.text.x = element_text(\n        angle = 45,\n        size = 48,\n        color = \"#1D1E3C\"\n      ),\n      title = element_text(\n        family = \"abril-fatface\",\n        color = \"#1D1E3C\",\n        size = 48\n      ),\n    ) +\n  scale_y_continuous(expand = expansion(mult = 0.2))\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nggsave(\n  here::here(\"images\", \"ticketmaster_traffic.png\"),\n  device = \"png\",\n  width = 16,\n  height = 4,\n  dpi = 300\n)\n```\n:::\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"

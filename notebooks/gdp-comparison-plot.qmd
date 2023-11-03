@@ -12,6 +12,7 @@ library(polite)
 library(ggplot2)
 library(showtext)
 library(rnaturalearth)
+library(terra)
 library(cowplot)
 
 font_add_google("Abril Fatface", "abril-fatface")

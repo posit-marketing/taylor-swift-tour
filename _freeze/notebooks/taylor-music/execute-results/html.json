@@ -1,10 +1,8 @@
 {
   "hash": "50492439aa0ae00cfd4afffa038ff140",
   "result": {
-    "markdown": "::: {.cell}\n::: {.cell-output .cell-output-stderr}\n\n```\n\nAttaching package: 'dplyr'\n```\n\n\n:::\n\n::: {.cell-output .cell-output-stderr}\n\n```\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n```\n\n\n:::\n\n::: {.cell-output .cell-output-stderr}\n\n```\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n```\n\n\n:::\n\n::: {.cell-output .cell-output-stderr}\n\n```\n`summarise()` has grouped output by 'month'. You can override using the\n`.groups` argument.\n```\n\n\n:::\n\n::: {.cell-output-display}\n![](taylor-music_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::",
-    "supporting": [
-      "taylor-music_files"
-    ],
+    "markdown": "::: {.cell}\n\n:::",
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

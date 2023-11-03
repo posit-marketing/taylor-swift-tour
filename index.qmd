@@ -4,6 +4,9 @@ title-block-banner: "images/hero.jpg"
 format: html
 filters:
    - lightbox
+execute:
+  echo: false
+  eval: true
 ---
 
 ```{r}
