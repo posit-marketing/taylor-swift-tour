@@ -106,8 +106,8 @@ In Cincinnati, a single room at the Days Inn was going for [over $1,000 during h
 :::{.column-page}
 
 ```{r}
-#| label: fig-taylor-economic-impact-map
-impact_geo <- read_csv(here::here("data", "taylor-economic-impact_geocoded.csv")) 
+#| label: taylor-economic-impact-map
+impact_geo <- read_csv(here::here("data", "taylor-economic-impact_geocoded.csv"))
 
 taylorIcon <- makeIcon(
   iconUrl = here::here("images", "face.png"),
@@ -138,7 +138,19 @@ leaflet(
              ~ latitude,
              label = ~ labelText,
              labelOptions = labelOptions(maxWidth = 50),
-             icon = taylorIcon)
+             icon = taylorIcon) |>
+  suspendScroll(wakeMessage = "Drag to move the map") |>
+  addEasyButton(easyButton(
+    icon = "fa-search-plus",
+    title = "Zoom In",
+    onClick = JS("function(btn, map) { map.zoomIn(); }")
+  )) %>%
+  addEasyButton(easyButton(
+    icon = "fa-search-minus",
+    title = "Zoom Out",
+    onClick = JS("function(btn, map) { map.zoomOut(); }")
+  )) %>% 
+  addResetMapButton()
 ```
 :::
 <br>
@@ -250,12 +262,14 @@ In the instances of Gracie Abrams and Beabadoobie, you can see a sharp uptick in
 Interestingly, Paramore didn’t seem to benefit from opening at Eras by these metrics. One possible explanation is that Paramore is already hugely popular, so a sharp increase was unlikely.
 
 ```{r}
+#| label: openers-data
 #| echo: false
 vbs_artists <- readRDS("data/vbs_artists.RDS")
 ```
 
 :::{.column-body-outset}
 ```{r}
+#| label: gracie-abrams
 #| echo: false
 card(
   card_header(
@@ -306,6 +320,7 @@ layout_column_wrap(
 
 :::{.column-body-outset}
 ```{r}
+#| label: beabadoobee
 #| echo: false
 card(
   card_header(
@@ -359,6 +374,7 @@ layout_column_wrap(
 
 :::{.column-body-outset}
 ```{r}
+#| label: paramore
 #| echo: false
 card(
   card_header(
