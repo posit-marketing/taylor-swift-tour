@@ -1,92 +1,75 @@
 ---
-title: "opening-artists-vbs"
-editor: visual
-editor_options: 
-  chunk_output_type: console
+output: html_document
 ---
 
-This notebook creates plots and value boxes for the Taylor Swift opening acts section.
+<details><summary>See R code</summary>
 
-Some of the work here is done in `opening-data.qmd`.
+:::{.goals}
+::::{.goals-header}
+R Code: The Eras Tour Openers - Value Boxes
+::::
+::::{.goals-container}
 
-------------------------------------------------------------------------
-
-Load data.
-
-Data to create these visualizations were granted to us under license. We may not be able to share it.
+This code creates plots and value boxes for the Taylor Swift opening acts section. The data to create these visualizations were granted to us under license. We may not be able to share it.
 
 ```{r}
+#| echo: true
+#| eval: false
 library(tidyverse)
 library(plotly)
 library(shiny)
 library(bslib)
 library(glue)
 library(bsicons)
+
 openers <-
   read_rds(here::here("secret-data", "combined_artist_data.rds")) |> 
   filter(artist != "Taylor Swift") |> 
   mutate(date = as.Date(date)) |> 
   filter(date > as.Date("2022-01-01"))
-
 ```
 
 ```{r}
-#| echo: false
-ggplot(
-  openers %>%
-    filter(stats.source == "shazam",
-           date > as.Date(2022-01-01)),
-  aes(x = as.Date(date), y = shazams_total)
-) +
+#| echo: true
+#| eval: false
+ggplot2::ggplot(openers |>
+                  filter(stats.source == "shazam",
+                         date > as.Date(2022-01-01)),
+                aes(x = as.Date(date), y = shazams_total)) +
   geom_point() +
   geom_smooth(method = "lm",
               aes(color = time_frame)) +
   facet_wrap( ~ artist, scales = "free")
 ```
 
-Creating a single artist's set of plots.
+Below, we create a single artist's set of plots.
 
 ```{r}
-#| echo: false
-
-# yt_color <- "#b2071d"
-# spotify_color <- "#1DB954"
-# shazam_color <- "#01a7ff"
-
+#| echo: true
+#| eval: false
 yt_color <- "#c681c8"
 spotify_color <- "#8dd07f"
 shazam_color <- "#6fc3d8"
   
 vbs_artists <- list()
 
-# iterate through all the artists
+# Iterate through all the artists
 for (i in 1:length(openers$artist |> unique())){
   artist_i <- (openers$artist |> unique())[i]
   
-  # shazam
+  # Shazam
   
   p_shazam <- openers |> 
-    filter(
-      stats.source == "shazam",
-      date > as.Date(2022-01-01)
-    ) |>
-    filter(
-      artist == artist_i
-    ) |> 
-    mutate(
-      date = as.Date(date)
-    ) |>
-    rename(
-      Date = date,
-      Shazams = shazams_total,
-      "Time Frame" = time_frame
-    ) |> 
-    ggplot(
-      aes(x = Date, 
-          y = Shazams,
-          text = NULL
-      )
-    ) +
+    filter(stats.source == "shazam",
+           date > as.Date(2022-01-01)) |>
+    filter(artist == artist_i) |> 
+    mutate(date = as.Date(date)) |>
+    rename(Date = date,
+           Shazams = shazams_total,
+           "Time Frame" = time_frame) |> 
+    ggplot(aes(x = Date, 
+               y = Shazams,
+               text = NULL)) +
     geom_line(
       color= "white",
       size = 1.4
@@ -352,5 +335,9 @@ saveRDS(
   vbs_artists,
   here::here("data", "vbs_artists.RDS")
 ) 
-
 ```
+
+::::
+:::
+
+</details>
