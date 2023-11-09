@@ -1,4 +1,20 @@
+---
+output: html_document
+---
+
+<details><summary>See R code</summary>
+
+:::{.goals}
+::::{.goals-header}
+R Code: The GDP of Taylor Data Visualization
+::::
+::::{.goals-container}
+
+First, we load the packages that we will need.
+
 ```{r}
+#| echo: true
+#| eval: false
 # To clean data
 library(tidyverse)
 library(janitor)
@@ -12,7 +28,6 @@ library(polite)
 library(ggplot2)
 library(showtext)
 library(rnaturalearth)
-library(terra)
 library(cowplot)
 
 font_add_google("Abril Fatface", "abril-fatface")
@@ -21,7 +36,11 @@ font_add_google("Lato", "lato")
 showtext::showtext_auto()
 ```
 
+The code below retrieves GDP data from a Wikipedia page, processes it, and filters countries based on their World Bank GDP values. It begins by defining the Wikipedia page's URL and politely scraping the page using {polite}. The HTML content is then extracted and specific tables with the class "wikitable" are selected and converted into a data frame. This data frame, named `gdp_tab`, undergoes several cleaning steps, including renaming columns, converting certain columns to numeric format, and filtering rows based on World Bank GDP criteria. The resulting data is sorted in descending order of World Bank GDP. Finally, a list of unique countries meeting the specified criteria is stored in the variable countries.
+
 ```{r}
+#| echo: true
+#| eval: false
 url_gdp <-
   "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)"
 
@@ -41,8 +60,8 @@ gdp_tab <-
                          world_bank_14,
                          united_nations_15),
                        ~ as.numeric(str_replace_all(.x, "[$,]", "")))) |>
-  filter(world_bank_14 < 10000 & world_bank_14 > 4900) |>
-  arrange(desc(world_bank_14))
+  dplyr::filter(world_bank_14 < 10000 & world_bank_14 > 4900) |>
+  dplyr::arrange(desc(world_bank_14))
 
 url_gdp <-
   "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)"
@@ -60,41 +79,41 @@ gdp_tab <-
   janitor::clean_names() |>
   slice(-1) |>
   dplyr::mutate(across(c(imf_1_13,
-      world_bank_14,
-      united_nations_15),
-    ~ as.numeric(str_replace_all(.x, "[$,]", ""))
-  )) |>
-  filter(world_bank_14 < 10000 & world_bank_14 > 4000) |>
-  arrange(desc(world_bank_14))
+                         world_bank_14,
+                         united_nations_15),
+                       ~ as.numeric(str_replace_all(.x, "[$,]", "")))) |>
+  dplyr::filter(world_bank_14 < 10000 & world_bank_14 > 4000) |>
+  dplyr::arrange(desc(world_bank_14))
 
 countries <- unique(gdp_tab$country_territory)
 ```
 
+Below, we create geographic plots for Fiji and several other countries, with custom styling and GDP-related information displayed on each plot. The countries vector contains a list of countries, and corresponding fill colors are specified in the colors vector. The `country_plots` function is defined to generate individual plots for each country. The `purrr::map2` function applies the `country_plots` function to each country in the countries vector with matching fill colors. Additionally, a separate plot (`p_blank`) is created specifically for Taylor Swift, featuring a custom title and subtitle displaying her estimated wealth.
+
 ```{r}
+#| echo: true
+#| eval: false
 fiji <- 
   ne_countries(scale = 10, returnclass = "sf", country = "Fiji") 
 
 p_Fiji <-
-  ggplot(fiji) +
-  geom_sf(fill = "#823549",
-          color = "#1D1E3C") +
-  coord_sf(
-    crs = 3460, # https://epsg.io/3460
-    ) +
-  theme_void() +
-  labs(title = gdp_tab |> filter(country_territory == "Fiji") |> pull(country_territory),
-       subtitle = scales::dollar(gdp_tab |> filter(country_territory == "Fiji") |> pull(world_bank_14), big.mark = ".", scale = 1e-3, suffix = "B")) +
-    theme(
-      plot.subtitle = element_text(size = 12,
-                                   margin = margin(5.5, 0, 8.5, 0, unit = "pt"), 
-                                   family = "lato",
-                                   hjust = 0.5),
-      plot.title = element_text(hjust = 0.5,
-                                margin = margin(24, 0, 5.5, 0, unit = "pt"), ),
-      title = element_text(size = 16,
-                           family = "abril-fatface",
-                           margin = margin(24, 0, 5.5, 0, unit = "pt"))
-    )
+  ggplot2::ggplot(fiji) +
+  ggplot2::geom_sf(fill = "#823549",
+                   color = "#1D1E3C") +
+  ggplot2::coord_sf(crs = 3460) +
+  ggplot2::theme_void() +
+  ggplot2::labs(title = gdp_tab |> dplyr::filter(country_territory == "Fiji") |> dplyr::pull(country_territory),
+       subtitle = scales::dollar(gdp_tab |> dplyr::filter(country_territory == "Fiji") |>
+                                   dplyr::pull(world_bank_14), big.mark = ".", scale = 1e-3, suffix = "B")) +
+  ggplot2::theme(plot.subtitle = element_text(size = 12,
+                                              margin = margin(5.5, 0, 8.5, 0, unit = "pt"), 
+                                              family = "lato",
+                                              hjust = 0.5),
+                 plot.title = element_text(hjust = 0.5,
+                                           margin = margin(24, 0, 5.5, 0, unit = "pt")),
+                 title = element_text(size = 16,
+                                      family = "abril-fatface",
+                                      margin = margin(24, 0, 5.5, 0, unit = "pt")))
 
 countries <- c("Kosovo", "Somalia", "Togo", "Bermuda", "Montenegro", "Barbados", "Eswatini")
 
@@ -102,34 +121,28 @@ colors <- c("#b9d2b5", "#f4cb8d", "#d1b2d2", "#CFCAC6", "#C8AE95", "#b5e9f6", "#
   
 country_plots <- function(country, fill){
   country_data <-
-    ne_countries(scale = 10, returnclass = "sf", country = country)
+    rnaturalearth::ne_countries(scale = 10, returnclass = "sf", country = country)
 
-  p <- ggplot(country_data) +
-    geom_sf(fill = fill,
+  p <- ggplot2::ggplot(country_data) +
+    ggplot2::geom_sf(fill = fill,
             color = "#1D1E3C") +
-    coord_sf() +
-    theme_void() +
-    labs(
-      title = gdp_tab |> filter(country_territory == country) |> pull(country_territory),
-      subtitle = scales::dollar(
-        gdp_tab |> filter(country_territory == country) |> pull(world_bank_14), big.mark = ".", scale = 1e-3, suffix = "B"
-      )
-    ) +
-    theme(
-      plot.subtitle = element_text(size = 12,
-                                   family = "lato",
-                                   margin = margin(5.5, 0, 8.5, 0, unit = "pt"), 
-                                   hjust = 0.5),
+    ggplot2::coord_sf() +
+    ggplot2::theme_void() +
+    ggplot2::labs(title = gdp_tab |> dplyr::filter(country_territory == country) |> dplyr::pull(country_territory),
+                  subtitle = scales::dollar(gdp_tab |> dplyr::filter(country_territory == country) |> dplyr::pull(world_bank_14), big.mark = ".", scale = 1e-3, suffix = "B")) +
+    theme(plot.subtitle = element_text(size = 12,
+                                       family = "lato",
+                                       margin = margin(5.5, 0, 8.5, 0, unit = "pt"), 
+                                       hjust = 0.5),
       plot.title = element_text(hjust = 0.5,
                                 lineheight = 6.5,
                                 margin = margin(24, 0, 5.5, 0, unit = "pt")),
       title = element_text(size = 16,
                            margin = margin(24, 0, 5.5, 0, unit = "pt"), 
-                           family = "abril-fatface")
-    )
+                           family = "abril-fatface"))
   
-plot_name <- paste("p_", country, sep = "")
-  assign(plot_name, p, envir = .GlobalEnv)
+plot_name <- paste0("p_", country)
+assign(plot_name, p, envir = .GlobalEnv)
 
 }
 
@@ -138,70 +151,74 @@ purrr::map2(.f = country_plots, .x = countries, .y = colors)
 # One specifically for Taylor Swift
 
 p_blank <-
-  ggplot() +
-  labs(title = "Taylor Swift",
-       subtitle = "$6.30B") +
-  theme_void() +
-  theme(
-    plot.subtitle = element_text(margin = margin(5.5, 0, 5.5, 0, unit = "pt"), 
-                                 size = 12,
-                                 family = "lato",
-                                 hjust = 0.5),
-    plot.title = element_text(hjust = 0.5,
-                              margin = margin(18, 0, 5.5, 0, unit = "pt")),
-    title = element_text(margin = margin(18, 0, 5.5, 0, unit = "pt"), 
-                         size = 24,
-                         family = "abril-fatface",
-                         hjust = 1,
-                         color = "#823549"))
+  ggplot2::ggplot() +
+  ggplot2::labs(title = "Taylor Swift",
+                subtitle = "$6.30B") +
+  ggplot2::theme_void() +
+  ggplot2::theme(plot.subtitle = element_text(margin = margin(5.5, 0, 5.5, 0, unit = "pt"),
+                                              size = 12,
+                                              family = "lato",
+                                              hjust = 0.5),
+                 plot.title = element_text(hjust = 0.5,
+                                           margin = margin(18, 0, 5.5, 0, unit = "pt")),
+                 title = element_text(margin = margin(18, 0, 5.5, 0, unit = "pt"), 
+                                      size = 24,
+                                      family = "abril-fatface",
+                                      hjust = 1,
+                                      color = "#823549"))
 ```
+
+Next, we generate a composite plot (`gdp_plot`) using the plot_grid function from the {cowplot} package. The plot grid includes individual country plots for Kosovo, Somalia, Togo, Bermuda, a custom plot for Taylor Swift (`p_blank`), Montenegro, Barbados, Fiji, and Eswatini. The align parameter is set to "v," aligning the plots vertically. Additionally, the code incorporates an image of Taylor Swift (`t_swift.png`) using the draw_image function, positioning it at specific coordinates within the plot. A label is added with the text "The GDP of Taylor" using `draw_label`, adjusting its position, font family, size, and color. The overall theme of the plot is modified with a margin adjustment using the theme function. The resulting `gdp_plot` combines individual country plots with a custom element representing Taylor Swift's GDP.
 
 ```{r}
+#| echo: true
+#| eval: false
 gdp_plot <-
-  plot_grid(
-    p_Kosovo,
-    p_Somalia,
-    p_Togo,
-    p_Bermuda,
-    p_blank,
-    p_Montenegro,
-    p_Barbados,
-    p_Fiji,
-    p_Eswatini,
-    align = "v"
-  ) +
-  draw_image(
-    here::here("notebooks", "t_swift.png"),
-    x = 0.4,
-    y = 0.28,
-    width = 0.2,
-    height = 0.2
-  ) +
-  draw_label(
-    "The GDP of Taylor",
-    x = 0.5,
-    y = 1.08,
-    hjust = 0.5,
-    vjust = 1,
-    fontfamily = "abril-fatface",
-    size = 32,
-    color = "#1D1E3C"
-  ) +
-  theme(# add margin on the left of the drawing canvas,
-    # so title is aligned with left edge of first plot
-    plot.margin = margin(50, 0, 0, 0))
-
-ggsave(
-  filename = here::here("images", "gdp_plot.png"),
-  plot = gdp_plot,
-  device = png,
-  path = NULL,
-  scale = 1,
-  width = 14,
-  height = 8,
-  units = "in",
-  dpi = 300,
-  limitsize = TRUE,
-  bg = NULL
-)
+  cowplot::plot_grid(p_Kosovo,
+                     p_Somalia,
+                     p_Togo,
+                     p_Bermuda,
+                     p_blank,
+                     p_Montenegro,
+                     p_Barbados,
+                     p_Fiji,
+                     p_Eswatini,
+                     align = "v") +
+  cowplot::draw_image(here::here("notebooks", "t_swift.png"),
+                      x = 0.4,
+                      y = 0.28,
+                      width = 0.2,
+                      height = 0.2) +
+  cowplot::draw_label("The GDP of Taylor",
+                      x = 0.5,
+                      y = 1.08,
+                      hjust = 0.5,
+                      vjust = 1,
+                      fontfamily = "abril-fatface",
+                      size = 32,
+                      color = "#1D1E3C") +
+  ggplot2::theme(plot.margin = margin(50, 0, 0, 0))
 ```
+
+The ggsave function from the ggplot2 package saves the composite plot (`gdp_plot`) as a PNG image. 
+
+```{r}
+#| echo: true
+#| eval: false
+ggplot2::ggsave(filename = here::here("images", "gdp_plot.png"),
+                plot = gdp_plot,
+                device = png,
+                path = NULL,
+                scale = 1,
+                width = 14,
+                height = 8,
+                units = "in",
+                dpi = 300,
+                limitsize = TRUE,
+                bg = NULL)
+```
+
+::::
+:::
+
+</details>

@@ -1,0 +1,150 @@
+---
+output: html_document
+---
+
+<details><summary>See R code</summary>
+
+:::{.goals}
+::::{.goals-header}
+R Code: Taylor Tour Gross Treemap
+::::
+::::{.goals-container}
+
+First, we load the packages that we will need.
+
+```{r}
+#| eval: false
+#| echo: true
+# To clean data
+library(tidyverse)
+library(janitor)
+
+# To scrape data
+library(rvest)
+library(httr)
+library(polite)
+
+# To visualize data
+library(ggplot2)
+library(showtext)
+library(treemapify)
+library(cowplot)
+
+sysfonts::font_add_google("Abril Fatface", "abril-fatface")
+sysfonts::font_add_google("Lato", "lato")
+
+showtext::showtext_auto()
+```
+
+Below, we extract information about Taylor Swift's live performances from a Wikipedia page. The code begins by defining the URL of the page. The HTML content is then scraped and specific tables with the class "wikitable" are selected and converted into a data frame (`ind_tab`). We go through a few cleaning steps, including renaming columns, converting certain columns to numeric format, and adjusting values for specific tours. Additionally, the code creates new columns for labels and images associated with each tour, incorporating HTML styling.
+
+```{r}
+#| eval: false
+#| echo: true
+url <-
+  "https://en.wikipedia.org/wiki/List_of_Taylor_Swift_live_performances"
+
+url_bow <- polite::bow(url)
+url_bow
+
+ind_html <-
+  polite::scrape(url_bow) |>
+  rvest::html_nodes("table.wikitable") |>
+  rvest::html_table(fill = TRUE) 
+
+ind_tab <- 
+  ind_html[[1]] |> 
+  janitor::clean_names() |> 
+  dplyr::mutate(across(c(adjusted_gross_in_2023_dollar,
+                         gross,
+                         attendance),
+                       ~ as.numeric(str_replace_all(.x, "[$,]", "")))) |> 
+  dplyr::mutate(attendance = case_when(title == "The Eras Tour" ~ 10512000,
+                                       .default = attendance),
+                gross = case_when(title == "The Eras Tour" ~ 2400000000,
+                                  .default = gross),
+                adjusted_gross_in_2023_dollar = case_when(title == "The Eras Tour" ~ 2400000000,
+                                                          .default = adjusted_gross_in_2023_dollar),
+                label = paste0(title, "<br><span style='font-size:30pt'>", scales::dollar(adjusted_gross_in_2023_dollar), "</span>"),
+                # To give the Fearless rectangle more space
+                adjusted_gross_in_2023_dollar2 = case_when(title == "Fearless Tour" ~ adjusted_gross_in_2023_dollar * 1.5,
+                                                           .default = adjusted_gross_in_2023_dollar))
+```
+
+Now, we create a treemap visualization using the {treemapify} package to represent Taylor Swift's live performances based on adjusted gross income in 2023 dollars. We start by generating a treemap using the `treemapify()` function, where the area of each rectangle corresponds to the adjusted gross income. The resulting treemap is then joined back to the original data frame (`ind_tab`) to include additional details.
+
+The code calculates the total adjusted gross income for all performances and creates a new treemap (`taylor_treemap`) using {ggplot2.} The treemap is customized with color-coded rectangles representing different tours, and the label for each rectangle includes the tour name and its adjusted gross income in billion dollars.
+
+```{r}
+#| echo: true
+#| eval: false
+treemap <-
+  treemapify::treemapify(ind_tab, area = "adjusted_gross_in_2023_dollar")
+
+treemap <-
+  dplyr::left_join(ind_tab, treemap |> select(title, ymax:xmax))
+
+total <- sum(ind_tab$adjusted_gross_in_2023_dollar)
+
+taylor_treemap <-
+  treemap |>
+  ggplot2::ggplot(
+    aes(area = adjusted_gross_in_2023_dollar2,
+        fill = title,
+        label = paste(title, scales::dollar(adjusted_gross_in_2023_dollar, scale = 1e-9, suffix = "B"), sep = "\n"),
+        xmin = xmin,
+        ymin = ymin,
+        xmax = xmax,
+        ymax = ymax)) +
+  treemapify::geom_treemap() +
+  # draw_image(here::here("notebooks", "tours-images", "tours.png"),
+  #            scale = 1.45,
+  #            x = 0,
+  #            y = 0.162) +
+  treemapify::geom_treemap_text(colour = "white",
+                                place = "center",
+                                grow = TRUE,
+                                reflow = FALSE,
+                                family = "abril-fatface") +
+  ggplot2::labs(title = scales::dollar(total, 
+                                       big.mark = ".", 
+                                       scale = 1e-9, 
+                                       suffix = "B"), 
+                sep = "\n") +
+  ggplot2::theme_void() +
+  ggplot2::theme(legend.position = "none",
+                 plot.title = element_text(
+                   size = 80,
+                   family = "abril-fatface",
+                   hjust = 0.5,
+                   color = "#1D1E3C")) +
+  ggplot2::scale_fill_manual(values = c("#b9d2b5",
+                                        "#f4cb8d",
+                                        "#b5e9f6",
+                                        "#d1b2d2",
+                                        "#CFCAC6",
+                                        "#C8AE95"))
+```
+
+The ggsave function from the ggplot2 package saves the composite plot (`taylor_treemap`) as a PNG image.
+
+```{r}
+#| eval: false
+#| echo: true
+ggplot2::ggsave(filename = here::here("images", "taylor_treemap.png"),
+                plot = taylor_treemap,
+                device = png,
+                path = NULL,
+                scale = 1,
+                width = 14,
+                height = 8,
+                units = "in",
+                dpi = 300,
+                limitsize = TRUE,
+                bg = NULL)
+```
+
+::::
+:::
+
+</details>

@@ -64,5 +64,36 @@ a {
 
 h2, h3 {
   font-family: Abril Fatface;
-  color: "#1D1E3C" !important;
+  color: #1D1E3C !important;
+}
+
+.goals {
+  margin: 1em 0;
+  border: 2px solid gray;
+  border-left: 10px solid #41475E; 
+  border-radius: 10px;
+}
+
+.goals-header {
+  margin-left: 0em;
+  padding-left:  60px;
+  padding-top:  5px;
+  padding-bottom: 5px;
+  color: white;
+  background-color: #41475E;
+  border-top-right-radius: 3px;
+  font-size: 1em;
+  font-weight: bold;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  background-image: url("stars.png");
+}
+
+.goals-container {
+  padding-top: 5px;
+  padding-left: 10px;
+  color: black;
+  background-color: white;
+  border-bottom-right-radius: 10px;
 }
