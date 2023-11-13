@@ -8,6 +8,10 @@ a {
   color: #823549;
 }
 
+nav-link active {
+  color: #823549;
+}
+
 .title-block-header {
   margin-block-end: 1rem;
   position: relative;
@@ -64,7 +68,7 @@ a {
 
 h2, h3 {
   font-family: Abril Fatface;
-  color: #1D1E3C !important;
+  color: #78384F !important;
 }
 
 .goals {
@@ -97,3 +101,4 @@ h2, h3 {
   background-color: white;
   border-bottom-right-radius: 10px;
 }
+

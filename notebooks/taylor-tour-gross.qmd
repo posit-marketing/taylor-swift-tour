@@ -65,7 +65,7 @@ ind_tab <-
                                   .default = gross),
                 adjusted_gross_in_2023_dollar = case_when(title == "The Eras Tour" ~ 2400000000,
                                                           .default = adjusted_gross_in_2023_dollar),
-                label = paste0(title, "<br><span style='font-size:30pt'>", scales::dollar(adjusted_gross_in_2023_dollar), "</span>"),
+                label = paste0(title, "<br><span style='font-size:20pt'>", scales::dollar(adjusted_gross_in_2023_dollar), "</span>"),
                 # To give the Fearless rectangle more space
                 adjusted_gross_in_2023_dollar2 = case_when(title == "Fearless Tour" ~ adjusted_gross_in_2023_dollar * 1.5,
                                                            .default = adjusted_gross_in_2023_dollar))
@@ -97,15 +97,16 @@ taylor_treemap <-
         xmax = xmax,
         ymax = ymax)) +
   treemapify::geom_treemap() +
-  # draw_image(here::here("notebooks", "tours-images", "tours.png"),
-  #            scale = 1.45,
-  #            x = 0,
-  #            y = 0.162) +
+  draw_image(here::here("images", "rev-by-tour-bg.png"),
+             scale = 1.5,
+             x = 0,
+             y = 0.14) +
   treemapify::geom_treemap_text(colour = "white",
                                 place = "center",
                                 grow = TRUE,
                                 reflow = FALSE,
-                                family = "abril-fatface") +
+                                family = "abril-fatface",
+                                padding.x = grid::unit(6, "mm")) +
   ggplot2::labs(title = scales::dollar(total, 
                                        big.mark = ".", 
                                        scale = 1e-9, 
@@ -114,16 +115,12 @@ taylor_treemap <-
   ggplot2::theme_void() +
   ggplot2::theme(legend.position = "none",
                  plot.title = element_text(
-                   size = 80,
+                   size = 90,
                    family = "abril-fatface",
                    hjust = 0.5,
-                   color = "#1D1E3C")) +
-  ggplot2::scale_fill_manual(values = c("#b9d2b5",
-                                        "#f4cb8d",
-                                        "#b5e9f6",
-                                        "#d1b2d2",
-                                        "#CFCAC6",
-                                        "#C8AE95"))
+                   color = "#1D1E3C"),
+                 
+                 plot.background = element_rect(fill = "white"))
 ```
 
 The ggsave function from the ggplot2 package saves the composite plot (`taylor_treemap`) as a PNG image.
@@ -136,8 +133,8 @@ ggplot2::ggsave(filename = here::here("images", "taylor_treemap.png"),
                 device = png,
                 path = NULL,
                 scale = 1,
-                width = 14,
-                height = 8,
+                width = 10,
+                height = 6.5,
                 units = "in",
                 dpi = 300,
                 limitsize = TRUE,

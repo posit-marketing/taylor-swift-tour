@@ -18,11 +18,9 @@ website:
           - text: "☁️ Open the project in Posit Cloud"
     footer: spotify_playlist.html
   page-footer:
-    center:
+    left:
       - href: references.qmd
-    left: |
-      Proudly supported by
-      [![](https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg){fig-alt="Posit" width=65px}](https://posit.co)
+    center: Proudly supported by [![](https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg){fig-alt="Posit" width=65px}](https://posit.co)
     right:
       - icon: linkedin
         href: https://www.linkedin.com/company/posit-software/

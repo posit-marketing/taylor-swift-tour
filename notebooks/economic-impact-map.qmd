@@ -48,7 +48,7 @@ Finally, we can use the leaflet package to create an interactive map displaying 
 ```{r}
 #| echo: true
 #| eval: false
-taylorIcon <- leaflet::makeIcon(iconUrl = here::here("images", "face.png"),
+taylorIcon <- leaflet::makeIcon(iconUrl = here::here("images", "map-taylor.png"),
                                 iconWidth = 64,
                                 iconHeight = 64,
                                 iconAnchorX = 22,
