@@ -47,10 +47,16 @@ Below, we create a single artist's set of plots.
 ```{r}
 #| echo: true
 #| eval: false
-yt_color <- "#c681c8"
-spotify_color <- "#8dd07f"
-shazam_color <- "#6fc3d8"
-  
+yt_color <- "#F9A395"
+yt_text_color <- "#7C1A03"
+
+spotify_color <- "#ADBF99"
+spotify_text_color <- "#3B4F29"
+
+shazam_color <- "#A2B8CB"
+shazam_text_color <- "#213D4F"
+
+
 vbs_artists <- list()
 
 # Iterate through all the artists
@@ -81,7 +87,10 @@ for (i in 1:length(openers$artist |> unique())){
       size = 0.7) +
     scale_color_manual(
       values=c(`after announcement`="#823549", `before announcement`="#0041CC")) +
-    theme(axis.text.x = element_text(colour="white"))
+    theme(
+      axis.text.x = element_text(colour="white"),
+      axis.title = element_text(colour="white")
+    )
   
   sparkline_shazam <- p_shazam |> 
     ggplotly(
@@ -101,7 +110,7 @@ for (i in 1:length(openers$artist |> unique())){
       "function(el) {
       var ro = new ResizeObserver(function() {
          var visible = el.offsetHeight > 200;
-         Plotly.relayout(el, {'xaxis.visible': visible});
+         Plotly.relayout(el, {'xaxis.visible': visible, hovermode: visible,});
       });
       ro.observe(el);
     }"
@@ -157,7 +166,8 @@ for (i in 1:length(openers$artist |> unique())){
     scale_color_manual(
       values=c(`after announcement`="#efc0cc", `before announcement`="#b7c8ed")) +
     theme(
-      axis.text.x = element_text(colour="white")
+      axis.text.x = element_text(colour="white"),
+      axis.title = element_text(colour="white")
     )
   
   sparkline_yt <- p_yt |> 
@@ -178,7 +188,7 @@ for (i in 1:length(openers$artist |> unique())){
       "function(el) {
       var ro = new ResizeObserver(function() {
          var visible = el.offsetHeight > 200;
-         Plotly.relayout(el, {'xaxis.visible': visible});
+         Plotly.relayout(el, {'xaxis.visible': visible, hovermode: visible,});
       });
       ro.observe(el);
     }"
@@ -239,7 +249,11 @@ for (i in 1:length(openers$artist |> unique())){
       size = 0.7) +
     scale_color_manual(
       values=c(`after announcement`="#823549", `before announcement`="#0041CC")) +
-    theme(axis.text.x = element_text(colour="white"))
+    theme(
+      axis.text.x = element_text(colour="white"),
+      axis.title = element_text(colour="white")
+      
+    )
   
   sparkline_spotify <- p_spotify |> 
     ggplotly(
@@ -259,13 +273,14 @@ for (i in 1:length(openers$artist |> unique())){
       plot_bgcolor = "transparent"
     ) |> 
     htmlwidgets::onRender(
-      "function(el) {
+     "function(el) {
       var ro = new ResizeObserver(function() {
          var visible = el.offsetHeight > 200;
-         Plotly.relayout(el, {'xaxis.visible': visible});
+         Plotly.relayout(el, {'xaxis.visible': visible, hovermode: visible});
       });
       ro.observe(el);
     }"
+
     )
   
   
@@ -300,7 +315,9 @@ for (i in 1:length(openers$artist |> unique())){
       p("Plot shows total channel views, Jan 2022 to Oct 2023"),
       showcase = sparkline_yt,
       full_screen = TRUE,
-      style = glue('background-color: {yt_color}!important;')
+      style = glue(
+        'background-color: {yt_color}!important;
+        color: {yt_text_color}!important;')
     ),
     value_box(
       title = "Shazam Total Plays",
@@ -310,7 +327,9 @@ for (i in 1:length(openers$artist |> unique())){
       p("Between Jan 2022 & Oct 2023"),
       showcase = sparkline_shazam,
       full_screen = TRUE,
-      style = glue('background-color: {shazam_color}!important;')
+      style = glue(
+        'background-color: {shazam_color}!important;
+        color: {shazam_text_color}!important;')
     ),
     value_box(
       title = "Spotify Total Followers",
@@ -320,11 +339,16 @@ for (i in 1:length(openers$artist |> unique())){
       p("Between Jan 2022 & Oct 2023"),
       showcase = sparkline_spotify,
       full_screen = TRUE,
-      style = glue('background-color: {spotify_color}!important;')
+      style = glue(
+        'background-color: {spotify_color}!important;
+        color: {shazam_text_color}!important;')
     )
   )
 }
 
+```
+
+```{r}
 layout_column_wrap(
   width = "300px",
   !!!vbs_artists[[artist_i]]
