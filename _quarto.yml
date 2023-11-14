@@ -20,7 +20,6 @@ website:
   page-footer:
     left:
       - href: references.qmd
-    center: Proudly supported by [![](https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg){fig-alt="Posit" width=65px}](https://posit.co)
     right:
       - icon: linkedin
         href: https://www.linkedin.com/company/posit-software/

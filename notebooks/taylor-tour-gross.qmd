@@ -66,8 +66,9 @@ ind_tab <-
                 adjusted_gross_in_2023_dollar = case_when(title == "The Eras Tour" ~ 2400000000,
                                                           .default = adjusted_gross_in_2023_dollar),
                 label = paste0(title, "<br><span style='font-size:20pt'>", scales::dollar(adjusted_gross_in_2023_dollar), "</span>"),
-                # To give the Fearless rectangle more space
+                # To make the Fearless rectangle a little bigger and The Eras Tour font a little small
                 adjusted_gross_in_2023_dollar2 = case_when(title == "Fearless Tour" ~ adjusted_gross_in_2023_dollar * 1.5,
+                                                           title == "The Eras Tour" ~ adjusted_gross_in_2023_dollar * 0.9,
                                                            .default = adjusted_gross_in_2023_dollar))
 ```
 
@@ -100,13 +101,12 @@ taylor_treemap <-
   draw_image(here::here("images", "rev-by-tour-bg.png"),
              scale = 1.5,
              x = 0,
-             y = 0.14) +
+             y = 0.16) +
   treemapify::geom_treemap_text(colour = "white",
                                 place = "center",
                                 grow = TRUE,
                                 reflow = FALSE,
-                                family = "abril-fatface",
-                                padding.x = grid::unit(6, "mm")) +
+                                family = "abril-fatface") +
   ggplot2::labs(title = scales::dollar(total, 
                                        big.mark = ".", 
                                        scale = 1e-9, 
@@ -118,9 +118,7 @@ taylor_treemap <-
                    size = 90,
                    family = "abril-fatface",
                    hjust = 0.5,
-                   color = "#1D1E3C"),
-                 
-                 plot.background = element_rect(fill = "white"))
+                   color = "#1D1E3C"))
 ```
 
 The ggsave function from the ggplot2 package saves the composite plot (`taylor_treemap`) as a PNG image.
@@ -132,13 +130,12 @@ ggplot2::ggsave(filename = here::here("images", "taylor_treemap.png"),
                 plot = taylor_treemap,
                 device = png,
                 path = NULL,
-                scale = 1,
                 width = 10,
                 height = 6.5,
                 units = "in",
                 dpi = 300,
                 limitsize = TRUE,
-                bg = NULL)
+                bg = "white")
 ```
 
 ::::

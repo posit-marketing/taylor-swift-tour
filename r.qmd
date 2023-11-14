@@ -127,7 +127,7 @@ In Cincinnati, a single room at the Days Inn was going for [over $1,000 during h
 impact_geo <- read_csv(here::here("data", "taylor-economic-impact_geocoded.csv"))
 
 taylorIcon <- makeIcon(
-  iconUrl = here::here("images", "face.png"),
+  iconUrl = here::here("images", "map-taylor.png"),
   iconWidth = 64, iconHeight = 64,
   iconAnchorX = 22, iconAnchorY = 94,
   shadowUrl = "http://leafletjs.com/examples/custom-icons/leaf-shadow.png",
@@ -145,7 +145,7 @@ leaflet(
   options = leafletOptions(zoomControl = FALSE,
                            scrollWheelZoom = FALSE)) |>
   setView(lng, lat, zoom = 4) |>
-  addProviderTiles("Esri.WorldGrayCanvas",
+  addProviderTiles("CartoDB.VoyagerNoLabels",
                    options = tileOptions(maxZoom = 12)) |>
   setMaxBounds(lng1 = -153.8,
                lat1 = -25.2,
@@ -167,6 +167,7 @@ leaflet(
     title = "Zoom Out",
     onClick = JS("function(btn, map) { map.zoomOut(); }")
   )) %>% 
+  setMapWidgetStyle(style = list(background = "transparent")) %>% 
   addResetMapButton()
 ```
 :::

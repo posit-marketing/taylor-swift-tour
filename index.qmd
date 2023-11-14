@@ -12,9 +12,28 @@ execute:
 ```{r}
 #| label: setup
 source("setup.R")
+library(confetti)
+
+config <-
+  list("emojis" = c(
+    "\U0001F9e3", # Scarf
+    "\U0001F3B8", # Guitar
+    "\U0001F40D", # Snake
+    "\U0002601", # Cloud
+    "\U0001F98B", # Butterfly
+    "\U0001FAF6", # Heart hands
+    "\U0001FAA9", # Mirror ball
+    "\U0001F408", # Cat
+    "\U0001F37E" # Champagne bottle
+    ),
+    "confettiNumber" = 100
+  )
+
+confetti::diy_confetti("confetti",
+                       config = config)
 ```
 
-## ![](images/face.png){width=100px} Introduction
+## Introduction
 
 It’s good to be Taylor Swift. 
 
@@ -130,7 +149,7 @@ leaflet(
   options = leafletOptions(zoomControl = FALSE,
                            scrollWheelZoom = FALSE)) |>
   setView(lng, lat, zoom = 4) |>
-  addProviderTiles("Esri.WorldGrayCanvas",
+  addProviderTiles("CartoDB.VoyagerNoLabels",
                    options = tileOptions(maxZoom = 12)) |>
   setMaxBounds(lng1 = -153.8,
                lat1 = -25.2,
@@ -438,3 +457,7 @@ The Eras Tour is its own economy, dealing in billions of dollars with a capital 
 The five-year wait since Reputation, the hundred thousand dollar bonuses to her employees, and the bear attacks her millions of fans endured to get their hands on tickets – clearly, all worth it. 
 
 So kudos to you, Taylor: you and Eras are truly 1 of 1 in the pantheon of music.
+
+::: {.column-screen}
+![](images/web-closer.png)
+:::

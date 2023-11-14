@@ -56,7 +56,6 @@ spotify_text_color <- "#3B4F29"
 shazam_color <- "#A2B8CB"
 shazam_text_color <- "#213D4F"
 
-
 vbs_artists <- list()
 
 # Iterate through all the artists
@@ -86,7 +85,7 @@ for (i in 1:length(openers$artist |> unique())){
       se = FALSE,
       size = 0.7) +
     scale_color_manual(
-      values=c(`after announcement`="#823549", `before announcement`="#0041CC")) +
+      values=c(`after announcement`="#823549", `before announcement`="#1D2642")) +
     theme(
       axis.text.x = element_text(colour="white"),
       axis.title = element_text(colour="white")
@@ -164,7 +163,7 @@ for (i in 1:length(openers$artist |> unique())){
       size = 0.7) +
     scale_y_continuous(trans='log2') +
     scale_color_manual(
-      values=c(`after announcement`="#efc0cc", `before announcement`="#b7c8ed")) +
+      values=c(`after announcement`="#823549", `before announcement`="#1D2642")) +
     theme(
       axis.text.x = element_text(colour="white"),
       axis.title = element_text(colour="white")
@@ -213,9 +212,6 @@ for (i in 1:length(openers$artist |> unique())){
   
   # Spotify
   
-  
-  
-  
   p_spotify <- openers |> 
     filter(
       stats.source == "spotify",
@@ -248,7 +244,7 @@ for (i in 1:length(openers$artist |> unique())){
       se = FALSE,
       size = 0.7) +
     scale_color_manual(
-      values=c(`after announcement`="#823549", `before announcement`="#0041CC")) +
+      values=c(`after announcement`="#823549", `before announcement`="#1D2642")) +
     theme(
       axis.text.x = element_text(colour="white"),
       axis.title = element_text(colour="white")
@@ -282,8 +278,6 @@ for (i in 1:length(openers$artist |> unique())){
     }"
 
     )
-  
-  
   
   spotify_total = (openers |> 
                      filter(

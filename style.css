@@ -8,7 +8,11 @@ a {
   color: #823549;
 }
 
-nav-link active {
+menu-text {
+   color: #823549; 
+}
+
+.nav-link.active {
   color: #823549;
 }
 
@@ -66,9 +70,14 @@ nav-link active {
 
 /*-- scss:rules --*/
 
-h2, h3 {
+h2 {
   font-family: Abril Fatface;
   color: #78384F !important;
+}
+
+h3 {
+  font-family: Abril Fatface;
+  color: white !important;
 }
 
 .goals {
@@ -102,3 +111,6 @@ h2, h3 {
   border-bottom-right-radius: 10px;
 }
 
+.column-screen {
+  margin-bottom: -100px;
+}

@@ -19,13 +19,9 @@ library(leaflet.extras)
 library(shiny)
 
 # Other
-library(confetti)
 library(glue)
 
 sysfonts::font_add_google("Abril Fatface", "abril-fatface")
 sysfonts::font_add_google("Lato", "lato")
 
 showtext::showtext_auto()
-
-# Surprise!
-confetti::diy_confetti("confetti")
