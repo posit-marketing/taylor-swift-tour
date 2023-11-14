@@ -28,6 +28,11 @@ library(polite)
 library(ggplot2)
 library(ggpattern)
 library(showtext)
+
+font_add_google("Abril Fatface", "abril-fatface")
+font_add_google("Lato", "lato")
+
+showtext::showtext_auto()
 ```
 
 Our goal is to compile and organize data about annual highest-grossing concert tours from multiple tables on a Wikipedia page. Below, we extract information about the highest-grossing concert tours from the page. The code starts by defining the URL of the page and scrapes the HTML content using the polite package. Specific tables with the class "wikitable" are selected and converted into a data frame (`ind_html`).
@@ -125,7 +130,7 @@ generate_bar_plot <- function(tours_data, decade) {
           axis.title.y = element_blank(),
           axis.text.x = element_blank(), 
           legend.position = "none",
-          title = element_text(size = 16,
+          title = element_text(size = 26,
                                family = "abril-fatface",
                                hjust = 0.5,
                                color = "#1D1E3C"),
@@ -133,20 +138,20 @@ generate_bar_plot <- function(tours_data, decade) {
     coord_flip() +
     geom_text(aes(label = paste0(round(adjusted_gross_in_2022_dollar/1e6, 0), "M"),
                   hjust = -0.1)) +
-    ylim(0, 2600000000)
+    ylim(0, 2600000000) +
+    ggplot2::theme(plot.margin = margin(20, 0, 0, 0))
 
   ggsave(
     filename = here::here("images", paste0("bar_", decade, ".png")),
     plot = plot_data,
     device = png,
     path = NULL,
-    scale = 1,
     width = 14,
     height = 8,
     units = "in",
     dpi = 300,
     limitsize = TRUE,
-    bg = NULL
+    bg = "white"
   )
 }
 ```
@@ -159,16 +164,16 @@ We need to associate each artist with an image. Then, we can run the data throug
 tours_1990s <-
   tours_by_decade |> 
   filter(decade == "1990s") |> 
-  mutate(image = case_when(artist == "Celine Dion" ~ here::here("notebooks", "tours-images", "1990s", "02dion.jpg"),
-                           artist == "Eagles" ~ here::here("notebooks", "tours-images", "1990s", "04eagles.jpg"),
-                           artist == "Garth Brooks" ~ here::here("notebooks", "tours-images", "1990s", "01brooks.jpg"),
-                           artist == "Michael Jackson" ~ here::here("notebooks", "tours-images", "1990s", "05michael.jpg"),
-                           artist == "Pink Floyd" ~ here::here("notebooks", "tours-images", "1990s", "09pf.jpg"),
-                           artist == "The Rolling Stones" & tour_title == "Bridges to Babylon Tour" ~ here::here("notebooks", "tours-images", "1990s", "08stones_babylon.jpg"),
-                           artist == "The Rolling Stones" & tour_title == "Voodoo Lounge Tour" ~ here::here("notebooks", "tours-images", "1990s", "10stones_voodoo.jpg"),
-                           artist == "Tina Turner" ~ here::here("notebooks", "tours-images", "1990s", "03tina.jpg"),
-                           artist == "U2" & tour_title == "PopMart Tour" ~ here::here("notebooks", "tours-images", "1990s", "07u2_pop.jpg"),
-                           artist == "U2" & tour_title == "Zoo TV Tour" ~ here::here("notebooks", "tours-images", "1990s", "06u2_zoo.jpg")))
+  mutate(image = case_when(artist == "Celine Dion" ~ here::here("images", "tours-images", "1990s", "02dion.jpg"),
+                           artist == "Eagles" ~ here::here("images", "tours-images", "1990s", "04eagles.jpg"),
+                           artist == "Garth Brooks" ~ here::here("images", "tours-images", "1990s", "01brooks.jpg"),
+                           artist == "Michael Jackson" ~ here::here("images", "tours-images", "1990s", "05michael.jpg"),
+                           artist == "Pink Floyd" ~ here::here("images", "tours-images", "1990s", "09pf.jpg"),
+                           artist == "The Rolling Stones" & tour_title == "Bridges to Babylon Tour" ~ here::here("images", "tours-images", "1990s", "08stones_babylon.jpg"),
+                           artist == "The Rolling Stones" & tour_title == "Voodoo Lounge Tour" ~ here::here("images", "tours-images", "1990s", "10stones_voodoo.jpg"),
+                           artist == "Tina Turner" ~ here::here("images", "tours-images", "1990s", "03tina.jpg"),
+                           artist == "U2" & tour_title == "PopMart Tour" ~ here::here("images", "tours-images", "1990s", "07u2_pop.jpg"),
+                           artist == "U2" & tour_title == "Zoo TV Tour" ~ here::here("images", "tours-images", "1990s", "06u2_zoo.jpg")))
 
 generate_bar_plot(tours_1990s, "1990s")
 ```
@@ -181,49 +186,49 @@ We do the same for the 2000s, 2010s, and 2020s.
 tours_2000s <-
   tours_by_decade |> 
   filter(decade == "2000s") |> 
-  mutate(image = case_when(title == "The Rolling Stones - A Bigger Bang Tour" ~ here::here("notebooks", "tours-images", "2000s", "stones_bang.jpg"),
-                           title == "Madonna - Sticky & Sweet Tour" ~ here::here("notebooks", "tours-images", "2000s", "madonna.jpg"),
-                           title == "U2 - Vertigo Tour" ~ here::here("notebooks", "tours-images", "2000s", "u2_vertigo.jpg"),
-                           title == "The Police - The Police Reunion Tour" ~ here::here("notebooks", "tours-images", "2000s","police.jpg"),
-                           title == "U2 - U2 360° Tour" ~ here::here("notebooks", "tours-images", "2000s", "u2_360.jpg"),
-                           title == "The Rolling Stones - Licks Tour" ~ here::here("notebooks", "tours-images", "2000s", "stones_lick.jpg"),
-                           title == "Celine Dion - Taking Chances World Tour" ~ here::here("notebooks", "tours-images", "2000s", "dion.jpg"),
-                           title == "Cher - Living Proof: The Farewell Tour" ~ here::here("notebooks", "tour-images", "2000s", 
+  mutate(image = case_when(title == "The Rolling Stones - A Bigger Bang Tour" ~ here::here("images", "tours-images", "2000s", "stones_bang.jpg"),
+                           title == "Madonna - Sticky & Sweet Tour" ~ here::here("images", "tours-images", "2000s", "madonna.jpg"),
+                           title == "U2 - Vertigo Tour" ~ here::here("images", "tours-images", "2000s", "u2_vertigo.jpg"),
+                           title == "The Police - The Police Reunion Tour" ~ here::here("images", "tours-images", "2000s","police.jpg"),
+                           title == "U2 - U2 360° Tour" ~ here::here("images", "tours-images", "2000s", "u2_360.jpg"),
+                           title == "The Rolling Stones - Licks Tour" ~ here::here("images", "tours-images", "2000s", "stones_lick.jpg"),
+                           title == "Celine Dion - Taking Chances World Tour" ~ here::here("images", "tours-images", "2000s", "dion.jpg"),
+                           title == "Cher - Living Proof: The Farewell Tour" ~ here::here("images", "tour-images", "2000s", 
                                                                                           "cher.jpg"),
-                           title == "AC/DC - Black Ice World Tour" ~ here::here("notebooks", "tour-images", "2000s", "acdc.jpg"),
-                           title == "Bruce Springsteen and the E Street Band - Magic Tour" ~ here::here("notebooks", "tour-images", "2000s", "bruce.jpg")))
+                           title == "AC/DC - Black Ice World Tour" ~ here::here("images", "tour-images", "2000s", "acdc.jpg"),
+                           title == "Bruce Springsteen and the E Street Band - Magic Tour" ~ here::here("images", "tour-images", "2000s", "bruce.jpg")))
 
 tours_2010s <-
   tours_by_decade |> 
   filter(decade == "2010s") |> 
-  mutate(image = case_when(title == "Bruno Mars - 24K Magic World Tour" ~ here::here("notebooks", "tour-images", "2010s", "bruno.jpg"),
-                           title == "Coldplay - A Head Full of Dreams Tour" ~ here::here("notebooks", "tour-images", "2010s", "coldplay.jpg"),
-                           title == "The Rolling Stones - No Filter Tour" ~ here::here("notebooks", "tour-images", "2010s", "stones.jpg"),
-                           title == "Ed Sheeran - ÷ Tour" ~ here::here("notebooks", "tour-images", "2010s", "ed.jpg"),
-                           title == "Guns N' Roses - Not in This Lifetime... Tour" ~ here::here("notebooks", "tour-images", "2010s", "gnr.jpg"),
-                           title == "Metallica - WorldWired Tour" ~ here::here("notebooks", "tour-images", "2010s", "metallica.jpg"),
-                           title == "Pink - Beautiful Trauma World Tour" ~ here::here("notebooks", "tour-images", "2010s", "pink.jpg"),
-                           title == "Roger Waters - The Wall" ~ here::here("notebooks", "tour-images", "2010s", "waters.jpg"),
-                           title == "U2 - The Joshua Tree Tours 2017 and 2019" ~ here::here("notebooks", "tour-images", "2010s", "u2_josh.jpg"),
-                           title == "U2 - U2 360° Tour" ~ here::here("notebooks", "tour-images", "2010s", "u2_360.jpg")))
+  mutate(image = case_when(title == "Bruno Mars - 24K Magic World Tour" ~ here::here("images", "tour-images", "2010s", "bruno.jpg"),
+                           title == "Coldplay - A Head Full of Dreams Tour" ~ here::here("images", "tour-images", "2010s", "coldplay.jpg"),
+                           title == "The Rolling Stones - No Filter Tour" ~ here::here("images", "tour-images", "2010s", "stones.jpg"),
+                           title == "Ed Sheeran - ÷ Tour" ~ here::here("images", "tour-images", "2010s", "ed.jpg"),
+                           title == "Guns N' Roses - Not in This Lifetime... Tour" ~ here::here("images", "tour-images", "2010s", "gnr.jpg"),
+                           title == "Metallica - WorldWired Tour" ~ here::here("images", "tour-images", "2010s", "metallica.jpg"),
+                           title == "Pink - Beautiful Trauma World Tour" ~ here::here("images", "tour-images", "2010s", "pink.jpg"),
+                           title == "Roger Waters - The Wall" ~ here::here("images", "tour-images", "2010s", "waters.jpg"),
+                           title == "U2 - The Joshua Tree Tours 2017 and 2019" ~ here::here("images", "tour-images", "2010s", "u2_josh.jpg"),
+                           title == "U2 - U2 360° Tour" ~ here::here("images", "tour-images", "2010s", "u2_360.jpg")))
 
 tours_2020s <-
   tours_by_decade |> 
   filter(decade == "2020s") |> 
-  mutate(image = case_when(artist == "Beyoncé" ~ here::here("notebooks", "tour-images", "beyonce2.jpg"),
-                           artist == "Harry Styles" ~ here::here("notebooks", "tour-images", "harry2.jpg"),
-                           artist == "Coldplay" ~ here::here("notebooks", "tour-images", "coldplay.jpg"),
-                           artist == "Ed Sheeran" ~ here::here("notebooks", "tour-images", "ed2.jpg"),
-                           artist == "Elton John" ~ here::here("notebooks", "tour-images", "elton2.jpg"),
-                           artist == "Bad Bunny" ~ here::here("notebooks", "tour-images", "bunny2.jpg"),
-                           artist == "Pink" ~ here::here("notebooks", "tour-images", "pink2.jpg"),
-                           artist == "Red Hot Chili Peppers" ~ here::here("notebooks", "tour-images", "rhcp.jpg"),
-                           artist == "The Weeknd" ~ here::here("notebooks", "tour-images", "wknd.jpg"),
-                           artist == "Taylor Swift" ~ here::here("notebooks", "tour-images", "taylor2.jpg")))
+  mutate(image = case_when(artist == "Beyoncé" ~ here::here("images", "tour-images", "beyonce2.jpg"),
+                           artist == "Harry Styles" ~ here::here("images", "tour-images", "harry2.jpg"),
+                           artist == "Coldplay" ~ here::here("images", "tour-images", "coldplay.jpg"),
+                           artist == "Ed Sheeran" ~ here::here("images", "tour-images", "ed2.jpg"),
+                           artist == "Elton John" ~ here::here("images", "tour-images", "elton2.jpg"),
+                           artist == "Bad Bunny" ~ here::here("images", "tour-images", "bunny2.jpg"),
+                           artist == "Pink" ~ here::here("images", "tour-images", "pink2.jpg"),
+                           artist == "Red Hot Chili Peppers" ~ here::here("images", "tour-images", "rhcp.jpg"),
+                           artist == "The Weeknd" ~ here::here("images", "tour-images", "wknd.jpg"),
+                           artist == "Taylor Swift" ~ here::here("images", "tour-images", "taylor2.jpg")))
 
-generate_bar_plot(tours_2000s, "2000s", "bar_2000s.png")
-generate_bar_plot(tours_2010s, "2010s", "bar_2010s.png")
-generate_bar_plot(tours_2020s, "2020s", "bar_2020s.png")
+generate_bar_plot(tours_2000s, "2000s")
+generate_bar_plot(tours_2010s, "2010s")
+generate_bar_plot(tours_2020s, "2020s")
 ```
 
 ::::
