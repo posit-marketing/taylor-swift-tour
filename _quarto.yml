@@ -16,6 +16,7 @@ website:
             text: "See the code on GitHub"
             href: https://github.com/posit-marketing/taylor-swift-tour
           - text: "☁️ Open the project in Posit Cloud"
+            href: https://posit.cloud/content/7059961
     footer: spotify_playlist.html
   page-footer:
     center: |
