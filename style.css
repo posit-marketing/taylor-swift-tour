@@ -23,6 +23,7 @@ a:active {
 }
 
 .quarto-title-banner {
+  margin-top: -27px;
   margin-block-end: 1rem;
   position: relative;
   margin-bottom: 30px;
@@ -112,7 +113,7 @@ h3 {
 }
 
 .column-screen {
-  margin-bottom: -100px;
+  margin-bottom: -80px;
 }
 
 .figure-caption {

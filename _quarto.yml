@@ -16,8 +16,10 @@ website:
           - icon: github
             text: "See the code on GitHub"
             href: https://github.com/posit-marketing/taylor-swift-tour
+            target: _blank
           - text: "☁️ Open the project in Posit Cloud"
             href: https://posit.cloud/content/7059961
+            target: _blank
     footer: spotify_playlist.html
   page-footer:
     center: |
