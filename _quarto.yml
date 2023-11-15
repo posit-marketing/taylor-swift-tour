@@ -5,6 +5,7 @@ website:
   sidebar:
     style: "floating"
     search: false
+    pinned: false
     contents:
       - section: "Walk through the code"
         contents:

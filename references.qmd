@@ -1,9 +1,13 @@
 ---
 title: "References"
 title-block-banner: "images/hero.jpg"
+title-block-banner-alt: "Taylor Swift on stage with a microphone in hand, likely during a concert. The individual is facing towards the right, with their head turned to look at the camera, giving a confident smile. They are wearing a glittering bodysuit adorned with sequins in shades of gold and blue, paired with fishnet stockings and sparkling knee-high boots. At the top of the image, in large white text against a black background, reads TAYLOR'S TOWERING YEAR. Below the main image, a bar of smaller images or possibly a visual data representation features the text ERAS TOUR TOLD BY DATA with some letters clear and others obscured by heart symbols replacing the Os."
+format: html
 ---
 
 ## References
+
+### Introduction
 
 "Seven months since the first show in Glendale, Arizona, her Eras Tour has done a projected \$2 billion in ticket sales and generated an additional \$6.3 billion in direct consumer spending."[^1]
 
@@ -13,13 +17,17 @@ index.qmd@gdp-comparison-plot, "more in line with the yearly GDP of small nation
 
 [^2]: "List_of_countries_by_GDP_(nominal)." Wikipedia, The Free Encyclopedia, Wikimedia Foundation, 31 October 2023, https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal).
 
+### Setting the stage
+
 index.qmd@fig-taylor-economic-impact-map[^3]
 
 [^3]: See list of sources here: https://github.com/posit-marketing/taylor-swift-tour/blob/main/data/taylor-economic-impact.csv
 
-index.qmd@taylor-economic-impact-map, 2018 Reputation Tour had 3 million attendees and did only $440 million gross[^4]
+2018 Reputation Tour had 3 million attendees and did only $440 million gross[^4]
 
 [^4]: "List of Taylor Swift live performances." Wikipedia, The Free Encyclopedia, Wikimedia Foundation, 31 October 2023, https://en.wikipedia.org/wiki/List_of_Taylor_Swift_live_performances.
+
+### In the limelight
 
 index.qmd@tswift-v-others-sankey, top-gross-decades plots [^5]
 
@@ -28,3 +36,9 @@ index.qmd@tswift-v-others-sankey, top-gross-decades plots [^5]
 Eras is projected to do over $2B[^6]
 
 [^6]: Hur, Krystal. "First on CNN: Taylor Swift’s Eras tour could become the highest grossing tour of all time." CNN Business, 17 August 2023, https://www.cnn.com/2023/08/17/business/taylor-swift-eras-tour-two-billion/index.html.
+
+### Opening acts
+
+Spotify and YouTube subscription numbers[^7]
+
+[^7]: SongStats API, https://docs.songstats.com/

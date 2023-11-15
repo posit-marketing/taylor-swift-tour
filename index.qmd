@@ -70,7 +70,6 @@ We’re so fascinated by the cultural and economic movement that is The Eras Tou
 
 ```{r}
 #| label: gdp-comparison-plot
-#| fig-cap: "The GDP of Taylor"
 #| fig-alt: "A plot titled The GDP of Taylor. It shows a series of country outlines each with a monetary value labeled as their Gross Domestic Product (GDP), and in the center, there's an image of Taylor Swift with her own GDP value. Starting from the top left and moving clockwise, the countries and their respective GDPs are: Kosovo with $9.43B, Somalia with $8.13B, Togo with $8.13B, Montenegro with $6.10B, Eswatini with $4.85B, Fiji with $4.94B, Barbados with $5.64B, and Bermuda with $7.55B. Taylor Swift is in the center with a GDP of $6.30B. Each country is represented by a colored silhouette in various shades of green, yellow, purple, and pink. Taylor Swift's image is in a blue circle, and she is depicted with blond hair, wearing a sparkling dress, and posing with one hand on her hip."
 knitr::include_graphics(here::here("images", "gdp_plot.png"))
 ```
@@ -208,7 +207,6 @@ Over 10 million estimated attendees. \$2 billion in estimated gross revenue. To 
 
 ```{r}
 #| label: taylor-performances-treemap
-#| fig-cap: "Taylor Swift Tour Gross Revenue"
 #| fig-alt: "A collage with the title The Eras Tour and revenue figures for different concert tours, set against a backdrop of concert images. At the top in large font is $3.60B, and below that in slightly smaller font is $2.40B. To the right, there are smaller sections each with a different tour name and corresponding revenue figure. These are, from top to bottom: Fearless Tour $0.09B, The Red Tour $0.19B, Speak Now World Tour $0.16B, The 1989 World Tour $0.32B, and Reputation Stadium Tour $0.44B. The background images show a performer on stage in various poses, with the largest image showing the artist in a blue dress with a flowing cape, mid-performance. The colors in the images range from dark blue to red, yellow, and black."
 knitr::include_graphics(here::here("images", "taylor_treemap.png"))
 ```
@@ -224,7 +222,6 @@ In the visualization below, you can see how Eras compares to the most successful
 :::{.column-body-outset}
 ```{r}
 #| label: tswift-v-others-sankey
-#| fig-cap: "How does Taylor Swift's Eras Tour Compare to Others?"
 #| fig-alt: "A data visualization titled How does Taylor Swift's Eras Tour Compare to Others? It displays a comparison of revenue from the top ten international music tours between 2000 and 2023. The background of the graph is white with gray grid lines indicating revenue levels up to $2 billion. The plot uses a streamgraph format, where the width of each stream represents the revenue in a given year for different artists' tours. Highlighted artists and their earnings include The Rolling Stones with $1.216 billion from 2013-2023, Bruce Springsteen & The E Street Band with $268.3 million in 2016, U2 with $316 million in 2017, Ed Sheeran with $768.2 million between 2017-2019, Elton John with $334.4 million in 2022, and Bad Bunny with $373.5 million in 2022. Taylor Swift's stream is the tallest, colored in pink, on the far right, with a projected revenue of $2.2 billion. The streams for other artists are in various colors such as blue, green, and purple, and they weave across the graph over time. The source is credited to Pollstar with projections by CNN & QuestionPro."
 knitr::include_graphics(here::here("images", "tswift-v-others-sankey-rect.jpg"))
 ```
@@ -246,7 +243,6 @@ There is simply no one like Taylor Swift and nothing like this tour.
 
 ```{r}
 #| label: top-gross-decades-1990s
-#| fig-cap: Top 10 highest-grossing tours of the 1990s
 #| fig-alt: "A bar chart titled Top 10 highest-grossing tours of the 1990s with a white background and a list of musical tours alongside the revenue they generated. Each tour is associated with an image of the performing artist. From top to bottom, the tours and their revenues are The Rolling Stones - Voodoo Lounge Tour: $615M, Pink Floyd - The Division Bell Tour: $494M, The Rolling Stones - Bridges to Babylon Tour: $492M, U2 - PopMart Tour: $313M, U2 - Zoo TV Tour: $306M, Michael Jackson - HIStory World Tour: $301M, Eagles - Hell Freezes Over Tour: $285M, Tina Turner - Wildest Dreams Tour: $237M, Celine Dion - Let's Talk About Love World Tour: $234M, Garth Brooks - The Garth Brooks World Tour: $189M. On the right side of each tour name and revenue figure, there is a corresponding photograph of the artist or band performing live. The source of the data is credited to Wikipedia at the bottom of the image."
 knitr::include_graphics(here::here("images", "bar_1990s.png"))
 ```
@@ -255,7 +251,6 @@ knitr::include_graphics(here::here("images", "bar_1990s.png"))
 
 ```{r}
 #| label: top-gross-decades-2000s
-#| fig-cap: Top 10 highest-grossing tours of the 2000s
 #| fig-alt: "A bar chart titled Top 10 highest-grossing tours of the 2000s with a white background. It lists musical tours from the 2000s with their corresponding revenue figures, each accompanied by a small image of the performing artist or band. From top to bottom, the tours and their revenues are: The Rolling Stones - A Bigger Bang Tour: $788M, U2 - Vertigo Tour: $565M, Madonna - Sticky & Sweet Tour: $561M, The Rolling Stones - Licks Tour: $495M, The Police - The Police Reunion Tour: $488M, U2 - U2 360° Tour: $425M, Celine Dion - Taking Chances World Tour: $379M, Cher - Living Proof: The Farewell Tour: $375M, AC/DC - Black Ice World Tour: $360M, Bruce Springsteen and the E Street Band - Magic Tour: $319M. On the right side of each tour name and revenue, there is a corresponding photograph of the artist or band performing live. The source of the data is credited to Wikipedia at the bottom of the image."
 knitr::include_graphics(here::here("images", "bar_2000s.png"))
 ```
@@ -264,7 +259,6 @@ knitr::include_graphics(here::here("images", "bar_2000s.png"))
 
 ```{r}
 #| label: top-gross-decades-2010s
-#| fig-cap: Top 10 highest-grossing tours of the 2010s
 #| fig-alt: "The image is a bar chart titled Top 10 highest-grossing tours of the 2010s with a white background. It lists musical tours from the 2010s with their corresponding revenue figures, each accompanied by a small image of the performing artist or band. From top to bottom, the tours and their revenues are: Ed Sheeran - ÷ Tour: 888M, Guns N' Roses - Not in This Lifetime... Tour: 669M, Coldplay - A Head Full of Dreams Tour: 624M, Roger Waters - The Wall: 577M, U2 - U2 360° Tour: 553M, Metallica - WorldWired Tour: 492M, The Rolling Stones - No Filter Tour: 476M, U2 - The Joshua Tree Tours 2017 and 2019: 467M, Pink - Beautiful Trauma World Tour: 455M, Bruno Mars - 24K Magic World Tour: 429M. On the right side of each tour name and revenue, there is a corresponding photograph of the artist or band performing live. The source of the data is credited to Wikipedia at the bottom of the image."
 knitr::include_graphics(here::here("images", "bar_2010s.png"))
 ```
@@ -273,7 +267,6 @@ knitr::include_graphics(here::here("images", "bar_2010s.png"))
 
 ```{r}
 #| label: top-gross-decades-2020s
-#| fig-cap: Top 10 highest-grossing tours of the 2020s
 #| fig-alt: "The image is a bar chart titled Top 10 highest-grossing tours of the 2020s with a white background. It lists musical tours from the 2020s with their corresponding revenue figures, each accompanied by a small image of the performing artist or band. From top to bottom, the tours and their revenues are: Taylor Swift - The Eras Tour: 2400, Coldplay - Music of the Spheres World Tour: 668, Harry Styles - Love On Tour: 617, Beyoncé - Renaissance World Tour: 580, Elton John - Farewell Yellow Brick Road: 471, Ed Sheeran - ÷=× Tour: 418, Bad Bunny - World's Hottest Tour: 314, The Weeknd - After Hours til Dawn Tour: 289, Pink - Summer Carnival: 258, Red Hot Chili Peppers - Global Stadium Tour: 237M. On the right side of each tour name and revenue, there is a corresponding photograph of the artist or band performing live. The source of the data is credited to Wikipedia at the bottom of the image."
 knitr::include_graphics(here::here("images", "bar_2020s.png"))
 ```

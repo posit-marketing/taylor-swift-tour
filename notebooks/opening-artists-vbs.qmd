@@ -354,9 +354,7 @@ for (i in 1:length(openers$artist |> unique())) {
 
 ```
 
-```{
-r
-}
+```{r}
 #| eval: false
 layout_column_wrap(width = "300px",!!!vbs_artists[[artist_i]])
 
