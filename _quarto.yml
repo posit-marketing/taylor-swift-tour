@@ -18,6 +18,8 @@ website:
           - text: "☁️ Open the project in Posit Cloud"
     footer: spotify_playlist.html
   page-footer:
+    center: |
+       <a href="https://posit.co"><img src="images/posit-logo.png" alt="Posit logo" style="width:60px;"></a> 
     left:
       - href: references.qmd
     right:

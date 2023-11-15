@@ -1,12 +1,13 @@
 ---
-title: "Taylor Swift's Towering Year"
+title: "Taylor's Towering Year"
 title-block-banner: "images/hero.jpg"
-format: html
+title-block-banner-alt: "Taylor Swift on stage with a microphone in hand, likely during a concert. The individual is facing towards the right, with their head turned to look at the camera, giving a confident smile. They are wearing a glittering bodysuit adorned with sequins in shades of gold and blue, paired with fishnet stockings and sparkling knee-high boots. At the top of the image, in large white text against a black background, reads TAYLOR'S TOWERING YEAR. Below the main image, a bar of smaller images or possibly a visual data representation features the text ERAS TOUR TOLD BY DATA with some letters clear and others obscured by heart symbols replacing the Os."
 filters:
    - lightbox
 execute:
   echo: false
   eval: true
+format: html
 ---
 
 ```{r}
@@ -15,18 +16,18 @@ source("setup.R")
 library(confetti)
 
 config <-
-  list("emojis" = c(
-    "\U0001F9e3", # Scarf
-    "\U0001F3B8", # Guitar
-    "\U0001F40D", # Snake
-    "\U0002601", # Cloud
-    "\U0001F98B", # Butterfly
-    "\U0001FAF6", # Heart hands
-    "\U0001FAA9", # Mirror ball
-    "\U0001F408", # Cat
-    "\U0001F37E" # Champagne bottle
+  list(
+    "confettiColors" = c(
+      "#B5B808",
+      "#B91824",
+      "#B32CAC",
+      "#FAA9C0",
+      "#9173C8",
+      "#25DE70",
+      "#005AA8",
+      "#161618"
     ),
-    "confettiNumber" = 100
+    "confettiNumber" = 200
   )
 
 confetti::diy_confetti("confetti",
@@ -53,9 +54,9 @@ She is the undisputed queen on the pop-culture chessboard, moving seven spaces l
 
 Just how permeating is Taylor Swift this year? 
 
-She and The Eras Tour have done the seemingly impossible: displace football (and virtually every other topic) as the most powerful weekly constant in America’s weekly media diet. 
+She and The Eras Tour have done the seemingly impossible: displace football (and virtually every other topic) as the most powerful constant in America’s weekly media diet. 
 
-And speaking of football, her new love interest, [NFL superstar Travis Kelce](https://www.rollingstone.com/music/music-news/taylor-swift-travis-kelces-complete-timeline-1234853777/), is being called out by another [NFL superstar Aaron Rodgers](https://www.youtube.com/watch?v=3IANdT1GdRE), for starring in a Pfizer commercial. Just months _after_ Aaron Rodgers [went viral](https://www.greenbaypressgazette.com/story/sports/nfl/packers/fans/2023/05/30/aaron-rodgers-shows-off-his-swiftie-moves-at-taylor-swifts-eras-tour/70268160007/) for dancing to the live rendition of Style at Taylor’s concert in East Rutherford, New Jersey. 
+And speaking of football, her new love interest, [NFL superstar Travis Kelce](https://www.rollingstone.com/music/music-news/taylor-swift-travis-kelces-complete-timeline-1234853777/), is being called out by another [NFL superstar, Aaron Rodgers](https://www.youtube.com/watch?v=3IANdT1GdRE), for starring in a Pfizer commercial. Just months _after_ Aaron Rodgers [went viral](https://www.greenbaypressgazette.com/story/sports/nfl/packers/fans/2023/05/30/aaron-rodgers-shows-off-his-swiftie-moves-at-taylor-swifts-eras-tour/70268160007/) for dancing to the live rendition of Style at Taylor’s concert in East Rutherford, New Jersey. 
 
 All while [CBS Sports](https://www.cbssports.com/nfl/news/look-taylor-swift-arrives-at-broncos-chiefs-thursday-night-game-to-watch-travis-kelce/), [Fox Sports](https://www.foxsports.com/stories/nfl/taylor-swift-expected-to-attend-chiefs-broncos-travis-kelce-questionable), and [ESPN](https://www.espn.com/video/clip/_/id/38647723) simply can’t keep their cameras focused on the football field, but instead, on her.
 
@@ -65,10 +66,12 @@ Yet, there’s Taylor on their screens.
 
 The Eras Tour has simply transcended music. If you were planning to release a song or tour, do it next year. Beatlemania, The Rolling Stones, Coldplay, Michael Jackson - Taylor trumps them all.
 
-We’re so fascinated by the cultural and economic movement that is The Eras Tour, that we wanted to break it down ourselves. Let’s see what the data says.
+We’re so fascinated by the cultural and economic movement that is The Eras Tour that we wanted to break it down ourselves. Let’s see what the data says.
 
 ```{r}
 #| label: gdp-comparison-plot
+#| fig-cap: "The GDP of Taylor"
+#| fig-alt: "A plot titled The GDP of Taylor. It shows a series of country outlines each with a monetary value labeled as their Gross Domestic Product (GDP), and in the center, there's an image of Taylor Swift with her own GDP value. Starting from the top left and moving clockwise, the countries and their respective GDPs are: Kosovo with $9.43B, Somalia with $8.13B, Togo with $8.13B, Montenegro with $6.10B, Eswatini with $4.85B, Fiji with $4.94B, Barbados with $5.64B, and Bermuda with $7.55B. Taylor Swift is in the center with a GDP of $6.30B. Each country is represented by a colored silhouette in various shades of green, yellow, purple, and pink. Taylor Swift's image is in a blue circle, and she is depicted with blond hair, wearing a sparkling dress, and posing with one hand on her hip."
 knitr::include_graphics(here::here("images", "gdp_plot.png"))
 ```
 
@@ -84,7 +87,7 @@ Demand was crushing. And Ticketmaster, the sole supplier of 2023’s golden tick
 
 ::: {.column width="30%"}
 
-On November 15th, the first day of the pre-sale, Ticketmaster’s website crashed within an hour, leaving most fans with presale codes stranded in confusion and endlessly bouncing around in the purchase queue.
+On November 15th, the first day of the presale, Ticketmaster’s website crashed within an hour, leaving most fans with presale codes stranded in confusion and endlessly bouncing around in the purchase queue.
 
 Some lucky fans were given presale codes. Most were demoted to a waitlist. The only two other options were testing your luck during the general sale (following the presale) or preparing yourself to swallow the stomach-churning premiums priced into resale tickets. None of those logistical details ended up meaning anything.
 
@@ -180,7 +183,7 @@ The power of Taylor Swift is that none of this chaos ultimately mattered.
 
 She [denounced Ticketmaster](https://musicmayhemmagazine.com/taylor-swift-breaks-silence-on-eras-tour-ticketmaster-fiasco-issues-statement-apologizing-to-fans/) in an Instagram story and apologized to her fans, comparing the process of getting a ticket to going through _several_ bear attacks. 
 
-And on March 17th, kicked off the tour with _Miss Americana & The Heartbreak Prince_ in front of 75,000 [shrieking, crying, and euphoric Swifties](https://youtu.be/GSVrEZCmfPM?si=6tGUaglLgK2I6vYf) at State Farm Stadium. The several bear attacks endured to get there – forgotten.
+And on March 17th, she kicked off the tour with _Miss Americana & The Heartbreak Prince_ in front of 75,000 [shrieking, crying, and euphoric Swifties](https://youtu.be/GSVrEZCmfPM?si=6tGUaglLgK2I6vYf) at State Farm Stadium. The several bear attacks endured to get there – forgotten.
 
 ## In the limelight
 
@@ -189,7 +192,7 @@ Seven months in, there’s no other way to put it.
 ::: {.column-margin}
 **The Eras Tour in Numbers**
 
-* 145 shows
+* 151 shows
 * 5 continents
 * 17 countries
 * 50 cities
@@ -200,13 +203,13 @@ Seven months in, there’s no other way to put it.
 
 The Eras Tour is a massive success.
 
-Over 10 million estimated attendees. $2 billion in estimated gross revenue. 17 countries. 50 cities. Almost 150 shows. 44 songs topping 3 hours.
-
-To put these numbers into perspective, her 2018 Reputation Tour had 3 million attendees and did only $440 million gross. 
+Over 10 million estimated attendees. \$2 billion in estimated gross revenue. To put these numbers into perspective, her 2018 Reputation Tour had 3 million attendees and did only \$440 million gross. 
 <br>
 
 ```{r}
 #| label: taylor-performances-treemap
+#| fig-cap: "Taylor Swift Tour Gross Revenue"
+#| fig-alt: "A collage with the title The Eras Tour and revenue figures for different concert tours, set against a backdrop of concert images. At the top in large font is $3.60B, and below that in slightly smaller font is $2.40B. To the right, there are smaller sections each with a different tour name and corresponding revenue figure. These are, from top to bottom: Fearless Tour $0.09B, The Red Tour $0.19B, Speak Now World Tour $0.16B, The 1989 World Tour $0.32B, and Reputation Stadium Tour $0.44B. The background images show a performer on stage in various poses, with the largest image showing the artist in a blue dress with a flowing cape, mid-performance. The colors in the images range from dark blue to red, yellow, and black."
 knitr::include_graphics(here::here("images", "taylor_treemap.png"))
 ```
 
@@ -221,11 +224,13 @@ In the visualization below, you can see how Eras compares to the most successful
 :::{.column-body-outset}
 ```{r}
 #| label: tswift-v-others-sankey
+#| fig-cap: "How does Taylor Swift's Eras Tour Compare to Others?"
+#| fig-alt: "A data visualization titled How does Taylor Swift's Eras Tour Compare to Others? It displays a comparison of revenue from the top ten international music tours between 2000 and 2023. The background of the graph is white with gray grid lines indicating revenue levels up to $2 billion. The plot uses a streamgraph format, where the width of each stream represents the revenue in a given year for different artists' tours. Highlighted artists and their earnings include The Rolling Stones with $1.216 billion from 2013-2023, Bruce Springsteen & The E Street Band with $268.3 million in 2016, U2 with $316 million in 2017, Ed Sheeran with $768.2 million between 2017-2019, Elton John with $334.4 million in 2022, and Bad Bunny with $373.5 million in 2022. Taylor Swift's stream is the tallest, colored in pink, on the far right, with a projected revenue of $2.2 billion. The streams for other artists are in various colors such as blue, green, and purple, and they weave across the graph over time. The source is credited to Pollstar with projections by CNN & QuestionPro."
 knitr::include_graphics(here::here("images", "tswift-v-others-sankey-rect.jpg"))
 ```
 :::
 
-The Rolling Stones is the only other touring group to eclipse the billion-dollar revenue mark, but needed nearly ten years (a decade!) to do so.
+The Rolling Stones is the only other touring group to eclipse the billion-dollar revenue mark but needed nearly ten years (a decade!) to do so.
 
 In one shot - one tour - Eras is projected to do over $2B. 
 
@@ -241,6 +246,8 @@ There is simply no one like Taylor Swift and nothing like this tour.
 
 ```{r}
 #| label: top-gross-decades-1990s
+#| fig-cap: Top 10 highest-grossing tours of the 1990s
+#| fig-alt: "A bar chart titled Top 10 highest-grossing tours of the 1990s with a white background and a list of musical tours alongside the revenue they generated. Each tour is associated with an image of the performing artist. From top to bottom, the tours and their revenues are The Rolling Stones - Voodoo Lounge Tour: $615M, Pink Floyd - The Division Bell Tour: $494M, The Rolling Stones - Bridges to Babylon Tour: $492M, U2 - PopMart Tour: $313M, U2 - Zoo TV Tour: $306M, Michael Jackson - HIStory World Tour: $301M, Eagles - Hell Freezes Over Tour: $285M, Tina Turner - Wildest Dreams Tour: $237M, Celine Dion - Let's Talk About Love World Tour: $234M, Garth Brooks - The Garth Brooks World Tour: $189M. On the right side of each tour name and revenue figure, there is a corresponding photograph of the artist or band performing live. The source of the data is credited to Wikipedia at the bottom of the image."
 knitr::include_graphics(here::here("images", "bar_1990s.png"))
 ```
 
@@ -248,6 +255,8 @@ knitr::include_graphics(here::here("images", "bar_1990s.png"))
 
 ```{r}
 #| label: top-gross-decades-2000s
+#| fig-cap: Top 10 highest-grossing tours of the 2000s
+#| fig-alt: "A bar chart titled Top 10 highest-grossing tours of the 2000s with a white background. It lists musical tours from the 2000s with their corresponding revenue figures, each accompanied by a small image of the performing artist or band. From top to bottom, the tours and their revenues are: The Rolling Stones - A Bigger Bang Tour: $788M, U2 - Vertigo Tour: $565M, Madonna - Sticky & Sweet Tour: $561M, The Rolling Stones - Licks Tour: $495M, The Police - The Police Reunion Tour: $488M, U2 - U2 360° Tour: $425M, Celine Dion - Taking Chances World Tour: $379M, Cher - Living Proof: The Farewell Tour: $375M, AC/DC - Black Ice World Tour: $360M, Bruce Springsteen and the E Street Band - Magic Tour: $319M. On the right side of each tour name and revenue, there is a corresponding photograph of the artist or band performing live. The source of the data is credited to Wikipedia at the bottom of the image."
 knitr::include_graphics(here::here("images", "bar_2000s.png"))
 ```
 
@@ -255,6 +264,8 @@ knitr::include_graphics(here::here("images", "bar_2000s.png"))
 
 ```{r}
 #| label: top-gross-decades-2010s
+#| fig-cap: Top 10 highest-grossing tours of the 2010s
+#| fig-alt: "The image is a bar chart titled Top 10 highest-grossing tours of the 2010s with a white background. It lists musical tours from the 2010s with their corresponding revenue figures, each accompanied by a small image of the performing artist or band. From top to bottom, the tours and their revenues are: Ed Sheeran - ÷ Tour: 888M, Guns N' Roses - Not in This Lifetime... Tour: 669M, Coldplay - A Head Full of Dreams Tour: 624M, Roger Waters - The Wall: 577M, U2 - U2 360° Tour: 553M, Metallica - WorldWired Tour: 492M, The Rolling Stones - No Filter Tour: 476M, U2 - The Joshua Tree Tours 2017 and 2019: 467M, Pink - Beautiful Trauma World Tour: 455M, Bruno Mars - 24K Magic World Tour: 429M. On the right side of each tour name and revenue, there is a corresponding photograph of the artist or band performing live. The source of the data is credited to Wikipedia at the bottom of the image."
 knitr::include_graphics(here::here("images", "bar_2010s.png"))
 ```
 
@@ -262,12 +273,14 @@ knitr::include_graphics(here::here("images", "bar_2010s.png"))
 
 ```{r}
 #| label: top-gross-decades-2020s
+#| fig-cap: Top 10 highest-grossing tours of the 2020s
+#| fig-alt: "The image is a bar chart titled Top 10 highest-grossing tours of the 2020s with a white background. It lists musical tours from the 2020s with their corresponding revenue figures, each accompanied by a small image of the performing artist or band. From top to bottom, the tours and their revenues are: Taylor Swift - The Eras Tour: 2400, Coldplay - Music of the Spheres World Tour: 668, Harry Styles - Love On Tour: 617, Beyoncé - Renaissance World Tour: 580, Elton John - Farewell Yellow Brick Road: 471, Ed Sheeran - ÷=× Tour: 418, Bad Bunny - World's Hottest Tour: 314, The Weeknd - After Hours til Dawn Tour: 289, Pink - Summer Carnival: 258, Red Hot Chili Peppers - Global Stadium Tour: 237M. On the right side of each tour name and revenue, there is a corresponding photograph of the artist or band performing live. The source of the data is credited to Wikipedia at the bottom of the image."
 knitr::include_graphics(here::here("images", "bar_2020s.png"))
 ```
 
 :::
 
-One thing that we think is worth calling out: the second highest-grossing tour in the 2020s (so far) was Beyoncé and her _Renaissance World Tour._
+One thing that we think is worth calling out: the tour with the second-highest average gross in the 2020s (so far) was Beyoncé and her _Renaissance World Tour._
 
 All to say: bow down to the queens 👑
 
@@ -280,7 +293,6 @@ All to say: bow down to the queens 👑
 Finally, we looked at the impact of Taylor Swift on a few of her openers: Gracie Abrams, Beabadoobie, and Paramore. 
 
 We wondered: what dividend does Taylor pay to her music industry friends? 
-
 In the instances of Gracie Abrams and Beabadoobie, you can see a sharp uptick in metrics like Spotify followers, Shazam total plays, and YouTube subscribers immediately after they opened at Eras. 
 
 Interestingly, Paramore didn’t seem to benefit from opening at Eras by these metrics. One possible explanation is that Paramore is already hugely popular, so a sharp increase was unlikely.
@@ -288,7 +300,7 @@ Interestingly, Paramore didn’t seem to benefit from opening at Eras by these m
 ```{r}
 #| label: openers-data
 #| echo: false
-vbs_artists <- readRDS("data/vbs_artists.RDS")
+vbs_artists <- readRDS(here::here("data", "vbs_artists.RDS"))
 ```
 
 :::{.column-body-outset}
@@ -323,7 +335,7 @@ card(
     
     card(
       p(HTML(paste(strong("Genre:")," Pop"))),
-      p(HTML(paste(strong("Origon:")," Los Angles, CA"))),
+      p(HTML(paste(strong("Origin:")," Los Angles, CA"))),
       p(HTML(paste(strong("First Album:")," Good Riddance"))),
       p('"I found out about (opening for Swift) through my agent and I immediately texted Taylor," Abrams said. "I don’t even remember. I just blacked out. I wouldn’t believe it at all. This couldn’t be real life. All I can think about is how insane an opportunity it is to watch her perform every night. I’m so lucky to be a part of that tour. It’s the greatest master class in the world, being able to see the person who’s the best at this, ever, do it so many times.'),
       style = "border:0px;"
@@ -374,14 +386,13 @@ card(
     
     card(
           p(HTML(paste(strong("Genre:")," Pop"))),
-          p(HTML(paste(strong("Origon:"),"London, England"))),
+          p(HTML(paste(strong("Origin:"),"London, England"))),
           p(HTML(paste(strong("First Album:")," Fake it Flowers"))),
       p('In an interview with People magazine, Bea shared that "It didn\'t feel real" when during Swift\'s acoustic portion of the show, the headliner revealed she read an interview with Bea, who grew up with Swift\'s debut LP. "I figured for her first show with us, I\'d play that specific song that she said she wanted to hear," Swift told her crowd, before performing "Our Song," in dedication to Bea.
 
 "Imagine someone that you\'ve listened to growing up and almost shaped your childhood being like, \'This is for young Bea.\' And I\'m like, well, f— my life. I\'m going to die. It\'s like all the problems have just been solved in that [moment]," shared Bea during her interview with People magazine.'),
       style = "border:0px;"
     )
-    
   )
 )
 
@@ -428,7 +439,7 @@ card(
     
     card(
       p(HTML(paste(strong("Genre:")," Rock"))),
-      p(HTML(paste(strong("Origon:"),"Franklin, TN"))),
+      p(HTML(paste(strong("Origin:"),"Franklin, TN"))),
       p(HTML(paste(strong("First Album:")," All We Know is Falling"))),
       p('Really can’t contain my excitement because … we’re adding 14 new shows to The Eras Tour. And I get to travel the world doing shows with @paramore!! @yelyahwilliams and I have been friends since we were teens in Nashville and now we get to frolic around the UK/Europe next summer??? I’m screaming???" - Taylor Swift when announcing Paramore would be opening for her during The Eras Tour'),
       style = "border:0px;"
@@ -459,5 +470,5 @@ The five-year wait since Reputation, the hundred thousand dollar bonuses to her 
 So kudos to you, Taylor: you and Eras are truly 1 of 1 in the pantheon of music.
 
 ::: {.column-screen}
-![](images/web-closer.png)
+![](images/web-closer.png){fig-alt="The image is a wide banner featuring a group of performers on stage, facing away from the camera, arms raised towards the audience. The performers are in colorful outfits, and the stage is lit with a concert atmosphere, including confetti in the air. Across the image, there is a blue overlay with the text ERAS TOUR TOLD BY DATA in a mix of clear and obscured letters, with heart symbols replacing the O in TOUR and BY. In the bottom right corner, there is a logo with the text Powered by Posit." .nolightbox}
 :::

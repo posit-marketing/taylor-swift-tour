@@ -9,7 +9,7 @@ title-block-banner: "images/hero.jpg"
 
 [^1]: QuestionPro Survey
 
-index.qmd@fig-gdp-comparison-plot, "more in line with the yearly GDP of small nations than a music tour."[^2]
+index.qmd@gdp-comparison-plot, "more in line with the yearly GDP of small nations than a music tour."[^2]
 
 [^2]: "List_of_countries_by_GDP_(nominal)." Wikipedia, The Free Encyclopedia, Wikimedia Foundation, 31 October 2023, https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal).
 
@@ -17,7 +17,7 @@ index.qmd@fig-taylor-economic-impact-map[^3]
 
 [^3]: See list of sources here: https://github.com/posit-marketing/taylor-swift-tour/blob/main/data/taylor-economic-impact.csv
 
-index.qmd@fig-taylor-performances-treemapher 2018 Reputation Tour had 3 million attendees and did only $440 million gross[^4]
+index.qmd@taylor-economic-impact-map, 2018 Reputation Tour had 3 million attendees and did only $440 million gross[^4]
 
 [^4]: "List of Taylor Swift live performances." Wikipedia, The Free Encyclopedia, Wikimedia Foundation, 31 October 2023, https://en.wikipedia.org/wiki/List_of_Taylor_Swift_live_performances.
 

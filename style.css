@@ -12,8 +12,8 @@ menu-text {
    color: #823549; 
 }
 
-.nav-link.active {
-  color: #823549;
+a:active {
+  color: #1C2540;
 }
 
 .title-block-header {
@@ -77,17 +77,17 @@ h2 {
 
 h3 {
   font-family: Abril Fatface;
-  color: white !important;
+  color: #1C2540 !important;
 }
 
-.goals {
+.rcode {
   margin: 1em 0;
   border: 2px solid gray;
   border-left: 10px solid #41475E; 
   border-radius: 10px;
 }
 
-.goals-header {
+.rcode-header {
   margin-left: 0em;
   padding-left:  60px;
   padding-top:  2px;
@@ -100,10 +100,10 @@ h3 {
   background-size: 40px;
   background-repeat: no-repeat;
   background-position: 15px center;
-  background-image: url("stars.png");
+  background-image: url("images/stars.png");
 }
 
-.goals-container {
+.rcode-container {
   padding-top: 5px;
   padding-left: 10px;
   color: black;
@@ -113,4 +113,8 @@ h3 {
 
 .column-screen {
   margin-bottom: -100px;
+}
+
+.figure-caption {
+    display: none;
 }

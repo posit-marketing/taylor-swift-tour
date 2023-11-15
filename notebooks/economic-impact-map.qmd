@@ -4,11 +4,11 @@ output: html_document
 
 <details><summary>See R code</summary>
 
-:::{.goals}
-::::{.goals-header}
+:::{.rcode}
+::::{.rcode-header}
 R Code: Taylor Swift Economic Impact Map
 ::::
-::::{.goals-container}
+::::{.rcode-container}
 
 To create the Taylor Swift Economic Impact Map, we first load the packages that we will need.
 
@@ -33,14 +33,14 @@ Now, we read a CSV file ("taylor-economic-impact.csv") using the `read_csv()` fu
 #| echo: true
 #| eval: false
 impact <-
-  readr::read_csv(here::here("data", "taylor-economic-impact.csv"))
+  read_csv(here::here("data", "taylor-economic-impact.csv"))
 
 impact_geo <-
   impact |>
-  tidygeocoder::geocode(location,
-                        method = "osm",
-                        lat = latitude,
-                        long = longitude)
+  geocode(location,
+          method = "osm",
+          lat = latitude,
+          long = longitude)
 ```
 
 Finally, we can use the leaflet package to create an interactive map displaying markers for various locations indicating Taylor's economic impact.
@@ -48,53 +48,66 @@ Finally, we can use the leaflet package to create an interactive map displaying 
 ```{r}
 #| echo: true
 #| eval: false
-taylorIcon <- leaflet::makeIcon(iconUrl = here::here("images", "map-taylor.png"),
-                                iconWidth = 64,
-                                iconHeight = 64,
-                                iconAnchorX = 22,
-                                iconAnchorY = 94,
-                                shadowUrl = "http://leafletjs.com/examples/custom-icons/leaf-shadow.png",
-                                shadowWidth = 50,
-                                shadowHeight = 64,
-                                shadowAnchorX = 4,
-                                shadowAnchorY = 62)
+taylorIcon <-
+  makeIcon(
+    iconUrl = here::here("images", "map-taylor.png"),
+    iconWidth = 64,
+    iconHeight = 64,
+    iconAnchorX = 22,
+    iconAnchorY = 94,
+    shadowUrl = "http://leafletjs.com/examples/custom-icons/leaf-shadow.png",
+    shadowWidth = 50,
+    shadowHeight = 64,
+    shadowAnchorX = 4,
+    shadowAnchorY = 62
+  )
 
-labelText = paste0("<b>",
-                   impact_geo$location,
-                   "</b>",
-                   "<br/>",
-                   "<br/>",
-                   impact_geo$news,
-                   "<br>",
-                   "<br>",
-                   '<a href="',
-                   impact_geo$Source,
-                   '">Source</a>') |> 
+labelText = paste0(
+  "<b>",
+  impact_geo$location,
+  "</b>",
+  "<br/>",
+  "<br/>",
+  impact_geo$news,
+  "<br>",
+  "<br>",
+  '<a href="',
+  impact_geo$Source,
+  '">Source</a>'
+) |>
   lapply(htmltools::HTML)
 
-leaflet::leaflet(data = impact_geo,
-                 options = leafletOptions(zoomControl = FALSE,
-                                          scrollWheelZoom = FALSE)) |>
-  leaflet::setView(lng, lat, zoom = 4) |>
-  leaflet::addProviderTiles("Esri.WorldGrayCanvas",
-                            options = tileOptions(maxZoom = 12)) |>
-  leaflet::setMaxBounds(lng1 = -153.8,
-                        lat1 = -25.2,
-                        lng2 = 176.7,
-                        lat2 = 63.5) |>
-  leaflet::addMarkers(~ longitude,
-                      ~ latitude,
-                      label = ~ labelText,
-                      labelOptions = labelOptions(maxWidth = 50),
-                      icon = taylorIcon) |>
-  leaflet::addEasyButton(easyButton(icon = "fa-search-plus",
-                                    title = "Zoom In",
-                                    onClick = JS("function(btn, map) { map.zoomIn(); }"))) |>
-  leaflet::addEasyButton(easyButton(icon = "fa-search-minus",
-                                    title = "Zoom Out",
-                                    onClick = JS("function(btn, map) { map.zoomOut(); }"))) |> 
-  leaflet.extras::suspendScroll(wakeMessage = "Drag to move the map") |>
-  leaflet.extras::addResetMapButton()
+leaflet(data = impact_geo,
+        options = leafletOptions(zoomControl = FALSE,
+                                 scrollWheelZoom = FALSE)) |>
+  setView(lng, lat, zoom = 4) |>
+  addProviderTiles("Esri.WorldGrayCanvas",
+                   options = tileOptions(maxZoom = 12)) |>
+  setMaxBounds(
+    lng1 = -153.8,
+    lat1 = -25.2,
+    lng2 = 176.7,
+    lat2 = 63.5
+  ) |>
+  addMarkers(
+    ~ longitude,
+    ~ latitude,
+    label = ~ labelText,
+    labelOptions = labelOptions(maxWidth = 50),
+    icon = taylorIcon
+  ) |>
+  addEasyButton(easyButton(
+    icon = "fa-search-plus",
+    title = "Zoom In",
+    onClick = JS("function(btn, map) { map.zoomIn(); }")
+  )) |>
+  addEasyButton(easyButton(
+    icon = "fa-search-minus",
+    title = "Zoom Out",
+    onClick = JS("function(btn, map) { map.zoomOut(); }")
+  )) |>
+  suspendScroll(wakeMessage = "Drag to move the map") |>
+  addResetMapButton()
 ```
 
 ::::

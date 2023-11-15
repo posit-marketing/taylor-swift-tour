@@ -4,18 +4,17 @@ output: html_document
 
 <details><summary>See R code</summary>
 
-:::{.goals}
-::::{.goals-header}
+:::{.rcode}
+::::{.rcode-header}
 R Code: Highest Grossing Tours Sankey Chart
 ::::
-::::{.goals-container}
+::::{.rcode-container}
 
 To create the Highest Grossing Tours Sankey Chart, we first load the packages that we will need.
 
 ```{r}
 #| eval: false
 #| echo: true
-
 # To load and clean data
 library(tidyverse)
 
@@ -53,7 +52,7 @@ rank_concert_tours <- read_csv("../data/rank_concert_tours.csv") |>
     )
   )
 
-for (YEAR in unique(rank_concert_tours$year)){
+for (YEAR in unique(rank_concert_tours$year)) {
   # print(as.character(YEAR))
   
   year_tbl <- rank_concert_tours |>
@@ -62,45 +61,44 @@ for (YEAR in unique(rank_concert_tours$year)){
   add_tbl <- tibble(
     year = YEAR,
     artist = (rank_concert_tours$artist |> unique())[!(rank_concert_tours$artist |> unique() %in% year_tbl$artist)],
-    gross = 1)
+    gross = 1
+  )
   
-  add_tbl$rank <- 11:(nrow(add_tbl)+10)
+  add_tbl$rank <- 11:(nrow(add_tbl) + 10)
   
-  year_tbl <- year_tbl |> 
-    bind_rows(
-      add_tbl)
+  year_tbl <- year_tbl |>
+    bind_rows(add_tbl)
   
-  rank_concert_tours <- year_tbl |> 
-    bind_rows(
-      rank_concert_tours |> 
-        filter(year != YEAR))
+  rank_concert_tours <- year_tbl |>
+    bind_rows(rank_concert_tours |>
+                filter(year != YEAR))
   
 }
 
-rank_concert_tours <- tibble(rank_concert_tours) |> 
+rank_concert_tours <- tibble(rank_concert_tours) |>
   arrange(year, rank)
 
 # Set artist as factor, set levels
 # This helps the visualization
 
 # artist we want in front
-artist_levels <- c("Taylor Swift",
-                   "Ed Sheeran",
-                   "The Rolling Stones",
-                   "Bruce Springsteen & the E Street Band",
-                   "U2",
-                   "Elton John",
-                   "Bad Bunny")
+artist_levels <- c(
+  "Taylor Swift",
+  "Ed Sheeran",
+  "The Rolling Stones",
+  "Bruce Springsteen & the E Street Band",
+  "U2",
+  "Elton John",
+  "Bad Bunny"
+)
 
-artist_levels = c(
-  artist_levels,
-  
-# everyone else, sorted alphabeically. 
-  (rank_concert_tours$artist |> unique())[!(rank_concert_tours$artist |> unique() %in% artist_levels)] |> sort())
+artist_levels = c(artist_levels,
+                  
+                  # everyone else, sorted alphabeically.
+                  (rank_concert_tours$artist |> unique())[!(rank_concert_tours$artist |> unique() %in% artist_levels)] |> sort())
 
-rank_concert_tours$artist <- factor(
-  x = rank_concert_tours$artist,
-  levels = artist_levels)
+rank_concert_tours$artist <- factor(x = rank_concert_tours$artist,
+                                    levels = artist_levels)
 ```
 
 Now, let's use {ggplot} and {ggsankey} to build this plot.
@@ -114,38 +112,88 @@ The placement of many of the annotations is optimized for the square image outpu
 # Update with taylor swift colors, https://www.color-hex.com/color-palette/1029201
 #b9d2b5	(185,210,181)
 ts_pal <- tribble(
-  ~artist,                                  ~hex_color,
-  "Taylor Swift",                           "#823549",
-  "Ed Sheeran",                             "#f4cb8d", 
-  "The Rolling Stones",                     "#1EB3B3", 
-  "Bruce Springsteen & the E Street Band",  "#0041CC",
-  "U2",                                     "#76ad6d",
-  "Elton John",                             "#cc86cf",
-  "Bad Bunny",                              "#6bddfa"            
+  ~ artist,
+  ~ hex_color,
+  "Taylor Swift",
+  "#823549",
+  "Ed Sheeran",
+  "#f4cb8d",
+  "The Rolling Stones",
+  "#1EB3B3",
+  "Bruce Springsteen & the E Street Band",
+  "#0041CC",
+  "U2",
+  "#76ad6d",
+  "Elton John",
+  "#cc86cf",
+  "Bad Bunny",
+  "#6bddfa"
 )
 # Old colors
 # ts_pal <- tribble(
 #   ~artist,                                  ~hex_color,
-#   "Bad Bunny",                              "#1EB3B3", 
-#   "Bruce Springsteen & the E Street Band",  "#0041CC", 
-#   "Ed Sheeran",                             "#e17d17", 
+#   "Bad Bunny",                              "#1EB3B3",
+#   "Bruce Springsteen & the E Street Band",  "#0041CC",
+#   "Ed Sheeran",                             "#e17d17",
 #   "Elton John",                             "#A713CC",
-#   "Taylor Swift",                           "#CE1126", 
+#   "Taylor Swift",                           "#CE1126",
 #   "The Rolling Stones",                     "#877DB8",
 #   "U2",                                     "#38C754"
 # )
 # ts_pal <- c("#1EB3B3","#0041CC","#e17d17","#A713CC","#CE1126","#877DB8","#38C754")
 
-# set text and position of major artist and tour annotation. 
-annot <- tribble(~artist, ~x, ~y, ~total, ~note, ~size,
-                 "The Rolling Stones", 2003.5, 1100, 1216000000, "between 2013-2023", 4.9,
-                 "Bruce Springsteen & the E Street Band", 2010, 1550, 268300000, "in 2016", 4.9,
-                 "U2", 2013, 1850, 316000000, "in 2017", 4.9,
-                 "Ed Sheeran", 2017, 2200, 768200000, "between 2017-2019", 5,
-                 "Elton John", 2018.5, 2500, 334400000, "in 2022", 4.8,
-                 "Bad Bunny", 2018.5, 2700, 373500000, "in 2022", 4.8,
-                 "Taylor Swift", 2018.6, 3000, 2400000000, "Projected", 5.5) |>
-  rowwise() |> 
+# set text and position of major artist and tour annotation.
+annot <- tribble(
+  ~ artist,
+  ~ x,
+  ~ y,
+  ~ total,
+  ~ note,
+  ~ size,
+  "The Rolling Stones",
+  2003.5,
+  1100,
+  1216000000,
+  "between 2013-2023",
+  4.9,
+  "Bruce Springsteen & the E Street Band",
+  2010,
+  1550,
+  268300000,
+  "in 2016",
+  4.9,
+  "U2",
+  2013,
+  1850,
+  316000000,
+  "in 2017",
+  4.9,
+  "Ed Sheeran",
+  2017,
+  2200,
+  768200000,
+  "between 2017-2019",
+  5,
+  "Elton John",
+  2018.5,
+  2500,
+  334400000,
+  "in 2022",
+  4.8,
+  "Bad Bunny",
+  2018.5,
+  2700,
+  373500000,
+  "in 2022",
+  4.8,
+  "Taylor Swift",
+  2018.6,
+  3000,
+  2400000000,
+  "Projected",
+  5.5
+) |>
+  rowwise() |>
   mutate(label = glue("**{artist}**<br>{scales::dollar(total)} {note}"))
 
 annot$artist <- factor(x = annot$artist,
@@ -155,85 +203,135 @@ f1 <- "Lato"
 f2 <- "Abril Fatface"
 
 # Borrowing (stealling liberally) from Georgios Karamanis:
-# exporting manually: 
-p <- rank_concert_tours |> 
-  mutate(fill = artist,
-         fill = ifelse(artist %in% annot$artist, artist, NA),
-         fill = as.factor(fill)) |> 
+# exporting manually:
+p <- rank_concert_tours |>
+  mutate(
+    fill = artist,
+    fill = ifelse(artist %in% annot$artist, artist, NA),
+    fill = as.factor(fill)
+  ) |>
   ggplot() +
   # create Sankey bump plot
-  geom_sankey_bump(aes(
-    x = year,
-    node = artist,
-    fill = fill,
-    value = gross,
-    color = after_scale(colorspace::lighten(fill, 0.4))), 
-    linewidth = 0.3, 
-    type = "alluvial", 
-    space = 0, 
-    alpha = 0.9) +
+  geom_sankey_bump(
+    aes(
+      x = year,
+      node = artist,
+      fill = fill,
+      value = gross,
+      color = after_scale(colorspace::lighten(fill, 0.4))
+    ),
+    linewidth = 0.3,
+    type = "alluvial",
+    space = 0,
+    alpha = 0.9
+  ) +
   # Labels for top artists
   ggtext::geom_richtext(
-    data = annot, 
-    aes(x = x, 
-        y = y, 
-        label = label, 
-        color = artist,
-        size = size), 
-    vjust = 0, 
-    family = f1, 
-    fill = NA, 
-    label.color = NA) + 
+    data = annot,
+    aes(
+      x = x,
+      y = y,
+      label = label,
+      color = artist,
+      size = size
+    ),
+    vjust = 0,
+    family = f1,
+    fill = NA,
+    label.color = NA
+  ) +
   # More labels
-  annotate("text", x = 2023.2, y = 900, label = "Mid-Year\nTotal\nfor Other\nArtists", family = f1, hjust = 0, vjust = 1, color = "grey30") +
+  annotate(
+    "text",
+    x = 2023.2,
+    y = 900,
+    label = "Mid-Year\nTotal\nfor Other\nArtists",
+    family = f1,
+    hjust = 0,
+    vjust = 1,
+    color = "grey30"
+  ) +
   # Title and subtitle
   annotate(
-    "text", x = 2000, y = 3500, 
-    label = str_wrap("How does Taylor Swift's Eras Tour Compare to Others?", indent = 0), 
-    size = 8, family = f2, fontface = "bold", hjust = 0, color = "#181716") +
-  annotate("text", x = 2000, y = 3370, label = str_wrap("This plot shows rankings and revenue from each year's top ten international music tours between 2000 and 2023. Other top tours & artists are highlighted. ", 50), 
-           size = 5.5, family = f1, hjust = 0, vjust = 1, color = "#393433",
-           lineheight = .9) +
+    "text",
+    x = 2000,
+    y = 3500,
+    label = str_wrap("How does Taylor Swift's Eras Tour Compare to Others?", indent = 0),
+    size = 8,
+    family = f2,
+    fontface = "bold",
+    hjust = 0,
+    color = "#181716"
+  ) +
+  annotate(
+    "text",
+    x = 2000,
+    y = 3370,
+    label = str_wrap(
+      "This plot shows rankings and revenue from each year's top ten international music tours between 2000 and 2023. Other top tours & artists are highlighted. ",
+      50
+    ),
+    size = 5.5,
+    family = f1,
+    hjust = 0,
+    vjust = 1,
+    color = "#393433",
+    lineheight = .9
+  ) +
   
   # Scales, coord, theme
-  scale_x_continuous(breaks = seq(2002, 2022, 2),
-                     minor_breaks = NULL, 
-                     guide = "axis_minor") +
+  scale_x_continuous(
+    breaks = seq(2002, 2022, 2),
+    minor_breaks = NULL,
+    guide = "axis_minor"
+  ) +
   scale_y_continuous(
-    labels = unit_format(prefix = "$",
-                         unit = "Billion", 
-                         scale = 1e-3),
-    limits = c(0,3600),
-    breaks = c(1000,2000),
-    minor_breaks = NULL) +
+    labels = unit_format(
+      prefix = "$",
+      unit = "Billion",
+      scale = 1e-3
+    ),
+    limits = c(0, 3600),
+    breaks = c(1000, 2000),
+    minor_breaks = NULL
+  ) +
   scale_fill_manual(values = ts_pal$hex_color, na.value = "grey80") +
   scale_color_manual(values = ts_pal$hex_color, na.value = "grey80") +
   scale_size_continuous(range = c(4, 6)) +
   coord_cartesian(clip = "off", expand = FALSE) +
   labs(caption = "Source: Pollstar. Projection by CNN & QuestionPro") +
   theme_minimal(base_family = f1) +
-  theme(legend.position = "none",
-        plot.background = element_rect(fill = "#FFFFFE", color = NA),
-        axis.title = element_blank(),
-        axis.text = element_text(size = 12, margin = margin(5, 0, 0, 0), family = f1, color = "#393433"),
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "#FFFFFE", color = NA),
+    axis.title = element_blank(),
+    axis.text = element_text(
+      size = 12,
+      margin = margin(5, 0, 0, 0),
+      family = f1,
+      color = "#393433"
+    ),
     # axis.ticks.x = element_line(color = "grey70"),
     # ggh4x.axis.ticks.length.minor = rel(1),
     plot.margin = margin(20, 75, 30, 35),
-    plot.caption = element_text(margin = margin(10, 0, 0, 0)))
+    plot.caption = element_text(margin = margin(10, 0, 0, 0))
+  )
 
 # p
 
-ggsave(filename = "../images/tswift-v-others-sankey-sqr.png",
-       plot = p,
-       device = png,
-       path = NULL,
-       scale = 1,
-       width = 10,
-       height = 10,
-       units = "in",
-       dpi = 300,
-       limitsize = TRUE,
-       bg = NULL)
+ggsave(
+  filename = "../images/tswift-v-others-sankey-sqr.png",
+  plot = p,
+  device = png,
+  path = NULL,
+  scale = 1,
+  width = 10,
+  height = 10,
+  units = "in",
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL
+)
 ```
 
 Rectangle Version, for blog post.
@@ -246,98 +344,184 @@ Rectangle Version, for blog post.
 #| fig.path: "../images/"
 #| label: tswift-v-others-sankey-rect
 
+
 ts_pal_fill <- tribble(
-  ~artist,                                  ~hex_color,
-  "Taylor Swift",                           "#823549",
-  "Ed Sheeran",                             "#f4cb8d", 
-  "The Rolling Stones",                     "#1EB3B3", 
-  "Bruce Springsteen & the E Street Band",  "#0041CC",
-  "U2",                                     "#76ad6d",
-  "Elton John",                             "#cc86cf",
-  "Bad Bunny",                              "#6bddfa"            
+  ~ artist,
+  ~ hex_color,
+  "Taylor Swift",
+  "#823549",
+  "Ed Sheeran",
+  "#f4cb8d",
+  "The Rolling Stones",
+  "#1EB3B3",
+  "Bruce Springsteen & the E Street Band",
+  "#0041CC",
+  "U2",
+  "#76ad6d",
+  "Elton John",
+  "#cc86cf",
+  "Bad Bunny",
+  "#6bddfa"
 )
 
 # Set color for annotation
 ts_pal_annotcolor <- tribble(
-  ~artist,                                  ~hex_color,
-  "Bad Bunny",                              "#6bddfa",
-  "Bruce Springsteen & the E Street Band",  "#0041CC", 
-  "Ed Sheeran",                             "#f4cb8d", 
-  "Elton John",                             "#cc86cf",
-  "Taylor Swift",                           "#823549",
-  "The Rolling Stones",                     "#1EB3B3",
-  "U2",                                     "#76ad6d"            
+  ~ artist,
+  ~ hex_color,
+  "Bad Bunny",
+  "#6bddfa",
+  "Bruce Springsteen & the E Street Band",
+  "#0041CC",
+  "Ed Sheeran",
+  "#f4cb8d",
+  "Elton John",
+  "#cc86cf",
+  "Taylor Swift",
+  "#823549",
+  "The Rolling Stones",
+  "#1EB3B3",
+  "U2",
+  "#76ad6d"
 )
-# set text and position of major artist and tour annotation. 
+# set text and position of major artist and tour annotation.
 annot <- tribble(
-  ~artist, ~x, ~y, ~total, ~note, ~size,
-  "The Rolling Stones",2004.5, 1100,1216000000,"between 2013-2023",5,
-  "Bruce Springsteen & the E Street Band",2010,1550,268300000,"in 2016",4.9,
-  "U2", 2013, 1900, 316000000,"in 2017",4.9,
-  "Ed Sheeran",2013.5,2200,768200000,"between 2017-2019",5.1,
-  "Elton John",2019,2250,334400000,"in 2022",4.8,
-  "Bad Bunny",2020,2600,373500000,"in 2022",4.8,
-  "Taylor Swift",2019.5, 3150, 2400000000,"Projected",5.5
-) |> rowwise() |> 
-  mutate(
-    label = glue("**{artist}**<br>{scales::dollar(total)} {note}")
-  )
+  ~ artist,
+  ~ x,
+  ~ y,
+  ~ total,
+  ~ note,
+  ~ size,
+  "The Rolling Stones",
+  2004.5,
+  1100,
+  1216000000,
+  "between 2013-2023",
+  5,
+  "Bruce Springsteen & the E Street Band",
+  2010,
+  1550,
+  268300000,
+  "in 2016",
+  4.9,
+  "U2",
+  2013,
+  1900,
+  316000000,
+  "in 2017",
+  4.9,
+  "Ed Sheeran",
+  2013.5,
+  2200,
+  768200000,
+  "between 2017-2019",
+  5.1,
+  "Elton John",
+  2019,
+  2250,
+  334400000,
+  "in 2022",
+  4.8,
+  "Bad Bunny",
+  2020,
+  2600,
+  373500000,
+  "in 2022",
+  4.8,
+  "Taylor Swift",
+  2019.5,
+  3150,
+  2400000000,
+  "Projected",
+  5.5
+) |> rowwise() |>
+  mutate(label = glue("**{artist}**<br>{scales::dollar(total)} {note}"))
 
 annot_segments <- tribble(
-  ~y,        ~yend,      ~x,     ~xend,  ~colour,
-  1100,      850,        2004.5, 2005,   "The Rolling Stones",
-  1680,      1500,       2013,   2015.7,   "Bruce Springsteen & the E Street Band",
-  2250,      2100,       2016.8,   2018,   "Ed Sheeran",
-  1950,      1800,       2015,   2016.7,   "U2",
-  2280,      1700,       2019.7,   2021.7, "Elton John",
-  2630,      2200,       2020.5, 2021.9, "Bad Bunny",
-  3180,      2900,       2019.5,   2022.8, "Taylor Swift",
+  ~ y,
+  ~ yend,
+  ~ x,
+  ~ xend,
+  ~ colour,
+  1100,
+  850,
+  2004.5,
+  2005,
+  "The Rolling Stones",
+  1680,
+  1500,
+  2013,
+  2015.7,
+  "Bruce Springsteen & the E Street Band",
+  2250,
+  2100,
+  2016.8,
+  2018,
+  "Ed Sheeran",
+  1950,
+  1800,
+  2015,
+  2016.7,
+  "U2",
+  2280,
+  1700,
+  2019.7,
+  2021.7,
+  "Elton John",
+  2630,
+  2200,
+  2020.5,
+  2021.9,
+  "Bad Bunny",
+  3180,
+  2900,
+  2019.5,
+  2022.8,
+  "Taylor Swift",
 )
 
-annot$artist <- factor(
-  x = annot$artist,
-  levels = artist_levels
-)
+annot$artist <- factor(x = annot$artist,
+                       levels = artist_levels)
 
 f1 <- "Lato"
 f2 <- "Abril Fatface"
 
-# exporting manually: 
-p2 <- rank_concert_tours |> 
+# exporting manually:
+p2 <- rank_concert_tours |>
   mutate(
     fill = artist,
     fill = ifelse(artist %in% annot$artist, artist, NA),
     fill = as.factor(fill)
-  ) |> 
-  ggplot( ) +
+  ) |>
+  ggplot() +
   # create Sankey bump plot
   geom_sankey_bump(
     aes(
-      x = year, 
-      node = artist, 
+      x = year,
+      node = artist,
       fill = fill,
       value = gross,
       color = after_scale(colorspace::lighten(fill, 0.4))
-    ), 
-    linewidth = 0.3, 
-    type = "alluvial", 
-    space = 0, 
+    ),
+    linewidth = 0.3,
+    type = "alluvial",
+    space = 0,
     alpha = 0.9
   ) +
   # Labels for top artists
   ggtext::geom_richtext(
-    data = annot, 
+    data = annot,
     aes(
-      x = x, 
-      y = y, 
-      label = label, 
+      x = x,
+      y = y,
+      label = label,
       color = artist,
       size = size
-    ), 
-    vjust = 0, 
-    family = f1, 
-    fill = NA, 
-    label.color = NA) + 
+    ),
+    vjust = 0,
+    family = f1,
+    fill = NA,
+    label.color = NA
+  ) +
   geom_segment(
     data = annot_segments,
     aes(
@@ -347,76 +531,108 @@ p2 <- rank_concert_tours |>
       yend =  yend,
       colour = colour
     ),
-    size=1,
-    alpha = 0.9) +
-  
+    size = 1,
+    alpha = 0.9
+  ) +
   
   # More labels
-  annotate("text", x = 2023.2, y = 900, label = "Mid-Year\nTotal\nfor Other\nArtists", family = f1, hjust = 0, vjust = 1, color = "grey30") +
+  annotate(
+    "text",
+    x = 2023.2,
+    y = 900,
+    label = "Mid-Year\nTotal\nfor Other\nArtists",
+    family = f1,
+    hjust = 0,
+    vjust = 1,
+    color = "grey30"
+  ) +
   # Title and subtitle
   annotate(
-    "text", x = 2000, y = 3500, 
-    label = str_wrap("How does Taylor Swift's Eras Tour Compare to Others?", indent = 0), 
-    size = 8, family = f2, fontface = "bold", hjust = 0, color = "#181716") +
-  annotate("text", x = 2000, y = 3370, 
-           label = paste0(
-             str_wrap("This plot shows rankings and revenue from each year's top ten international music tours between 2000 and 2023.", 60),
-             "\n",
-             "Other top tours & artists are highlighted."
-           ), 
-           size = 5.5, family = f1, hjust = 0, vjust = 1, color = "#393433",
-           lineheight = .9) +
+    "text",
+    x = 2000,
+    y = 3500,
+    label = str_wrap("How does Taylor Swift's Eras Tour Compare to Others?", indent = 0),
+    size = 8,
+    family = f2,
+    fontface = "bold",
+    hjust = 0,
+    color = "#181716"
+  ) +
+  annotate(
+    "text",
+    x = 2000,
+    y = 3370,
+    label = paste0(
+      str_wrap(
+        "This plot shows rankings and revenue from each year's top ten international music tours between 2000 and 2023.",
+        60
+      ),
+      "\n",
+      "Other top tours & artists are highlighted."
+    ),
+    size = 5.5,
+    family = f1,
+    hjust = 0,
+    vjust = 1,
+    color = "#393433",
+    lineheight = .9
+  ) +
   
   
   # Scales, coord, theme
   scale_x_continuous(
     breaks = seq(2002, 2022, 2),
-    minor_breaks = NULL, 
-    guide = "axis_minor") +
+    minor_breaks = NULL,
+    guide = "axis_minor"
+  ) +
   scale_y_continuous(
     labels = unit_format(
       prefix = "$",
-      unit = "Billion", 
-      scale = 1e-3),
-    limits = c(0,3600),
-    breaks = c(1000,2000),
+      unit = "Billion",
+      scale = 1e-3
+    ),
+    limits = c(0, 3600),
+    breaks = c(1000, 2000),
     minor_breaks = NULL
   ) +
   scale_fill_manual(
     values = c(
-      "7"="#6bddfa",
-      "4"="#0041CC", 
-      "2"="#f4cb8d", 
-      "6"="#cc86cf",
-      "1"="#823549",
-      "3"="#1EB3B3",
-      "5"="#76ad6d"   
-    ), 
-    na.value = "grey80") +
+      "7" = "#6bddfa",
+      "4" = "#0041CC",
+      "2" = "#f4cb8d",
+      "6" = "#cc86cf",
+      "1" = "#823549",
+      "3" = "#1EB3B3",
+      "5" = "#76ad6d"
+    ),
+    na.value = "grey80"
+  ) +
   scale_color_manual(
     values = c(
-      "Bad Bunny"="#6bddfa",
-      "Bruce Springsteen & the E Street Band"="#0041CC", 
-      "Ed Sheeran"="#f4cb8d", 
-      "Elton John"="#cc86cf",
-      "Taylor Swift"="#823549",
-      "The Rolling Stones"="#1EB3B3",
-      "U2"="#76ad6d"   
-    ), 
-    na.value = "grey80") +
+      "Bad Bunny" = "#6bddfa",
+      "Bruce Springsteen & the E Street Band" = "#0041CC",
+      "Ed Sheeran" = "#f4cb8d",
+      "Elton John" = "#cc86cf",
+      "Taylor Swift" = "#823549",
+      "The Rolling Stones" = "#1EB3B3",
+      "U2" = "#76ad6d"
+    ),
+    na.value = "grey80"
+  ) +
   scale_size_continuous(range = c(4, 6)) +
   coord_cartesian(clip = "off", expand = FALSE) +
-  labs(
-    caption = "Source: Pollstar. Projection by CNN & QuestionPro"
-  ) +
-  theme_minimal(
-    base_family = f1
-  ) +
+  labs(caption = "Source: Pollstar. Projection by CNN & QuestionPro") +
+  theme_minimal(base_family = f1) +
   theme(
     legend.position = "none",
     plot.background = element_rect(fill = "#FFFFFE", color = NA),
     axis.title = element_blank(),
-    axis.text = element_text(size = 12, margin = margin(5, 0, 0, 0), family = f1, color = "#393433"),
+    axis.text = element_text(
+      size = 12,
+      margin = margin(5, 0, 0, 0),
+      family = f1,
+      color = "#393433"
+    ),
     # axis.ticks.x = element_line(color = "grey70"),
     # ggh4x.axis.ticks.length.minor = rel(1),
     plot.margin = margin(20, 75, 30, 35),

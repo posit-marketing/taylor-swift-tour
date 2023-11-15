@@ -4,11 +4,11 @@ output: html_document
 
 <details><summary>See R code</summary>
 
-:::{.goals}
-::::{.goals-header}
+:::{.rcode}
+::::{.rcode-header}
 R Code: The Eras Tour Openers - Value Boxes
 ::::
-::::{.goals-container}
+::::{.rcode-container}
 
 This code creates plots and value boxes for the Taylor Swift opening acts section. The data to create these visualizations were granted to us under license. We may not be able to share it.
 
@@ -23,23 +23,25 @@ library(glue)
 library(bsicons)
 
 openers <-
-  read_rds(here::here("secret-data", "combined_artist_data.rds")) |> 
-  filter(artist != "Taylor Swift") |> 
-  mutate(date = as.Date(date)) |> 
+  read_rds(here::here("secret-data", "combined_artist_data.rds")) |>
+  filter(artist != "Taylor Swift") |>
+  mutate(date = as.Date(date)) |>
   filter(date > as.Date("2022-01-01"))
 ```
 
 ```{r}
 #| echo: true
 #| eval: false
-ggplot2::ggplot(openers |>
-                  filter(stats.source == "shazam",
-                         date > as.Date(2022-01-01)),
-                aes(x = as.Date(date), y = shazams_total)) +
+ggplot2::ggplot(
+  openers |>
+    filter(stats.source == "shazam",
+           date > as.Date(2022 - 01 - 01)),
+  aes(x = as.Date(date), y = shazams_total)
+) +
   geom_point() +
   geom_smooth(method = "lm",
               aes(color = time_frame)) +
-  facet_wrap( ~ artist, scales = "free")
+  facet_wrap(~ artist, scales = "free")
 ```
 
 Below, we create a single artist's set of plots.
@@ -59,52 +61,63 @@ shazam_text_color <- "#213D4F"
 vbs_artists <- list()
 
 # Iterate through all the artists
-for (i in 1:length(openers$artist |> unique())){
+for (i in 1:length(openers$artist |> unique())) {
   artist_i <- (openers$artist |> unique())[i]
   
   # Shazam
   
-  p_shazam <- openers |> 
+  p_shazam <- openers |>
     filter(stats.source == "shazam",
-           date > as.Date(2022-01-01)) |>
-    filter(artist == artist_i) |> 
+           date > as.Date(2022 - 01 - 01)) |>
+    filter(artist == artist_i) |>
     mutate(date = as.Date(date)) |>
     rename(Date = date,
            Shazams = shazams_total,
-           "Time Frame" = time_frame) |> 
-    ggplot(aes(x = Date, 
+           "Time Frame" = time_frame) |>
+    ggplot(aes(x = Date,
                y = Shazams,
                text = NULL)) +
-    geom_line(
-      color= "white",
-      size = 1.4
-    ) +
+    geom_line(color = "white",
+              size = 1.4) +
     geom_smooth(
       xmethod = "lm",
       aes(color = `Time Frame`),
       se = FALSE,
-      size = 0.7) +
-    scale_color_manual(
-      values=c(`after announcement`="#823549", `before announcement`="#1D2642")) +
-    theme(
-      axis.text.x = element_text(colour="white"),
-      axis.title = element_text(colour="white")
-    )
+      size = 0.7
+    ) +
+    scale_color_manual(values = c(
+      `after announcement` = "#823549",
+      `before announcement` = "#1D2642"
+    )) +
+    theme(axis.text.x = element_text(colour = "white"),
+          axis.title = element_text(colour = "white"))
   
-  sparkline_shazam <- p_shazam |> 
-    ggplotly(
-    ) |>
-    config(displayModeBar = F) |> 
+  sparkline_shazam <- p_shazam |>
+    ggplotly() |>
+    config(displayModeBar = F) |>
     layout(
       showlegend = FALSE,
-      xaxis = list(visible = F, showgrid = F, title = ""),
-      yaxis = list(visible = F, showgrid = F, title = ""),
+      xaxis = list(
+        visible = F,
+        showgrid = F,
+        title = ""
+      ),
+      yaxis = list(
+        visible = F,
+        showgrid = F,
+        title = ""
+      ),
       hovermode = "none",
-      margin = list(t = 0, r = 0, l = 0, b = 0),
+      margin = list(
+        t = 0,
+        r = 0,
+        l = 0,
+        b = 0
+      ),
       font = list(color = "white"),
       paper_bgcolor = "transparent",
       plot_bgcolor = "transparent"
-    ) |> 
+    ) |>
     htmlwidgets::onRender(
       "function(el) {
       var ro = new ResizeObserver(function() {
@@ -117,72 +130,71 @@ for (i in 1:length(openers$artist |> unique())){
   
   
   
-  shazams_total = (openers |> 
-                     filter(
-                       artist == artist_i,
-                       source_ids == "shazam") |> 
-                     arrange(desc(date)) |> 
-                     slice(1))$shazams_total |> 
-    formatC(big.mark=",")
+  shazams_total = (
+    openers |>
+      filter(artist == artist_i,
+             source_ids == "shazam") |>
+      arrange(desc(date)) |>
+      slice(1)
+  )$shazams_total |>
+    formatC(big.mark = ",")
   
   
   # YouTube
   
-  p_yt <- openers |> 
-    filter(
-      stats.source == "youtube",
-      date > as.Date(2022-01-01)
-    ) |>
-    filter(
-      artist == artist_i
-    ) |> 
-    mutate(
-      video_views_total_2 = video_views_total,
-      date = as.Date(date)
-    ) |>
-    rename(
-      Date = date,
-      YouTube = video_views_total,
-      "Time Frame" = time_frame
-    ) |> 
-    ggplot(
-      aes(
-        x = Date, 
-        y = YouTube
-      ) 
-    ) +
-    geom_line(
-      color= "white",
-      size = 1.4
-    ) +
+  p_yt <- openers |>
+    filter(stats.source == "youtube",
+           date > as.Date(2022 - 01 - 01)) |>
+    filter(artist == artist_i) |>
+    mutate(video_views_total_2 = video_views_total,
+           date = as.Date(date)) |>
+    rename(Date = date,
+           YouTube = video_views_total,
+           "Time Frame" = time_frame) |>
+    ggplot(aes(x = Date,
+               y = YouTube)) +
+    geom_line(color = "white",
+              size = 1.4) +
     geom_smooth(
       xmethod = "lm",
-      aes(color = `Time Frame`
-      ),
+      aes(color = `Time Frame`),
       se = FALSE,
-      size = 0.7) +
-    scale_y_continuous(trans='log2') +
-    scale_color_manual(
-      values=c(`after announcement`="#823549", `before announcement`="#1D2642")) +
-    theme(
-      axis.text.x = element_text(colour="white"),
-      axis.title = element_text(colour="white")
-    )
+      size = 0.7
+    ) +
+    scale_y_continuous(trans = 'log2') +
+    scale_color_manual(values = c(
+      `after announcement` = "#823549",
+      `before announcement` = "#1D2642"
+    )) +
+    theme(axis.text.x = element_text(colour = "white"),
+          axis.title = element_text(colour = "white"))
   
-  sparkline_yt <- p_yt |> 
-    ggplotly(
-    ) |>
-    config(displayModeBar = F) |> 
+  sparkline_yt <- p_yt |>
+    ggplotly() |>
+    config(displayModeBar = F) |>
     layout(
       showlegend = FALSE,
-      xaxis = list(visible = F, showgrid = F, title = ""),
-      yaxis = list(visible = F, showgrid = F, title = ""),
+      xaxis = list(
+        visible = F,
+        showgrid = F,
+        title = ""
+      ),
+      yaxis = list(
+        visible = F,
+        showgrid = F,
+        title = ""
+      ),
       hovermode = "none",
-      margin = list(t = 0, r = 0, l = 0, b = 0),
+      margin = list(
+        t = 0,
+        r = 0,
+        l = 0,
+        b = 0
+      ),
       font = list(color = "white"),
       paper_bgcolor = "transparent",
       plot_bgcolor = "transparent"
-    ) |> 
+    ) |>
     htmlwidgets::onRender(
       "function(el) {
       var ro = new ResizeObserver(function() {
@@ -193,105 +205,102 @@ for (i in 1:length(openers$artist |> unique())){
     }"
     )
   
-  sparkline_yt$data[[1]]$hoverinfo='none'
+  sparkline_yt$data[[1]]$hoverinfo = 'none'
   
-  yt_subs = (openers |> 
-               filter(
-                 artist == artist_i,
-                 source_ids == "youtube") |> 
-               arrange(desc(date)) |> 
-               slice(1))$subscribers_total |> 
-    prettyNum(big.mark=",")
-  yt_views <- (openers |> 
-                 filter(
-                   artist == artist_i,
-                   source_ids == "youtube") |> 
-                 arrange(desc(date)) |> 
-                 slice(1))$video_views_total |> 
-    prettyNum(big.mark=",")
+  yt_subs = (
+    openers |>
+      filter(artist == artist_i,
+             source_ids == "youtube") |>
+      arrange(desc(date)) |>
+      slice(1)
+  )$subscribers_total |>
+    prettyNum(big.mark = ",")
+  yt_views <- (
+    openers |>
+      filter(artist == artist_i,
+             source_ids == "youtube") |>
+      arrange(desc(date)) |>
+      slice(1)
+  )$video_views_total |>
+    prettyNum(big.mark = ",")
   
   # Spotify
   
-  p_spotify <- openers |> 
-    filter(
-      stats.source == "spotify",
-      date > as.Date(2022-01-01)
-    ) |>
-    filter(
-      artist == artist_i
-    ) |> 
-    mutate(
-      date = as.Date(date)
-    ) |>
+  p_spotify <- openers |>
+    filter(stats.source == "spotify",
+           date > as.Date(2022 - 01 - 01)) |>
+    filter(artist == artist_i) |>
+    mutate(date = as.Date(date)) |>
     rename(
       Date = date,
       `Monthly Listeners` = monthly_listeners_current,
       "Time Frame" = time_frame
-    ) |> 
-    ggplot(
-      aes(x = Date, 
-          y = `Monthly Listeners`,
-          text = NULL
-      )
-    ) +
-    geom_line(
-      color= "grey90",
-      size = 1.4
-    ) +
+    ) |>
+    ggplot(aes(x = Date,
+               y = `Monthly Listeners`,
+               text = NULL)) +
+    geom_line(color = "grey90",
+              size = 1.4) +
     geom_smooth(
       xmethod = "lm",
       aes(color = `Time Frame`),
       se = FALSE,
-      size = 0.7) +
-    scale_color_manual(
-      values=c(`after announcement`="#823549", `before announcement`="#1D2642")) +
-    theme(
-      axis.text.x = element_text(colour="white"),
-      axis.title = element_text(colour="white")
-      
-    )
+      size = 0.7
+    ) +
+    scale_color_manual(values = c(
+      `after announcement` = "#823549",
+      `before announcement` = "#1D2642"
+    )) +
+    theme(axis.text.x = element_text(colour = "white"),
+          axis.title = element_text(colour = "white"))
   
-  sparkline_spotify <- p_spotify |> 
-    ggplotly(
-    ) |>
-    config(displayModeBar = F) |> 
+  sparkline_spotify <- p_spotify |>
+    ggplotly() |>
+    config(displayModeBar = F) |>
     layout(
       showlegend = FALSE,
-      xaxis = list(
-        visible = F, 
-        showgrid = F
+      xaxis = list(visible = F,
+                   showgrid = F),
+      yaxis = list(
+        visible = F,
+        showgrid = F,
+        title = ""
       ),
-      yaxis = list(visible = F, showgrid = F, title = ""),
       hovermode = "none",
-      margin = list(t = 0, r = 0, l = 0, b = 0),
+      margin = list(
+        t = 0,
+        r = 0,
+        l = 0,
+        b = 0
+      ),
       font = list(color = "white"),
       paper_bgcolor = "transparent",
       plot_bgcolor = "transparent"
-    ) |> 
+    ) |>
     htmlwidgets::onRender(
-     "function(el) {
+      "function(el) {
       var ro = new ResizeObserver(function() {
          var visible = el.offsetHeight > 200;
          Plotly.relayout(el, {'xaxis.visible': visible, hovermode: visible});
       });
       ro.observe(el);
     }"
-
+    
     )
   
-  spotify_total = (openers |> 
-                     filter(
-                       artist == artist_i,
-                       source_ids == "spotify") |> 
-                     arrange(desc(date)) |> 
-                     slice(1))$followers_total |> 
-    formatC(big.mark=",")
+  spotify_total = (
+    openers |>
+      filter(artist == artist_i,
+             source_ids == "spotify") |>
+      arrange(desc(date)) |>
+      slice(1)
+  )$followers_total |>
+    formatC(big.mark = ",")
   
   
   # create our value boxes
   
   vbs_artists[[artist_i]] <- list(
-    
     # value_box(
     #   title = "Artist",
     #   value = h3(glue("{artist_i}")),
@@ -311,7 +320,8 @@ for (i in 1:length(openers$artist |> unique())){
       full_screen = TRUE,
       style = glue(
         'background-color: {yt_color}!important;
-        color: {yt_text_color}!important;')
+        color: {yt_text_color}!important;'
+      )
     ),
     value_box(
       title = "Shazam Total Plays",
@@ -323,7 +333,8 @@ for (i in 1:length(openers$artist |> unique())){
       full_screen = TRUE,
       style = glue(
         'background-color: {shazam_color}!important;
-        color: {shazam_text_color}!important;')
+        color: {shazam_text_color}!important;'
+      )
     ),
     value_box(
       title = "Spotify Total Followers",
@@ -335,24 +346,22 @@ for (i in 1:length(openers$artist |> unique())){
       full_screen = TRUE,
       style = glue(
         'background-color: {spotify_color}!important;
-        color: {shazam_text_color}!important;')
+        color: {shazam_text_color}!important;'
+      )
     )
   )
 }
 
 ```
 
-```{r}
-layout_column_wrap(
-  width = "300px",
-  !!!vbs_artists[[artist_i]]
-)
+```{
+r
+}
+#| eval: false
+layout_column_wrap(width = "300px",!!!vbs_artists[[artist_i]])
 
-
-saveRDS(
-  vbs_artists,
-  here::here("data", "vbs_artists.RDS")
-) 
+saveRDS(vbs_artists,
+here::here("data", "vbs_artists.RDS"))
 ```
 
 ::::
