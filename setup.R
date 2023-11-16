@@ -1,6 +1,12 @@
 # Load packages
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(readr)
 library(janitor)
+library(stringr)
+library(purrr)
+library(lubridate)
+library(forcats)
 
 # To scrape data
 library(rvest)

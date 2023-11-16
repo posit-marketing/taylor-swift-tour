@@ -83,7 +83,7 @@ We’re so fascinated by the cultural and economic movement that is The Eras Tou
 
 ```{r}
 #| label: gdp-comparison-plot
-#| fig-alt: "A plot titled The GDP of Taylor. It shows a series of country outlines each with a monetary value labeled as their Gross Domestic Product (GDP), and in the center, there's an image of Taylor Swift with her own GDP value. Starting from the top left and moving clockwise, the countries and their respective GDPs are: Kosovo with $9.43B, Somalia with $8.13B, Togo with $8.13B, Montenegro with $6.10B, Eswatini with $4.85B, Fiji with $4.94B, Barbados with $5.64B, and Bermuda with $7.55B. Taylor Swift is in the center with a GDP of $6.30B. Each country is represented by a colored silhouette in various shades of green, yellow, purple, and pink. Taylor Swift's image is in a blue circle, and she is depicted with blond hair, wearing a sparkling dress, and posing with one hand on her hip."
+#| fig-alt: "A plot titled The GDP of Taylor. It shows a series of country outlines each with a monetary value labeled as their Gross Domestic Product (GDP), and in the center, there's an image of Taylor Swift with her own GDP value. Starting from the top left and moving clockwise, the countries and their respective GDPs are: Kosovo with $9.43B, Somalia with $8.13B, Togo with $8.13B, Montenegro with $6.10B, Eswatini with $4.85B, Fiji with $4.94B, Barbados with $5.64B, and Bermuda with $7.55B. Taylor Swift is in the center with a GDP of $6.30B. Each country is represented by a colored silhouette in various shades of green, yellow, purple, and pink. Taylor Swift's image is in a blue circle, and she is depicted with blond hair, wearing a sparkling dress, and posing."
 knitr::include_graphics(here::here("images", "gdp_plot.png"))
 ```
 

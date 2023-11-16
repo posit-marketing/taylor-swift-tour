@@ -16,7 +16,11 @@ To create the Highest Grossing Tours by Decade charts, we first load the package
 #| echo: true
 #| eval: false
 # Load packages
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(lubridate)
+library(forcats)
 library(janitor)
 
 # To scrape data

@@ -16,7 +16,11 @@ To create the Highest Grossing Tours Sankey Chart, we first load the packages th
 #| eval: false
 #| echo: true
 # To load and clean data
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(stringr)
+library(forcats)
 
 # To visualize the data  
 library(ggplot2)
@@ -35,7 +39,7 @@ First, we're going to load our data, collected manually from Pollstar reporting 
 ```{r}
 #| eval: false
 #| echo: true
-rank_concert_tours <- read_csv("../data/rank_concert_tours.csv") |>
+rank_concert_tours <- read_csv(here::here("data", "rank_concert_tours.csv")) |>
   mutate(
     artist = case_when(
       artist == "Tim McGraw/Faith Hill"  ~ "Tim Mcgraw et. al.",
@@ -343,7 +347,6 @@ Rectangle Version, for blog post.
 #| fig.show: hide
 #| fig.path: "../images/"
 #| label: tswift-v-others-sankey-rect
-
 
 ts_pal_fill <- tribble(
   ~ artist,

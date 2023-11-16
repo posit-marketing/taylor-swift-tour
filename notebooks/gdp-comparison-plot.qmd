@@ -16,7 +16,11 @@ First, we load the packages that we will need.
 #| echo: true
 #| eval: false
 # To clean data
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(stringr)
+library(purrr)
 library(janitor)
 
 # To scrape data
@@ -82,7 +86,7 @@ gdp_tab <-
   slice(-1) |>
   mutate(across(
     c(imf_1_13,
-      world_bank_14
+      world_bank_14,
       united_nations_15),
     ~ as.numeric(str_replace_all(.x, "[$,]", ""))
   )) |>

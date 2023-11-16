@@ -16,7 +16,9 @@ To create the Taylor Swift Economic Impact Map, we first load the packages that 
 #| echo: true
 #| eval: false
 # To clean data
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(readr)
 
 # To geocode data
 library(tidygeocoder)
@@ -76,6 +78,9 @@ labelText = paste0(
   '">Source</a>'
 ) |>
   lapply(htmltools::HTML)
+
+lng <- -102.3
+lat <- 36.8
 
 leaflet(data = impact_geo,
         options = leafletOptions(zoomControl = FALSE,

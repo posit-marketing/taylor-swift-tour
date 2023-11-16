@@ -15,12 +15,14 @@ This code creates plots and value boxes for the Taylor Swift opening acts sectio
 ```{r}
 #| echo: true
 #| eval: false
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(readr)
 library(plotly)
 library(shiny)
 library(bslib)
-library(glue)
 library(bsicons)
+library(glue)
 
 openers <-
   read_rds(here::here("secret-data", "combined_artist_data.rds")) |>
