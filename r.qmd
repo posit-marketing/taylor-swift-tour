@@ -15,7 +15,7 @@ format: html
 R Code: Taylor's Towering Year
 ::::
 ::::{.rcode-container}
-We're thrilled about your interest in the code behind this page! We used [Quarto](https://quarto.org/) for document creation and R for visualizations. Click the 'See R code' button for detailed steps. Feel free to explore the Posit Cloud project or clone the [GitHub repository](https://github.com/posit-marketing/taylor-swift-tour) to recreate the visuals or the entire article. Happy coding!
+We're thrilled about your interest in the code behind this page! We used [Quarto](https://quarto.org/) for document creation and R for visualizations. Click the 'See R code' button for detailed steps. Feel free to explore the [Posit Cloud](https://posit.cloud/content/7059961) project or clone the [GitHub repository](https://github.com/posit-marketing/taylor-swift-tour) to recreate the visuals or the entire article. Happy coding!
 ::::
 :::
 

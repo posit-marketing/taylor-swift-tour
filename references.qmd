@@ -5,6 +5,10 @@ title-block-banner-alt: "Taylor Swift on stage with a microphone in hand, likely
 format: html
 ---
 
+## Acknowledgements
+
+Thank you to [Ben Ruijl](https://github.com/benruijl) for the `progress_bar.html` code.
+
 ## References
 
 ### Introduction
@@ -42,3 +46,10 @@ Eras is projected to do over $2B[^6]
 Spotify and YouTube subscription numbers[^7]
 
 [^7]: SongStats API, https://docs.songstats.com/
+
+## Colophon
+
+```{r}
+#| eval: true
+sessionInfo()
+```
